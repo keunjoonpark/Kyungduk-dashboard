@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경덕한의원 데이터 대시보드</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f6f9;color:#1a1a2e;min-height:100vh}
+.topbar{background:#1F4E79;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.topbar h1{font-size:18px;font-weight:600;letter-spacing:-0.3px}
+.topbar .badge{font-size:12px;background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px}
+.nav{background:#fff;border-bottom:1px solid #e5e9f0;padding:0 24px;display:flex;gap:4px;overflow-x:auto}
+.nav button{padding:14px 18px;border:none;background:none;font-size:13px;color:#6b7a99;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.nav button.active{color:#1F4E79;border-bottom-color:#1F4E79;font-weight:600}
+.nav button:hover{color:#1F4E79;background:#f4f6f9}
+.content{padding:24px;max-width:1200px;margin:0 auto}
+.section{display:none}.section.active{display:block}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.metric{background:#fff;border-radius:10px;padding:16px;border:1px solid #e5e9f0}
+.metric-label{font-size:11px;color:#6b7a99;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.metric-value{font-size:24px;font-weight:700;color:#1a1a2e}
+.metric-sub{font-size:11px;color:#6b7a99;margin-top:3px}
+.metric.green .metric-value{color:#1D9E75}
+.metric.red .metric-value{color:#E24B4A}
+.metric.blue .metric-value{color:#1F4E79}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:10px;padding:20px;border:1px solid #e5e9f0;margin-bottom:16px}
+.card-title{font-size:12px;font-weight:600;color:#6b7a99;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px}
+.chart-wrap{position:relative;width:100%}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:12px;color:#6b7a99}
+.legend span{display:flex;align-items:center;gap:5px}
+.leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;background:#f4f6f9;color:#6b7a99;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #e5e9f0}
+td{padding:10px 12px;border-bottom:1px solid #f4f6f9;color:#1a1a2e}
+tr:hover td{background:#f9fafc}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+.tag.green{background:#E2EFDA;color:#3B6D11}
+.tag.red{background:#FCE4D6;color:#993C1D}
+.tag.blue{background:#E6F1FB;color:#185FA5}
+.tag.orange{background:#FFF2CC;color:#854F0B}
+.funnel-bar{height:32px;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;transition:width .3s}
+.note{font-size:11px;color:#6b7a99;margin-top:8px;font-style:italic}
+.insight-item{padding:14px 16px;border-radius:8px;border-left:3px solid;background:#f9fafc;margin-bottom:10px}
+.insight-item.blue{border-color:#378ADD}
+.insight-item.green{border-color:#1D9E75}
+.insight-item.red{border-color:#E24B4A}
+.insight-item.orange{border-color:#BA7517}
+.insight-cat{font-size:10px;color:#6b7a99;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.insight-title{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
+.insight-desc{font-size:12px;color:#4a5568;line-height:1.6}
+.insight-action{font-size:11px;color:#1F4E79;margin-top:6px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>경덕한의원 데이터 대시보드</h1>
+    <div style="font-size:12px;opacity:0.8;margin-top:2px">2026년 1~4월 | 4월은 14일치 기준</div>
+  </div>
+  <span class="badge">최종 업데이트: 2026.04.14</span>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="showTab('overview',this)">종합 현황</button>
+  <button onclick="showTab('patients',this)">환자 분석</button>
+  <button onclick="showTab('cohort',this)">코호트 분석</button>
+  <button onclick="showTab('revenue',this)">수입 분석</button>
+  <button onclick="showTab('disease',this)">상병별 분석</button>
+  <button onclick="showTab('insights',this)">인사이트</button>
+</div>
+
+<div class="content">
+
+<!-- 종합 현황 -->
+<div class="section active" id="tab-overview">
+  <div class="metrics">
+    <div class="metric blue"><div class="metric-label">3월 총 방문</div><div class="metric-value">574회</div><div class="metric-sub">고유환자 268명</div></div>
+    <div class="metric blue"><div class="metric-label">4월 총 방문</div><div class="metric-value">290회</div><div class="metric-sub">고유환자 160명 (14일)</div></div>
+    <div class="metric green"><div class="metric-label">최고 재진율</div><div class="metric-value">62.7%</div><div class="metric-sub">1월 초진 코호트</div></div>
+    <div class="metric"><div class="metric-label">누적 총 진료비</div><div class="metric-value">140.6M</div><div class="metric-sub">1~4월 합계</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">월별 방문 현황 (연인원 vs 고유환자)</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#1F4E79"></span>연인원(총방문)</span>
+        <span><span class="leg-dot" style="background:#85B7EB"></span>고유환자</span>
+      </div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-visit" role="img" aria-label="월별 연인원 및 고유환자수">방문현황</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">월별 총 진료비 (만원)</div>
+      <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총 진료비</span></div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-revenue" role="img" aria-label="월별 총 진료비">진료비</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">진료의별 환자수</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#378ADD"></span>김현</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>박미</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>박근</span>
+        <span><span class="leg-dot" style="background:#D85A30"></span>박상</span>
+      </div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-doctor" role="img" aria-label="진료의별 환자수 추이">진료의별</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">연령대별 환자 비중 (1~4월 누적)</div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-age-pie" role="img" aria-label="연령대별 환자 비중">연령별</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 환자 분석 -->
+<div class="section" id="tab-patients">
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">1월 고유환자</div><div class="metric-value">226명</div><div class="metric-sub">1인당 2.3회 방문</div></div>
+    <div class="metric"><div class="metric-label">2월 고유환자</div><div class="metric-value">234명</div><div class="metric-sub">1인당 1.9회 방문</div></div>
+    <div class="metric"><div class="metric-label">3월 고유환자</div><div class="metric-value">268명</div><div class="metric-sub">1인당 2.1회 방문</div></div>
+    <div class="metric"><div class="metric-label">4월 고유환자</div><div class="metric-value">160명</div><div class="metric-sub">1인당 1.8회 (14일)</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">월별 내원횟수별 환자 분포</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#E24B4A"></span>1회(이탈위험)</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>2회</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>3회이상</span>
+      </div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-loyalty" role="img" aria-label="재방문 충성도">충성도</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">연령대별 월별 환자수</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>70대+</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>50대</span>
+        <span><span class="leg-dot" style="background:#D85A30"></span>30대</span>
+      </div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-age-line" role="img" aria-label="연령대별 월별 추이">연령추이</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">월별 방문현황 상세 테이블</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>1월</th><th>2월</th><th>3월</th><th>4월(14일)</th></tr></thead>
+        <tbody>
+          <tr><td>연인원(총방문횟수)</td><td>520회</td><td>456회</td><td>574회</td><td>290회</td></tr>
+          <tr><td>고유환자수(중복제외)</td><td>226명</td><td>234명</td><td>268명</td><td>160명</td></tr>
+          <tr><td>1인당 평균 방문</td><td>2.3회</td><td>1.9회</td><td>2.1회</td><td>1.8회</td></tr>
+          <tr><td>초진 환자수</td><td>51명</td><td>42명</td><td>40명</td><td>25명</td></tr>
+          <tr><td>재진율 (코호트 기반)</td><td><span class="tag green">62.7%</span></td><td><span class="tag green">54.8%</span></td><td><span class="tag orange">52.5%</span></td><td><span class="tag orange">24.0%</span></td></tr>
+          <tr><td>이탈율</td><td><span class="tag red">37.3%</span></td><td><span class="tag red">45.2%</span></td><td><span class="tag red">47.5%</span></td><td><span class="tag red">76.0%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">※ 재진율 기준: 당월 Vs≥2(같은달 재방문) 또는 이후달 재방문 포함 | 4월 이탈율은 14일치 기준으로 월말 상승 예상</p>
+  </div>
+</div>
+
+<!-- 코호트 분석 -->
+<div class="section" id="tab-cohort">
+  <div class="metrics">
+    <div class="metric green"><div class="metric-label">1월 재진율</div><div class="metric-value">62.7%</div><div class="metric-sub">재진 32명 / 이탈 19명</div></div>
+    <div class="metric green"><div class="metric-label">2월 재진율</div><div class="metric-value">54.8%</div><div class="metric-sub">재진 23명 / 이탈 19명</div></div>
+    <div class="metric orange" style="--c:#BA7517"><div class="metric-label">3월 재진율</div><div class="metric-value" style="color:#BA7517">52.5%</div><div class="metric-sub">재진 21명 / 이탈 19명</div></div>
+    <div class="metric red"><div class="metric-label">4월 재진율</div><div class="metric-value">24.0%</div><div class="metric-sub">14일치 기준 (상승 예상)</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">월별 초진 코호트 재진율 비교</div>
+    <div class="legend">
+      <span><span class="leg-dot" style="background:#1D9E75"></span>재진</span>
+      <span><span class="leg-dot" style="background:#E24B4A"></span>이탈</span>
+    </div>
+    <div class="chart-wrap" style="height:240px">
+      <canvas id="c-cohort-bar" role="img" aria-label="코호트 재진율 비교">코호트</canvas>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">1월 초진 재방문 퍼널 (51명)</div>
+      <div style="padding:8px 0">
+        <div style="margin-bottom:6px;font-size:12px;color:#6b7a99">1월 초진</div>
+        <div class="funnel-bar" style="background:#1F4E79;width:100%">51명 (100%)</div>
+        <div style="margin-bottom:6px;font-size:12px;color:#6b7a99">재방문 (당월 또는 이후달)</div>
+        <div class="funnel-bar" style="background:#1D9E75;width:62.7%">32명 (62.7%)</div>
+        <div style="margin-bottom:6px;font-size:12px;color:#6b7a99">2월 이후 재방문</div>
+        <div class="funnel-bar" style="background:#378ADD;width:45.1%">23명 (45.1%)</div>
+        <div style="margin-bottom:6px;font-size:12px;color:#6b7a99">3월 이후 재방문</div>
+        <div class="funnel-bar" style="background:#85B7EB;width:29.4%">15명 (29.4%)</div>
+        <div style="margin-bottom:6px;font-size:12px;color:#6b7a99">4월에도 재방문</div>
+        <div class="funnel-bar" style="background:#B5D4F4;width:13.7%">7명 (13.7%)</div>
+        <div style="margin-bottom:6px;font-size:12px;color:#6b7a99">완전 이탈</div>
+        <div class="funnel-bar" style="background:#E24B4A;width:37.3%">19명 (37.3%)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">이탈환자 재유치 우선순위</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>초진월</th><th>이탈수</th><th>경과</th><th>우선순위</th></tr></thead>
+          <tbody>
+            <tr><td>1월</td><td>19명</td><td>4개월</td><td><span class="tag red">1순위</span></td></tr>
+            <tr><td>2월</td><td>19명</td><td>3개월</td><td><span class="tag red">2순위</span></td></tr>
+            <tr><td>3월</td><td>19명</td><td>2개월</td><td><span class="tag orange">3순위</span></td></tr>
+            <tr><td>4월</td><td>19명</td><td>1개월</td><td><span class="tag blue">4순위</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">※ 총 76명 이탈 — 재유치 시 월 추가 매출 200~300만원 기대</p>
+    </div>
+  </div>
+</div>
+
+<!-- 수입 분석 -->
+<div class="section" id="tab-revenue">
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">1월 총진료비</div><div class="metric-value">35.7M</div><div class="metric-sub">1인당 157,850원</div></div>
+    <div class="metric"><div class="metric-label">2월 총진료비</div><div class="metric-value">42.4M</div><div class="metric-sub">1인당 181,258원</div></div>
+    <div class="metric"><div class="metric-label">3월 총진료비</div><div class="metric-value">43.0M</div><div class="metric-sub">1인당 160,622원</div></div>
+    <div class="metric"><div class="metric-label">4월 총진료비</div><div class="metric-value">19.5M</div><div class="metric-sub">14일치 | 환산 41.8M</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">보험 vs 비급여 수입 구조</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#378ADD"></span>보험수입</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>비급여수입</span>
+      </div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-rev-type" role="img" aria-label="수입 구조">수입구조</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">환자 1인당 매출 추이</div>
+      <div class="legend"><span><span class="leg-dot" style="background:#534AB7"></span>1인당 매출</span></div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="c-per-pt" role="img" aria-label="1인당 매출">1인당매출</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">수입 현황 상세</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>1월</th><th>2월</th><th>3월</th><th>4월(14일)</th><th>4월 환산</th></tr></thead>
+        <tbody>
+          <tr><td><b>총 진료비</b></td><td>35,674,160</td><td>42,414,400</td><td>43,046,670</td><td>19,474,730</td><td>41,731,567</td></tr>
+          <tr><td>보험수입</td><td>22,653,160</td><td>22,067,900</td><td>25,321,570</td><td>13,263,230</td><td>28,421,207</td></tr>
+          <tr><td>비급여수입</td><td>13,021,000</td><td>20,346,500</td><td>17,725,100</td><td>6,211,500</td><td>13,310,357</td></tr>
+          <tr><td>보험 비중</td><td><span class="tag blue">63.5%</span></td><td><span class="tag blue">52.0%</span></td><td><span class="tag blue">58.8%</span></td><td><span class="tag blue">68.1%</span></td><td>-</td></tr>
+          <tr><td>비급여 비중</td><td>36.5%</td><td><span class="tag green">48.0%</span></td><td>41.2%</td><td>31.9%</td><td>-</td></tr>
+          <tr><td>1인당 매출</td><td>157,850원</td><td>181,258원</td><td>160,622원</td><td>121,717원</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 상병별 분석 -->
+<div class="section" id="tab-disease">
+  <div class="card">
+    <div class="card-title">상위 10개 상병 (1~4월 합계)</div>
+    <div class="chart-wrap" style="height:420px">
+      <canvas id="c-disease" role="img" aria-label="상위 상병별 환자수">상병</canvas>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">질환 카테고리별 비중</div>
+      <div class="chart-wrap" style="height:250px">
+        <canvas id="c-cat-pie" role="img" aria-label="질환 카테고리 비중">카테고리</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">주요 상병 월별 추이</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#378ADD"></span>경추통(척추)</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>기능성소화불량</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>알레르기비염</span>
+      </div>
+      <div class="chart-wrap" style="height:250px">
+        <canvas id="c-disease-line" role="img" aria-label="주요 상병 월별 추이">상병추이</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 인사이트 -->
+<div class="section" id="tab-insights">
+  <div class="insight-item blue">
+    <div class="insight-cat">환자수 추이</div>
+    <div class="insight-title">3월이 최다 방문 — 연인원 574회, 고유환자 268명</div>
+    <div class="insight-desc">1월 520회 → 2월 456회(▼) → 3월 574회(▲) → 4월 290회(14일). 3월 성수기 요인 파악 및 내년 준비 필요.</div>
+    <div class="insight-action">→ 3월 성수기 마케팅 강화 검토</div>
+  </div>
+  <div class="insight-item green">
+    <div class="insight-cat">코호트 재진율</div>
+    <div class="insight-title">재진율 하락 추세 — 1월 62.7% → 3월 52.5%</div>
+    <div class="insight-desc">신규 환자 유입은 유지되고 있으나 재방문율이 점차 하락. 초진 후 재방문 유도 강화가 필요한 시점.</div>
+    <div class="insight-action">→ 초진 후 2~4주 내 문자 발송 시스템 도입 (즉시 실행 가능)</div>
+  </div>
+  <div class="insight-item red">
+    <div class="insight-cat">이탈 관리</div>
+    <div class="insight-title">매월 약 19명 완전 이탈 — 4개월 누적 76명</div>
+    <div class="insight-desc">1~4월 초진 환자 중 한 번도 재방문하지 않은 환자 76명. 재유치 성공률 30%만 달성해도 월 추가 매출 200~300만원 기대.</div>
+    <div class="insight-action">→ 이탈환자 명단 기반 문자/전화 재유치 캠페인</div>
+  </div>
+  <div class="insight-item blue">
+    <div class="insight-cat">매출 구조</div>
+    <div class="insight-title">2월 비급여 비중 48% 최고 — 비급여 확대 기회</div>
+    <div class="insight-desc">보험수입 의존도 낮추고 비급여 프로그램 확대 시 1인당 단가 상승 가능. 2월 1인당 매출 181,258원으로 4개월 중 최고.</div>
+    <div class="insight-action">→ 다이어트·미용침·체형교정 등 비급여 프로그램 기획</div>
+  </div>
+  <div class="insight-item green">
+    <div class="insight-cat">주요 상병</div>
+    <div class="insight-title">경추/목 질환 압도적 1위 — 4개월 합계 약 190건</div>
+    <div class="insight-desc">경추통(척추 여러 부위) 108건 + 경추통(경부) 81건. 전체 상병의 약 30% 차지. 경추 특화 콘텐츠 마케팅 효과 기대.</div>
+    <div class="insight-action">→ SNS 경추 관련 콘텐츠 발행 / 경추 특화 패키지 기획</div>
+  </div>
+  <div class="insight-item orange" style="border-color:#BA7517">
+    <div class="insight-cat">연령별</div>
+    <div class="insight-title">60대+70대 이상 35~40% — 고령층이 핵심 고객</div>
+    <div class="insight-desc">60대 평균 43명/월, 70대 이상 평균 44명/월. 접수 편의·주차 등 고령층 서비스 강화 시 재방문율 제고 가능.</div>
+    <div class="insight-action">→ 어르신 특화 서비스 및 예약 시스템 개선</div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const months = ['1월','2월','3월','4월'];
+
+function showTab(name, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+const co = {responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+
+new Chart(document.getElementById('c-visit'),{type:'bar',data:{labels:months,datasets:[
+  {label:'연인원',data:[520,456,574,290],backgroundColor:'#1F4E79'},
+  {label:'고유환자',data:[226,234,268,160],backgroundColor:'#85B7EB'},
+]},options:{...co,scales:{x:{stacked:false},y:{stacked:false}}}});
+
+new Chart(document.getElementById('c-revenue'),{type:'line',data:{labels:months,datasets:[
+  {label:'총진료비(만원)',data:[3567,4241,4305,1947],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',tension:0.3,fill:true,pointRadius:5},
+]},options:{...co,scales:{y:{ticks:{callback:v=>v+'만'}}}}});
+
+new Chart(document.getElementById('c-doctor'),{type:'line',data:{labels:months,datasets:[
+  {label:'김현',data:[86,82,85,52],borderColor:'#378ADD',tension:0.3,pointRadius:4},
+  {label:'박미',data:[0,0,1,4],borderColor:'#1D9E75',tension:0.3,pointRadius:4,borderDash:[4,4]},
+  {label:'박근',data:[0,0,15,16],borderColor:'#BA7517',tension:0.3,pointRadius:4},
+  {label:'박상',data:[108,111,122,70],borderColor:'#D85A30',tension:0.3,pointRadius:4},
+]},options:co});
+
+new Chart(document.getElementById('c-age-pie'),{type:'doughnut',data:{labels:['09세이하','10대','20대','30대','40대','50대','60대','70대+'],datasets:[{
+  data:[7,21,43,97,92,145,170,176],
+  backgroundColor:['#B5D4F4','#85B7EB','#378ADD','#1D9E75','#97C459','#BA7517','#1F4E79','#0C447C'],
+  borderWidth:2,borderColor:'#fff'
+}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:10}}}}});
+
+new Chart(document.getElementById('c-loyalty'),{type:'bar',data:{labels:months,datasets:[
+  {label:'1회(이탈위험)',data:[72,89,99,68],backgroundColor:'#E24B4A'},
+  {label:'2회',data:[46,37,43,44],backgroundColor:'#BA7517'},
+  {label:'3회이상',data:[76,67,81,30],backgroundColor:'#1D9E75'},
+]},options:{...co,scales:{x:{stacked:true},y:{stacked:true}}}});
+
+new Chart(document.getElementById('c-age-line'),{type:'line',data:{labels:months,datasets:[
+  {label:'60대',data:[47,51,40,32],borderColor:'#378ADD',tension:0.3,pointRadius:4},
+  {label:'70대+',data:[50,35,54,37],borderColor:'#1D9E75',tension:0.3,pointRadius:4},
+  {label:'50대',data:[39,36,45,25],borderColor:'#BA7517',tension:0.3,pointRadius:4},
+  {label:'30대',data:[21,27,37,12],borderColor:'#D85A30',tension:0.3,pointRadius:4},
+]},options:co});
+
+new Chart(document.getElementById('c-cohort-bar'),{type:'bar',data:{labels:['1월 초진(51명)','2월 초진(42명)','3월 초진(40명)','4월 초진(25명)'],datasets:[
+  {label:'재진',data:[32,23,21,6],backgroundColor:'#1D9E75'},
+  {label:'이탈',data:[19,19,19,19],backgroundColor:'#E24B4A'},
+]},options:{...co,indexAxis:'y',scales:{x:{stacked:true},y:{stacked:true}}}});
+
+new Chart(document.getElementById('c-rev-type'),{type:'bar',data:{labels:months,datasets:[
+  {label:'보험수입',data:[2265,2207,2532,1326],backgroundColor:'#378ADD'},
+  {label:'비급여수입',data:[1302,2035,1773,621],backgroundColor:'#1D9E75'},
+]},options:{...co,scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v+'만'}}}}});
+
+new Chart(document.getElementById('c-per-pt'),{type:'line',data:{labels:months,datasets:[
+  {label:'1인당 매출',data:[157850,181258,160622,121717],borderColor:'#534AB7',backgroundColor:'rgba(83,74,183,0.08)',tension:0.3,fill:true,pointRadius:5},
+]},options:{...co,scales:{y:{ticks:{callback:v=>Math.round(v/10000)+'만'}}}}});
+
+new Chart(document.getElementById('c-disease'),{type:'bar',data:{
+  labels:['경추통(척추)','경추통(경부)','기능성소화불량','기타알레르기비염','아래허리긴장(요천)','요통(요추)','요통(요천)','경추의염좌','회전근개증후군','기타등통증(경흉)'],
+  datasets:[{label:'합계',data:[108,81,74,56,51,40,47,29,38,44],
+    backgroundColor:['#1F4E79','#1F4E79','#1D9E75','#BA7517','#378ADD','#378ADD','#378ADD','#85B7EB','#D85A30','#85B7EB'],
+  }]
+},options:{...co,indexAxis:'y',scales:{x:{beginAtZero:true}}}});
+
+new Chart(document.getElementById('c-cat-pie'),{type:'doughnut',data:{
+  labels:['경추/목','요통/허리','소화기','알레르기비염','좌골신경통','기타등통증','무릎/발목','어깨','기타'],
+  datasets:[{data:[189,180,74,56,46,44,38,35,40],
+    backgroundColor:['#1F4E79','#378ADD','#1D9E75','#BA7517','#85B7EB','#B5D4F4','#D85A30','#E2EFDA','#D3D1C7'],
+    borderWidth:2,borderColor:'#fff'
+  }]
+},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
+
+new Chart(document.getElementById('c-disease-line'),{type:'line',data:{labels:months,datasets:[
+  {label:'경추통(척추여러부위)',data:[37,29,29,13],borderColor:'#378ADD',tension:0.3,pointRadius:4},
+  {label:'기능성소화불량',data:[19,20,22,13],borderColor:'#1D9E75',tension:0.3,pointRadius:4},
+  {label:'기타알레르기비염',data:[10,21,16,9],borderColor:'#BA7517',tension:0.3,pointRadius:4},
+]},options:co});
+</script>
+</body>
+</html>
