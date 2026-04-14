@@ -173,13 +173,13 @@ tr:hover td{background:#f9fafc}
           <tr><td>연인원(총방문횟수)</td><td>520회</td><td>456회</td><td>574회</td><td>290회</td></tr>
           <tr><td>고유환자수(중복제외)</td><td>226명</td><td>234명</td><td>268명</td><td>160명</td></tr>
           <tr><td>1인당 평균 방문</td><td>2.3회</td><td>1.9회</td><td>2.1회</td><td>1.8회</td></tr>
-          <tr><td>초진 환자수</td><td>51명</td><td>42명</td><td>40명</td><td>25명</td></tr>
-          <tr><td>재진율 (코호트 기반)</td><td><span class="tag green">62.7%</span></td><td><span class="tag green">54.8%</span></td><td><span class="tag orange">52.5%</span></td><td><span class="tag orange">24.0%</span></td></tr>
-          <tr><td>이탈율</td><td><span class="tag red">37.3%</span></td><td><span class="tag red">45.2%</span></td><td><span class="tag red">47.5%</span></td><td><span class="tag red">76.0%</span></td></tr>
+          <tr><td>초진 환자수</td><td>48명</td><td>41명</td><td>40명</td><td>23명</td></tr>
+          <tr><td>재진율 (코호트 기반)</td><td><span class="tag green">64.6%</span></td><td><span class="tag green">56.1%</span></td><td><span class="tag orange">52.5%</span></td><td><span class="tag orange">30.4%</span></td></tr>
+          <tr><td>이탈율</td><td><span class="tag red">35.4%</span></td><td><span class="tag red">43.9%</span></td><td><span class="tag red">47.5%</span></td><td><span class="tag red">69.6%</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note">※ 재진율 기준: 당월 Vs≥2(같은달 재방문) 또는 이후달 재방문 포함 | 4월 이탈율은 14일치 기준으로 월말 상승 예상</p>
+    <p class="note">※ 재진율 기준: 총 내원횟수 2회 이상(당월+이후달 합산) | 초진은 매출현황 확인 기준 (1월 48명, 2월 41명, 4월 23명)</p>
   </div>
 </div>
 
@@ -205,78 +205,284 @@ tr:hover td{background:#f9fafc}
 
   <div class="grid2">
     <div class="card">
-      <div class="card-title">1월 초진 누적 재방문율 (48명 기준 | 각 구간은 해당 횟수 이상 방문한 환자)</div>
-      <div style="padding:8px 0">
+      <div class="card-title">월별 초진 누적 재방문율 (해당 횟수 이상 방문한 환자 비율)</div>
+
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button onclick="showFunnel('f1')" id="fb1" style="padding:6px 14px;border-radius:20px;border:1.5px solid #1F4E79;background:#1F4E79;color:#fff;font-size:12px;cursor:pointer;font-weight:600">1월 (48명)</button>
+        <button onclick="showFunnel('f2')" id="fb2" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer">2월 (41명)</button>
+        <button onclick="showFunnel('f3')" id="fb3" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer">3월 (40명)</button>
+        <button onclick="showFunnel('f4')" id="fb4" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer">4월 (23명)</button>
+      </div>
+
+      <div id="f1" style="display:block">
+        <div style="padding:4px 0">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진 (1회+)</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1F4E79;height:26px;width:100.0%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">48명 (100.0%)</div>
+            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">48명 (100.0%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진 (2회+)</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#185FA5;height:26px;width:64.6%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">31명 (64.6%)</div>
+            <div style="background:#185FA5;height:24px;width:64.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">31명 (64.6%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진 (3회+)</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#378ADD;height:26px;width:50.0%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">24명 (50.0%)</div>
+            <div style="background:#378ADD;height:24px;width:50.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">24명 (50.0%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진 (4회+)</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1D9E75;height:26px;width:41.7%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">20명 (41.7%)</div>
+            <div style="background:#1D9E75;height:24px;width:41.7%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">20명 (41.7%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진 (5회+)</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진(5회+)</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#3B6D11;height:26px;width:31.2%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">15명 (31.2%)</div>
+            <div style="background:#3B6D11;height:24px;width:31.2%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">15명 (31.2%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회 이상</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회+</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#639922;height:26px;width:22.9%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">11명 (22.9%)</div>
+            <div style="background:#639922;height:24px;width:22.9%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">11명 (22.9%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회 이상</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회+</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#BA7517;height:26px;width:20.8%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">10명 (20.8%)</div>
+            <div style="background:#BA7517;height:24px;width:20.8%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">10명 (20.8%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회 이상</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회+</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#EF9F27;height:26px;width:18.8%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">9명 (18.8%)</div>
+            <div style="background:#EF9F27;height:24px;width:18.8%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">9명 (18.8%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회 이상</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회+</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#D85A30;height:26px;width:18.8%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">9명 (18.8%)</div>
+            <div style="background:#D85A30;height:24px;width:18.8%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">9명 (18.8%)</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:85px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회 이상</div>
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회+</div>
           <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#E24B4A;height:26px;width:14.6%;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600;min-width:60px">7명 (14.6%)</div>
+            <div style="background:#E24B4A;height:24px;width:14.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">7명 (14.6%)</div>
           </div>
+        </div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 17명 (35.4%)</span>
+            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 31명 (64.6%)</span>
+          </div>
+          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 이재혁/이용재/문상현 제외(매출현황 없음) | 총 Vs 기준 누적</p>
         </div>
       </div>
-      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
-        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
-          <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 17명 (35.4%)</span>
-          <span style="color:#1D9E75;font-weight:600">2회 이상 방문(재진+): 31명 (64.6%)</span>
-          <span style="color:#1F4E79;font-weight:600">최다내원: 18회 (김재연)</span>
+
+      <div id="f2" style="display:none">
+        <div style="padding:4px 0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">41명 (100.0%)</div>
+          </div>
         </div>
-        <p class="note" style="margin-top:6px">※ 이재혁/이용재/문상현 3명 제외 (매출현황 데이터 없음) | 총 Vs(전체달 방문횟수 합산) 기준</p>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#185FA5;height:24px;width:56.1%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">23명 (56.1%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#378ADD;height:24px;width:31.7%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">13명 (31.7%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#1D9E75;height:24px;width:17.1%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">7명 (17.1%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진(5회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#3B6D11;height:24px;width:14.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">6명 (14.6%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#639922;height:24px;width:14.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">6명 (14.6%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#BA7517;height:24px;width:12.2%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">5명 (12.2%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#EF9F27;height:24px;width:7.3%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">3명 (7.3%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#D85A30;height:24px;width:4.9%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">2명 (4.9%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#E24B4A;height:24px;width:2.4%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">1명 (2.4%)</div>
+          </div>
+        </div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 18명 (43.9%)</span>
+            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 23명 (56.1%)</span>
+          </div>
+          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 매출현황 확인된 41명 기준 | 총 Vs 기준 누적</p>
+        </div>
+      </div>
+
+      <div id="f3" style="display:none">
+        <div style="padding:4px 0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">40명 (100.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#185FA5;height:24px;width:52.5%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">21명 (52.5%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#378ADD;height:24px;width:30.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">12명 (30.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#1D9E75;height:24px;width:25.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">10명 (25.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진(5회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#3B6D11;height:24px;width:15.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">6명 (15.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#639922;height:24px;width:10.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (10.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#BA7517;height:24px;width:10.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (10.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#EF9F27;height:24px;width:10.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (10.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#D85A30;height:24px;width:7.5%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">3명 (7.5%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회+</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#E24B4A;height:24px;width:7.5%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">3명 (7.5%)</div>
+          </div>
+        </div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 19명 (47.5%)</span>
+            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 21명 (52.5%)</span>
+          </div>
+          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 총 Vs 기준 누적 | 4월 이후 데이터 없어 추적 제한</p>
+        </div>
+      </div>
+
+      <div id="f4" style="display:none">
+        <div style="padding:4px 0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">23명 (100.0%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#185FA5;height:24px;width:30.4%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">7명 (30.4%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#378ADD;height:24px;width:17.4%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (17.4%)</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
+          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
+            <div style="background:#1D9E75;height:24px;width:8.7%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">2명 (8.7%)</div>
+          </div>
+        </div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
+            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 16명 (69.6%)</span>
+            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 7명 (30.4%)</span>
+          </div>
+          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 매출현황 확인된 23명 기준 | 4월 13일치로 추적 제한</p>
+        </div>
       </div>
     </div>
+
+    <script>
+    function showFunnel(id) {
+      ['f1','f2','f3','f4'].forEach(function(k) {
+        document.getElementById(k).style.display = k===id ? 'block' : 'none';
+      });
+      ['fb1','fb2','fb3','fb4'].forEach(function(k,i) {
+        var active = 'f'+(i+1) === id;
+        document.getElementById(k).style.background = active ? '#1F4E79' : '#fff';
+        document.getElementById(k).style.color = active ? '#fff' : '#6b7a99';
+        document.getElementById(k).style.borderColor = active ? '#1F4E79' : '#e5e9f0';
+        document.getElementById(k).style.fontWeight = active ? '600' : '400';
+      });
+    }
+    </script>
+
+    v>
 
     <div class="card">
       <div class="card-title">이탈환자 재유치 우선순위</div>
