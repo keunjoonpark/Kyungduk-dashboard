@@ -307,16 +307,19 @@ tr:hover td{background:#f9fafc}
 
 <!-- 주별 분석 -->
 <div class="section" id="tab-weekly">
+
   <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
     <button class="tab-btn active" id="wb1" onclick="showWeek('w1')">1주차 (3/23~3/29)</button>
     <button class="tab-btn" id="wb2" onclick="showWeek('w2')">2주차 (3/30~4/5)</button>
+    <button class="tab-btn" id="wb3" onclick="showWeek('w3')">3주차 (4/6~4/12)</button>
   </div>
 
+  <!-- 1주차 -->
   <div id="w1" style="display:block">
     <div class="metrics">
       <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">149건</div><div class="metric-sub">고유환자 99명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">6.54M</div><div class="metric-sub">6,541,372원</div></div>
-      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">8명</div><div class="metric-sub">5.4%</div></div>
+      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">8명</div><div class="metric-sub">전체의 5.4%</div></div>
       <div class="metric"><div class="metric-label">재초진</div><div class="metric-value" style="color:#BA7517">24명</div><div class="metric-sub">16.1%</div></div>
     </div>
     <div class="grid2">
@@ -327,12 +330,12 @@ tr:hover td{background:#f9fafc}
           <span><span class="leg-dot" style="background:#BA7517"></span>재초진</span>
           <span><span class="leg-dot" style="background:#1D9E75"></span>초진</span>
         </div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-bar" role="img" aria-label="1주차 일별 현황">1주차</canvas></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-bar" role="img" aria-label="1주차">1주차</canvas></div>
       </div>
       <div class="card">
         <div class="card-title">일별 총 진료비 (만원)</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총진료비</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-rev" role="img" aria-label="1주차 진료비">1주차진료비</canvas></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-rev" role="img" aria-label="1주차진료비">1주차진료비</canvas></div>
       </div>
     </div>
     <div class="card">
@@ -344,34 +347,33 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
         <span><span class="leg-dot" style="background:#D85A30"></span>30대이하</span>
       </div>
-      <div class="chart-wrap" style="height:200px"><canvas id="c-w1-age" role="img" aria-label="1주차 연령대">1주차연령</canvas></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-w1-age" role="img" aria-label="1주차연령">1주차연령</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">1주차 일별 상세</div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
-          <tbody>
-            <tr><td>3/23 (일)</td><td>33명</td><td><span class="tag green">3</span></td><td><span class="tag orange">5</span></td><td>25명</td><td>1,534,380원</td></tr>
-            <tr><td>3/24 (월)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">2</span></td><td>5명</td><td>354,498원</td></tr>
-            <tr><td>3/25 (화)</td><td>34명</td><td><span class="tag green">3</span></td><td><span class="tag orange">2</span></td><td>29명</td><td>1,375,842원</td></tr>
-            <tr><td>3/26 (수)</td><td>16명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>11명</td><td>765,060원</td></tr>
-            <tr><td>3/27 (목)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>1,040,210원</td></tr>
-            <tr><td>3/28 (금)</td><td>29명</td><td><span class="tag green">1</span></td><td><span class="tag orange">4</span></td><td>24명</td><td>1,275,524원</td></tr>
-            <tr><td>3/29 (토)</td><td>4명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>4명</td><td>195,858원</td></tr>
-            <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>149건</td><td>8명</td><td>24명</td><td>117명</td><td>6,541,372원</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">※ 재초진: 파일 초진 라벨이지만 이전 방문 이력 있는 환자</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
+        <tbody>
+          <tr><td>3/23 (월)</td><td>33명</td><td><span class="tag green">3</span></td><td><span class="tag orange">5</span></td><td>25명</td><td>1,534,380원</td></tr>
+          <tr><td>3/24 (화)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">2</span></td><td>5명</td><td>354,498원</td></tr>
+          <tr><td>3/25 (수)</td><td>34명</td><td><span class="tag green">3</span></td><td><span class="tag orange">2</span></td><td>29명</td><td>1,375,842원</td></tr>
+          <tr><td>3/26 (목)</td><td>16명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>11명</td><td>765,060원</td></tr>
+          <tr><td>3/27 (금)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>1,040,210원</td></tr>
+          <tr><td>3/28 (토)</td><td>29명</td><td><span class="tag green">1</span></td><td><span class="tag orange">4</span></td><td>24명</td><td>1,275,524원</td></tr>
+          <tr><td>3/29 (일)</td><td>4명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>4명</td><td>195,858원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>149건</td><td>8명</td><td>24명</td><td>117명</td><td>6,541,372원</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">※ 재초진: 파일에 초진으로 기재됐으나 이전 방문 이력 있는 환자</p>
     </div>
   </div>
 
+  <!-- 2주차 -->
   <div id="w2" style="display:none">
     <div class="metrics">
       <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">154건</div><div class="metric-sub">고유환자 98명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">7.12M</div><div class="metric-sub">7,118,936원</div></div>
-      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">9명</div><div class="metric-sub">5.8%</div></div>
+      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">9명</div><div class="metric-sub">전체의 5.8%</div></div>
       <div class="metric"><div class="metric-label">재초진</div><div class="metric-value" style="color:#BA7517">17명</div><div class="metric-sub">11.0%</div></div>
     </div>
     <div class="grid2">
@@ -382,12 +384,12 @@ tr:hover td{background:#f9fafc}
           <span><span class="leg-dot" style="background:#BA7517"></span>재초진</span>
           <span><span class="leg-dot" style="background:#1D9E75"></span>초진</span>
         </div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-bar" role="img" aria-label="2주차 일별 현황">2주차</canvas></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-bar" role="img" aria-label="2주차">2주차</canvas></div>
       </div>
       <div class="card">
         <div class="card-title">일별 총 진료비 (만원)</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총진료비</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-rev" role="img" aria-label="2주차 진료비">2주차진료비</canvas></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-rev" role="img" aria-label="2주차진료비">2주차진료비</canvas></div>
       </div>
     </div>
     <div class="card">
@@ -399,47 +401,98 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
         <span><span class="leg-dot" style="background:#D85A30"></span>30대이하</span>
       </div>
-      <div class="chart-wrap" style="height:200px"><canvas id="c-w2-age" role="img" aria-label="2주차 연령대">2주차연령</canvas></div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-w2-age" role="img" aria-label="2주차연령">2주차연령</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">2주차 일별 상세</div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
-          <tbody>
-            <tr><td>3/30 (일)</td><td>31명</td><td><span class="tag green">2</span></td><td><span class="tag orange">2</span></td><td>27명</td><td>1,325,620원</td></tr>
-            <tr><td>3/31 (월)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>194,410원</td></tr>
-            <tr><td>4/1 (화)</td><td>35명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>30명</td><td>1,603,438원</td></tr>
-            <tr><td>4/2 (수)</td><td>9명</td><td><span class="tag green">1</span></td><td><span class="tag orange">1</span></td><td>7명</td><td>401,508원</td></tr>
-            <tr><td>4/3 (목)</td><td>34명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>26명</td><td>1,381,908원</td></tr>
-            <tr><td>4/4 (금)</td><td>33명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>26명</td><td>1,859,850원</td></tr>
-            <tr><td>4/5 (토)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>352,202원</td></tr>
-            <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>154건</td><td>9명</td><td>17명</td><td>128명</td><td>7,118,936원</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">※ 재초진: 파일 초진 라벨이지만 이전 방문 이력 있는 환자</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
+        <tbody>
+          <tr><td>3/30 (월)</td><td>31명</td><td><span class="tag green">2</span></td><td><span class="tag orange">2</span></td><td>27명</td><td>1,325,620원</td></tr>
+          <tr><td>3/31 (화)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>194,410원</td></tr>
+          <tr><td>4/1 (수)</td><td>35명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>30명</td><td>1,603,438원</td></tr>
+          <tr><td>4/2 (목)</td><td>9명</td><td><span class="tag green">1</span></td><td><span class="tag orange">1</span></td><td>7명</td><td>401,508원</td></tr>
+          <tr><td>4/3 (금)</td><td>34명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>26명</td><td>1,381,908원</td></tr>
+          <tr><td>4/4 (토)</td><td>33명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>26명</td><td>1,859,850원</td></tr>
+          <tr><td>4/5 (일)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>352,202원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>154건</td><td>9명</td><td>17명</td><td>128명</td><td>7,118,936원</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">※ 재초진: 파일에 초진으로 기재됐으나 이전 방문 이력 있는 환자</p>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">주차별 비교</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>구분</th><th>1주차 (3/23~3/29)</th><th>2주차 (3/30~4/5)</th><th>3주차 (4/6~4/12)</th></tr></thead>
+  <!-- 3주차 -->
+  <div id="w3" style="display:none">
+    <div class="metrics">
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">158건</div><div class="metric-sub">고유환자 100명</div></div>
+      <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">6.84M</div><div class="metric-sub">6,836,808원</div></div>
+      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">10명</div><div class="metric-sub">전체의 6.3%</div></div>
+      <div class="metric"><div class="metric-label">재초진</div><div class="metric-value" style="color:#BA7517">18명</div><div class="metric-sub">11.4%</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">일별 초진 / 재초진 / 재진</div>
+        <div class="legend">
+          <span><span class="leg-dot" style="background:#1F4E79"></span>재진</span>
+          <span><span class="leg-dot" style="background:#BA7517"></span>재초진</span>
+          <span><span class="leg-dot" style="background:#1D9E75"></span>초진</span>
+        </div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w3-bar" role="img" aria-label="3주차">3주차</canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">일별 총 진료비 (만원)</div>
+        <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총진료비</span></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w3-rev" role="img" aria-label="3주차진료비">3주차진료비</canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">일별 연령대 분포</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#1F4E79"></span>70대+</span>
+        <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>50대</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
+        <span><span class="leg-dot" style="background:#D85A30"></span>30대이하</span>
+      </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-w3-age" role="img" aria-label="3주차연령">3주차연령</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">3주차 일별 상세</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
         <tbody>
-          <tr style="background:#f4f6f9"><td></td><th>1주차</th><th>2주차</th><th>3주차</th></tr>
-          <tr><td>총 방문건수</td><td>149건</td><td>154건</td><td>158건</td></tr>
-          <tr><td>고유 환자수</td><td>99명</td><td>98명</td><td>100명</td></tr>
-          <tr><td>초진</td><td>8명 (5.4%)</td><td>9명 (5.8%)</td><td>10명 (6.3%)</td></tr>
-          <tr><td>재초진</td><td>24명 (16.1%)</td><td>17명 (11.0%)</td><td>18명 (11.4%)</td></tr>
-          <tr><td>재진</td><td>117명 (78.5%)</td><td>128명 (83.1%)</td><td>130명 (82.3%)</td></tr>
-          <tr><td>총 진료비</td><td>6,541,372원</td><td>7,118,936원</td><td>6,836,808원</td></tr>
-          <tr><td>최다 방문 요일</td><td>수 34명</td><td>수 35명</td><td>월 42명</td></tr>
+          <tr><td>4/6 (월)</td><td>42명</td><td><span class="tag green">2</span></td><td><span class="tag orange">5</span></td><td>35명</td><td>1,677,244원</td></tr>
+          <tr><td>4/7 (화)</td><td>8명</td><td><span class="tag green">2</span></td><td><span class="tag orange">3</span></td><td>3명</td><td>369,180원</td></tr>
+          <tr><td>4/8 (수)</td><td>37명</td><td><span class="tag green">4</span></td><td><span class="tag orange">3</span></td><td>30명</td><td>1,681,222원</td></tr>
+          <tr><td>4/9 (목)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>7명</td><td>340,090원</td></tr>
+          <tr><td>4/10 (금)</td><td>35명</td><td><span class="tag green">2</span></td><td><span class="tag orange">4</span></td><td>29명</td><td>1,376,652원</td></tr>
+          <tr><td>4/11 (토)</td><td>22명</td><td><span class="tag green">0</span></td><td><span class="tag orange">3</span></td><td>19명</td><td>1,025,344원</td></tr>
+          <tr><td>4/12 (일)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>7명</td><td>367,076원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>158건</td><td>10명</td><td>18명</td><td>130명</td><td>6,836,808원</td></tr>
         </tbody>
-      </table>
+      </table></div>
+      <p class="note">※ 재초진: 파일에 초진으로 기재됐으나 이전 방문 이력 있는 환자</p>
     </div>
   </div>
+
+  <!-- 주차 비교 -->
+  <div class="card" style="margin-top:8px">
+    <div class="card-title">주차별 비교</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>구분</th><th>1주차 (3/23~3/29)</th><th>2주차 (3/30~4/5)</th><th>3주차 (4/6~4/12)</th></tr></thead>
+      <tbody>
+        <tr><td>총 방문건수</td><td>149건</td><td>154건</td><td>158건</td></tr>
+        <tr><td>고유 환자수</td><td>99명</td><td>98명</td><td>100명</td></tr>
+        <tr><td>초진</td><td>8명 (5.4%)</td><td>9명 (5.8%)</td><td>10명 (6.3%)</td></tr>
+        <tr><td>재초진</td><td>24명 (16.1%)</td><td>17명 (11.0%)</td><td>18명 (11.4%)</td></tr>
+        <tr><td>재진</td><td>117명 (78.5%)</td><td>128명 (83.1%)</td><td>130명 (82.3%)</td></tr>
+        <tr><td>총 진료비</td><td>6,541,372원</td><td>7,118,936원</td><td>6,836,808원</td></tr>
+        <tr><td>최다 방문 요일</td><td>월 33명</td><td>수 35명</td><td>월 42명</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
 </div>
 
 <!-- 인사이트 -->
@@ -482,10 +535,6 @@ function showWeek(id) {
   renderWeekCharts(id);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-var months = ['1월','2월','3월','4월'];
-var co = {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}};
-
 function renderWeekCharts(id) {
   if (weekChartsRendered[id]) return;
   weekChartsRendered[id] = true;
@@ -526,7 +575,30 @@ function renderWeekCharts(id) {
       {label:'30대이하',data:[6,2,5,1,4,5,1],backgroundColor:'#D85A30'}
     ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
   }
+  if (id==='w3') {
+    var l3=['4/6(월)','4/7(화)','4/8(수)','4/9(목)','4/10(금)','4/11(토)','4/12(일)'];
+    new Chart(document.getElementById('c-w3-bar'),{type:'bar',data:{labels:l3,datasets:[
+      {label:'재진',data:[35,3,30,7,29,19,7],backgroundColor:'#1F4E79'},
+      {label:'재초진',data:[5,3,3,0,4,3,0],backgroundColor:'#BA7517'},
+      {label:'초진',data:[2,2,4,0,2,0,0],backgroundColor:'#1D9E75'}
+    ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
+    new Chart(document.getElementById('c-w3-rev'),{type:'bar',data:{labels:l3,datasets:[
+      {label:'진료비',data:[168,37,168,34,138,103,37],backgroundColor:'#1D9E75'}
+    ]},options:Object.assign({},co2,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
+    new Chart(document.getElementById('c-w3-age'),{type:'bar',data:{labels:l3,datasets:[
+      {label:'70대+',data:[15,1,8,0,10,5,0],backgroundColor:'#1F4E79'},
+      {label:'60대',data:[13,1,11,2,7,5,1],backgroundColor:'#378ADD'},
+      {label:'50대',data:[4,2,8,4,5,4,3],backgroundColor:'#1D9E75'},
+      {label:'40대',data:[3,1,6,1,6,6,2],backgroundColor:'#BA7517'},
+      {label:'30대이하',data:[7,3,4,0,7,2,1],backgroundColor:'#D85A30'}
+    ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
+  }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+var months = ['1월','2월','3월','4월'];
+var co = {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}};
+
 renderWeekCharts('w1');
 
 // 누적 재방문율 퍼널 렌더링
