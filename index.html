@@ -4,15 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>경덕한의원 데이터 대시보드</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f6f9;color:#1a1a2e;min-height:100vh}
 .topbar{background:#1F4E79;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.topbar h1{font-size:18px;font-weight:600;letter-spacing:-0.3px}
+.topbar h1{font-size:18px;font-weight:600}
 .topbar .badge{font-size:12px;background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px}
 .nav{background:#fff;border-bottom:1px solid #e5e9f0;padding:0 24px;display:flex;gap:4px;overflow-x:auto}
-.nav button{padding:14px 18px;border:none;background:none;font-size:13px;color:#6b7a99;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.nav button{padding:14px 16px;border:none;background:none;font-size:13px;color:#6b7a99;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
 .nav button.active{color:#1F4E79;border-bottom-color:#1F4E79;font-weight:600}
 .nav button:hover{color:#1F4E79;background:#f4f6f9}
 .content{padding:24px;max-width:1200px;margin:0 auto}
@@ -26,8 +25,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .metric.red .metric-value{color:#E24B4A}
 .metric.blue .metric-value{color:#1F4E79}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
-@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
 .card{background:#fff;border-radius:10px;padding:20px;border:1px solid #e5e9f0;margin-bottom:16px}
 .card-title{font-size:12px;font-weight:600;color:#6b7a99;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px}
 .chart-wrap{position:relative;width:100%}
@@ -36,7 +34,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:10px 12px;background:#f4f6f9;color:#6b7a99;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #e5e9f0}
+th{text-align:left;padding:10px 12px;background:#f4f6f9;color:#6b7a99;font-weight:600;font-size:11px;text-transform:uppercase;border-bottom:1px solid #e5e9f0}
 td{padding:10px 12px;border-bottom:1px solid #f4f6f9;color:#1a1a2e}
 tr:hover td{background:#f9fafc}
 .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
@@ -44,7 +42,6 @@ tr:hover td{background:#f9fafc}
 .tag.red{background:#FCE4D6;color:#993C1D}
 .tag.blue{background:#E6F1FB;color:#185FA5}
 .tag.orange{background:#FFF2CC;color:#854F0B}
-.funnel-bar{height:32px;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;transition:width .3s}
 .note{font-size:11px;color:#6b7a99;margin-top:8px;font-style:italic}
 .insight-item{padding:14px 16px;border-radius:8px;border-left:3px solid;background:#f9fafc;margin-bottom:10px}
 .insight-item.blue{border-color:#378ADD}
@@ -55,10 +52,12 @@ tr:hover td{background:#f9fafc}
 .insight-title{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
 .insight-desc{font-size:12px;color:#4a5568;line-height:1.6}
 .insight-action{font-size:11px;color:#1F4E79;margin-top:6px;font-weight:600}
+.tab-btn{padding:6px 16px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer;font-weight:400}
+.tab-btn.active{background:#1F4E79;color:#fff;border-color:#1F4E79;font-weight:600}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 </head>
 <body>
-
 <div class="topbar">
   <div>
     <h1>경덕한의원 데이터 대시보드</h1>
@@ -66,47 +65,40 @@ tr:hover td{background:#f9fafc}
   </div>
   <span class="badge">최종 업데이트: 2026.04.13</span>
 </div>
-
 <div class="nav">
   <button class="active" onclick="showTab('overview',this)">종합 현황</button>
   <button onclick="showTab('patients',this)">환자 분석</button>
   <button onclick="showTab('cohort',this)">코호트 분석</button>
   <button onclick="showTab('revenue',this)">수입 분석</button>
   <button onclick="showTab('disease',this)">상병별 분석</button>
+  <button onclick="showTab('weekly',this)">주별 분석</button>
   <button onclick="showTab('insights',this)">인사이트</button>
 </div>
-
 <div class="content">
 
 <!-- 종합 현황 -->
 <div class="section active" id="tab-overview">
   <div class="metrics">
     <div class="metric blue"><div class="metric-label">3월 총 방문</div><div class="metric-value">574회</div><div class="metric-sub">고유환자 268명</div></div>
-    <div class="metric blue"><div class="metric-label">4월 총 방문</div><div class="metric-value">290회</div><div class="metric-sub">고유환자 160명</div></div>
-    <div class="metric green"><div class="metric-label">최고 재진율</div><div class="metric-value">62.7%</div><div class="metric-sub">1월 초진 코호트</div></div>
+    <div class="metric blue"><div class="metric-label">4월 총 방문</div><div class="metric-value">290회</div><div class="metric-sub">고유환자 160명 (13일)</div></div>
+    <div class="metric green"><div class="metric-label">최고 재진율</div><div class="metric-value">64.6%</div><div class="metric-sub">1월 초진 코호트</div></div>
     <div class="metric"><div class="metric-label">누적 총 진료비</div><div class="metric-value">140.6M</div><div class="metric-sub">1~4월 합계</div></div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">월별 방문 현황 (연인원 vs 고유환자)</div>
       <div class="legend">
-        <span><span class="leg-dot" style="background:#1F4E79"></span>연인원(총방문)</span>
+        <span><span class="leg-dot" style="background:#1F4E79"></span>연인원</span>
         <span><span class="leg-dot" style="background:#85B7EB"></span>고유환자</span>
       </div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-visit" role="img" aria-label="월별 연인원 및 고유환자수">방문현황</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-visit" role="img" aria-label="월별 방문현황">방문현황</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">월별 총 진료비 (만원)</div>
       <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총 진료비</span></div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-revenue" role="img" aria-label="월별 총 진료비">진료비</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-revenue" role="img" aria-label="월별 총 진료비">진료비</canvas></div>
     </div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">진료의별 환자수</div>
@@ -116,15 +108,11 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#BA7517"></span>박근</span>
         <span><span class="leg-dot" style="background:#D85A30"></span>박상</span>
       </div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-doctor" role="img" aria-label="진료의별 환자수 추이">진료의별</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-doctor" role="img" aria-label="진료의별 환자수">진료의별</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">연령대별 환자 비중 (1~4월 누적)</div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-age-pie" role="img" aria-label="연령대별 환자 비중">연령별</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-age-pie" role="img" aria-label="연령대별 환자 비중">연령별</canvas></div>
     </div>
   </div>
 </div>
@@ -132,23 +120,20 @@ tr:hover td{background:#f9fafc}
 <!-- 환자 분석 -->
 <div class="section" id="tab-patients">
   <div class="metrics">
-    <div class="metric"><div class="metric-label">1월 고유환자</div><div class="metric-value">226명</div><div class="metric-sub">1인당 2.3회 방문</div></div>
-    <div class="metric"><div class="metric-label">2월 고유환자</div><div class="metric-value">234명</div><div class="metric-sub">1인당 1.9회 방문</div></div>
-    <div class="metric"><div class="metric-label">3월 고유환자</div><div class="metric-value">268명</div><div class="metric-sub">1인당 2.1회 방문</div></div>
-    <div class="metric"><div class="metric-label">4월 고유환자</div><div class="metric-value">160명</div><div class="metric-sub">1인당 1.8회</div></div>
+    <div class="metric"><div class="metric-label">1월 고유환자</div><div class="metric-value">226명</div><div class="metric-sub">1인당 2.3회</div></div>
+    <div class="metric"><div class="metric-label">2월 고유환자</div><div class="metric-value">234명</div><div class="metric-sub">1인당 1.9회</div></div>
+    <div class="metric"><div class="metric-label">3월 고유환자</div><div class="metric-value">268명</div><div class="metric-sub">1인당 2.1회</div></div>
+    <div class="metric"><div class="metric-label">4월 고유환자</div><div class="metric-value">160명</div><div class="metric-sub">1인당 1.8회 (13일)</div></div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">월별 내원횟수별 환자 분포</div>
       <div class="legend">
-        <span><span class="leg-dot" style="background:#E24B4A"></span>1회(이탈위험)</span>
+        <span><span class="leg-dot" style="background:#E24B4A"></span>1회</span>
         <span><span class="leg-dot" style="background:#BA7517"></span>2회</span>
-        <span><span class="leg-dot" style="background:#1D9E75"></span>3회이상</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>3회+</span>
       </div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-loyalty" role="img" aria-label="재방문 충성도">충성도</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-loyalty" role="img" aria-label="충성도">충성도</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">연령대별 월별 환자수</div>
@@ -158,17 +143,14 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#BA7517"></span>50대</span>
         <span><span class="leg-dot" style="background:#D85A30"></span>30대</span>
       </div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-age-line" role="img" aria-label="연령대별 월별 추이">연령추이</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-age-line" role="img" aria-label="연령대별 추이">연령추이</canvas></div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">월별 방문현황 상세 테이블</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>구분</th><th>1월</th><th>2월</th><th>3월</th><th>4월(14일)</th></tr></thead>
+        <thead><tr><th>구분</th><th>1월</th><th>2월</th><th>3월</th><th>4월(13일)</th></tr></thead>
         <tbody>
           <tr><td>연인원(총방문횟수)</td><td>520회</td><td>456회</td><td>574회</td><td>290회</td></tr>
           <tr><td>고유환자수(중복제외)</td><td>226명</td><td>234명</td><td>268명</td><td>160명</td></tr>
@@ -179,324 +161,82 @@ tr:hover td{background:#f9fafc}
         </tbody>
       </table>
     </div>
-    <p class="note">※ 재진율 기준: 총 내원횟수 2회 이상(당월+이후달 합산) | 초진은 매출현황 확인 기준 (1월 48명, 2월 41명, 4월 23명)</p>
+    <p class="note">※ 재진율: 총 내원횟수 2회 이상(당월+이후달 합산) | 초진은 매출현황 확인 기준</p>
   </div>
 </div>
 
 <!-- 코호트 분석 -->
 <div class="section" id="tab-cohort">
   <div class="metrics">
-    <div class="metric green"><div class="metric-label">1월 재진율</div><div class="metric-value">62.7%</div><div class="metric-sub">재진 32명 / 이탈 19명</div></div>
-    <div class="metric green"><div class="metric-label">2월 재진율</div><div class="metric-value">54.8%</div><div class="metric-sub">재진 23명 / 이탈 19명</div></div>
-    <div class="metric orange" style="--c:#BA7517"><div class="metric-label">3월 재진율</div><div class="metric-value" style="color:#BA7517">52.5%</div><div class="metric-sub">재진 21명 / 이탈 19명</div></div>
-    <div class="metric red"><div class="metric-label">4월 재진율</div><div class="metric-value">24.0%</div><div class="metric-sub">14일치 기준 (상승 예상)</div></div>
+    <div class="metric green"><div class="metric-label">1월 재진율</div><div class="metric-value">64.6%</div><div class="metric-sub">재진 31명 / 이탈 17명</div></div>
+    <div class="metric green"><div class="metric-label">2월 재진율</div><div class="metric-value">56.1%</div><div class="metric-sub">재진 23명 / 이탈 18명</div></div>
+    <div class="metric"><div class="metric-label">3월 재진율</div><div class="metric-value" style="color:#BA7517">52.5%</div><div class="metric-sub">재진 21명 / 이탈 19명</div></div>
+    <div class="metric red"><div class="metric-label">4월 재진율</div><div class="metric-value">30.4%</div><div class="metric-sub">13일치 기준</div></div>
   </div>
-
   <div class="card">
     <div class="card-title">월별 초진 코호트 재진율 비교</div>
     <div class="legend">
       <span><span class="leg-dot" style="background:#1D9E75"></span>재진</span>
       <span><span class="leg-dot" style="background:#E24B4A"></span>이탈</span>
     </div>
-    <div class="chart-wrap" style="height:240px">
-      <canvas id="c-cohort-bar" role="img" aria-label="코호트 재진율 비교">코호트</canvas>
-    </div>
+    <div class="chart-wrap" style="height:240px"><canvas id="c-cohort-bar" role="img" aria-label="코호트 재진율">코호트</canvas></div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">월별 초진 누적 재방문율 (해당 횟수 이상 방문한 환자 비율)</div>
-
       <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-        <button onclick="showFunnel('f1')" id="fb1" style="padding:6px 14px;border-radius:20px;border:1.5px solid #1F4E79;background:#1F4E79;color:#fff;font-size:12px;cursor:pointer;font-weight:600">1월 (48명)</button>
-        <button onclick="showFunnel('f2')" id="fb2" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer">2월 (41명)</button>
-        <button onclick="showFunnel('f3')" id="fb3" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer">3월 (40명)</button>
-        <button onclick="showFunnel('f4')" id="fb4" style="padding:6px 14px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer">4월 (23명)</button>
+        <button class="tab-btn active" id="fb1" onclick="showFunnel('f1')">1월 (48명)</button>
+        <button class="tab-btn" id="fb2" onclick="showFunnel('f2')">2월 (41명)</button>
+        <button class="tab-btn" id="fb3" onclick="showFunnel('f3')">3월 (40명)</button>
+        <button class="tab-btn" id="fb4" onclick="showFunnel('f4')">4월 (23명)</button>
       </div>
-
       <div id="f1" style="display:block">
-        <div style="padding:4px 0">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">48명 (100.0%)</div>
-          </div>
+        <div id="funnel1-bars"></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0;font-size:12px">
+          <span style="color:#E24B4A;font-weight:600">1회만(이탈): 17명 (35.4%)</span>&nbsp;&nbsp;
+          <span style="color:#1D9E75;font-weight:600">2회+(재진): 31명 (64.6%)</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#185FA5;height:24px;width:64.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">31명 (64.6%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#378ADD;height:24px;width:50.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">24명 (50.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1D9E75;height:24px;width:41.7%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">20명 (41.7%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진(5회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#3B6D11;height:24px;width:31.2%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">15명 (31.2%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#639922;height:24px;width:22.9%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">11명 (22.9%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#BA7517;height:24px;width:20.8%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">10명 (20.8%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#EF9F27;height:24px;width:18.8%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">9명 (18.8%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#D85A30;height:24px;width:18.8%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">9명 (18.8%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#E24B4A;height:24px;width:14.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">7명 (14.6%)</div>
-          </div>
-        </div>
-        </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
-          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
-            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 17명 (35.4%)</span>
-            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 31명 (64.6%)</span>
-          </div>
-          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 이재혁/이용재/문상현 제외(매출현황 없음) | 총 Vs 기준 누적</p>
-        </div>
+        <p class="note">※ 이재혁/이용재/문상현 제외 | 총 Vs 기준 누적</p>
       </div>
-
       <div id="f2" style="display:none">
-        <div style="padding:4px 0">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">41명 (100.0%)</div>
-          </div>
+        <div id="funnel2-bars"></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0;font-size:12px">
+          <span style="color:#E24B4A;font-weight:600">1회만(이탈): 18명 (43.9%)</span>&nbsp;&nbsp;
+          <span style="color:#1D9E75;font-weight:600">2회+(재진): 23명 (56.1%)</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#185FA5;height:24px;width:56.1%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">23명 (56.1%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#378ADD;height:24px;width:31.7%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">13명 (31.7%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1D9E75;height:24px;width:17.1%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">7명 (17.1%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진(5회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#3B6D11;height:24px;width:14.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">6명 (14.6%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#639922;height:24px;width:14.6%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">6명 (14.6%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#BA7517;height:24px;width:12.2%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">5명 (12.2%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#EF9F27;height:24px;width:7.3%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">3명 (7.3%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#D85A30;height:24px;width:4.9%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">2명 (4.9%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#E24B4A;height:24px;width:2.4%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">1명 (2.4%)</div>
-          </div>
-        </div>
-        </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
-          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
-            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 18명 (43.9%)</span>
-            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 23명 (56.1%)</span>
-          </div>
-          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 매출현황 확인된 41명 기준 | 총 Vs 기준 누적</p>
-        </div>
+        <p class="note">※ 매출현황 확인된 41명 기준</p>
       </div>
-
       <div id="f3" style="display:none">
-        <div style="padding:4px 0">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">40명 (100.0%)</div>
-          </div>
+        <div id="funnel3-bars"></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0;font-size:12px">
+          <span style="color:#E24B4A;font-weight:600">1회만(이탈): 19명 (47.5%)</span>&nbsp;&nbsp;
+          <span style="color:#1D9E75;font-weight:600">2회+(재진): 21명 (52.5%)</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#185FA5;height:24px;width:52.5%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">21명 (52.5%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#378ADD;height:24px;width:30.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">12명 (30.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1D9E75;height:24px;width:25.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">10명 (25.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">오진(5회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#3B6D11;height:24px;width:15.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">6명 (15.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">6회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#639922;height:24px;width:10.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (10.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">7회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#BA7517;height:24px;width:10.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (10.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">8회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#EF9F27;height:24px;width:10.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (10.0%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">9회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#D85A30;height:24px;width:7.5%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">3명 (7.5%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">10회+</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#E24B4A;height:24px;width:7.5%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">3명 (7.5%)</div>
-          </div>
-        </div>
-        </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
-          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
-            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 19명 (47.5%)</span>
-            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 21명 (52.5%)</span>
-          </div>
-          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 총 Vs 기준 누적 | 4월 이후 데이터 없어 추적 제한</p>
-        </div>
+        <p class="note">※ 4월 이후 데이터 없어 추적 제한</p>
       </div>
-
       <div id="f4" style="display:none">
-        <div style="padding:4px 0">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">초진(1회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1F4E79;height:24px;width:100.0%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">23명 (100.0%)</div>
-          </div>
+        <div id="funnel4-bars"></div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0;font-size:12px">
+          <span style="color:#E24B4A;font-weight:600">1회만(이탈): 16명 (69.6%)</span>&nbsp;&nbsp;
+          <span style="color:#1D9E75;font-weight:600">2회+(재진): 7명 (30.4%)</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">재진(2회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#185FA5;height:24px;width:30.4%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">7명 (30.4%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">삼진(3회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#378ADD;height:24px;width:17.4%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">4명 (17.4%)</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-          <div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">사진(4회+)</div>
-          <div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">
-            <div style="background:#1D9E75;height:24px;width:8.7%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">2명 (8.7%)</div>
-          </div>
-        </div>
-        </div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e9f0">
-          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px">
-            <span style="color:#E24B4A;font-weight:600">1회만 방문(이탈): 16명 (69.6%)</span>
-            <span style="color:#1D9E75;font-weight:600">2회 이상(재진+): 7명 (30.4%)</span>
-          </div>
-          <p style="font-size:11px;color:#6b7a99;margin-top:6px;font-style:italic">※ 매출현황 확인된 23명 기준 | 4월 13일치로 추적 제한</p>
-        </div>
+        <p class="note">※ 매출현황 확인된 23명 기준 | 13일치로 추적 제한</p>
       </div>
     </div>
-
-    <script>
-    function showFunnel(id) {
-      ['f1','f2','f3','f4'].forEach(function(k) {
-        document.getElementById(k).style.display = k===id ? 'block' : 'none';
-      });
-      ['fb1','fb2','fb3','fb4'].forEach(function(k,i) {
-        var active = 'f'+(i+1) === id;
-        document.getElementById(k).style.background = active ? '#1F4E79' : '#fff';
-        document.getElementById(k).style.color = active ? '#fff' : '#6b7a99';
-        document.getElementById(k).style.borderColor = active ? '#1F4E79' : '#e5e9f0';
-        document.getElementById(k).style.fontWeight = active ? '600' : '400';
-      });
-    }
-    </script>
-
-
     <div class="card">
       <div class="card-title">이탈환자 재유치 우선순위</div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>초진월</th><th>이탈수</th><th>경과</th><th>우선순위</th></tr></thead>
           <tbody>
-            <tr><td>1월</td><td>19명</td><td>4개월</td><td><span class="tag red">1순위</span></td></tr>
-            <tr><td>2월</td><td>19명</td><td>3개월</td><td><span class="tag red">2순위</span></td></tr>
+            <tr><td>1월</td><td>17명</td><td>4개월</td><td><span class="tag red">1순위</span></td></tr>
+            <tr><td>2월</td><td>18명</td><td>3개월</td><td><span class="tag red">2순위</span></td></tr>
             <tr><td>3월</td><td>19명</td><td>2개월</td><td><span class="tag orange">3순위</span></td></tr>
-            <tr><td>4월</td><td>19명</td><td>1개월</td><td><span class="tag blue">4순위</span></td></tr>
+            <tr><td>4월</td><td>16명</td><td>1개월</td><td><span class="tag blue">4순위</span></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="note">※ 총 76명 이탈 — 재유치 시 월 추가 매출 200~300만원 기대</p>
+      <p class="note">※ 총 70명 이탈 — 재유치 시 월 추가 매출 200~300만원 기대</p>
     </div>
   </div>
 </div>
@@ -507,9 +247,8 @@ tr:hover td{background:#f9fafc}
     <div class="metric"><div class="metric-label">1월 총진료비</div><div class="metric-value">35.7M</div><div class="metric-sub">1인당 157,850원</div></div>
     <div class="metric"><div class="metric-label">2월 총진료비</div><div class="metric-value">42.4M</div><div class="metric-sub">1인당 181,258원</div></div>
     <div class="metric"><div class="metric-label">3월 총진료비</div><div class="metric-value">43.0M</div><div class="metric-sub">1인당 160,622원</div></div>
-    <div class="metric"><div class="metric-label">4월 총진료비</div><div class="metric-value">19.5M</div><div class="metric-sub">14일치 | 환산 41.8M</div></div>
+    <div class="metric"><div class="metric-label">4월 총진료비</div><div class="metric-value">19.5M</div><div class="metric-sub">13일치 | 환산 41.7M</div></div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">보험 vs 비급여 수입 구조</div>
@@ -517,28 +256,23 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#378ADD"></span>보험수입</span>
         <span><span class="leg-dot" style="background:#1D9E75"></span>비급여수입</span>
       </div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-rev-type" role="img" aria-label="수입 구조">수입구조</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-rev-type" role="img" aria-label="수입구조">수입구조</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">환자 1인당 매출 추이</div>
       <div class="legend"><span><span class="leg-dot" style="background:#534AB7"></span>1인당 매출</span></div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="c-per-pt" role="img" aria-label="1인당 매출">1인당매출</canvas>
-      </div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-per-pt" role="img" aria-label="1인당 매출">1인당매출</canvas></div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">수입 현황 상세</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>구분</th><th>1월</th><th>2월</th><th>3월</th><th>4월(14일)</th><th>4월 환산</th></tr></thead>
+        <thead><tr><th>구분</th><th>1월</th><th>2월</th><th>3월</th><th>4월(13일)</th><th>4월 환산</th></tr></thead>
         <tbody>
-          <tr><td><b>총 진료비</b></td><td>35,674,160</td><td>42,414,400</td><td>43,046,670</td><td>19,474,730</td><td>41,731,567</td></tr>
-          <tr><td>보험수입</td><td>22,653,160</td><td>22,067,900</td><td>25,321,570</td><td>13,263,230</td><td>28,421,207</td></tr>
-          <tr><td>비급여수입</td><td>13,021,000</td><td>20,346,500</td><td>17,725,100</td><td>6,211,500</td><td>13,310,357</td></tr>
+          <tr><td><b>총 진료비</b></td><td>35,674,160</td><td>42,414,400</td><td>43,046,670</td><td>19,474,730</td><td>44,942,007</td></tr>
+          <tr><td>보험수입</td><td>22,653,160</td><td>22,067,900</td><td>25,321,570</td><td>13,263,230</td><td>30,607,454</td></tr>
+          <tr><td>비급여수입</td><td>13,021,000</td><td>20,346,500</td><td>17,725,100</td><td>6,211,500</td><td>14,334,231</td></tr>
           <tr><td>보험 비중</td><td><span class="tag blue">63.5%</span></td><td><span class="tag blue">52.0%</span></td><td><span class="tag blue">58.8%</span></td><td><span class="tag blue">68.1%</span></td><td>-</td></tr>
           <tr><td>비급여 비중</td><td>36.5%</td><td><span class="tag green">48.0%</span></td><td>41.2%</td><td>31.9%</td><td>-</td></tr>
           <tr><td>1인당 매출</td><td>157,850원</td><td>181,258원</td><td>160,622원</td><td>121,717원</td><td>-</td></tr>
@@ -552,16 +286,12 @@ tr:hover td{background:#f9fafc}
 <div class="section" id="tab-disease">
   <div class="card">
     <div class="card-title">상위 10개 상병 (1~4월 합계)</div>
-    <div class="chart-wrap" style="height:420px">
-      <canvas id="c-disease" role="img" aria-label="상위 상병별 환자수">상병</canvas>
-    </div>
+    <div class="chart-wrap" style="height:420px"><canvas id="c-disease" role="img" aria-label="상위 상병별">상병</canvas></div>
   </div>
   <div class="grid2">
     <div class="card">
       <div class="card-title">질환 카테고리별 비중</div>
-      <div class="chart-wrap" style="height:250px">
-        <canvas id="c-cat-pie" role="img" aria-label="질환 카테고리 비중">카테고리</canvas>
-      </div>
+      <div class="chart-wrap" style="height:250px"><canvas id="c-cat-pie" role="img" aria-label="카테고리 비중">카테고리</canvas></div>
     </div>
     <div class="card">
       <div class="card-title">주요 상병 월별 추이</div>
@@ -570,137 +300,302 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#1D9E75"></span>기능성소화불량</span>
         <span><span class="leg-dot" style="background:#BA7517"></span>알레르기비염</span>
       </div>
-      <div class="chart-wrap" style="height:250px">
-        <canvas id="c-disease-line" role="img" aria-label="주요 상병 월별 추이">상병추이</canvas>
+      <div class="chart-wrap" style="height:250px"><canvas id="c-disease-line" role="img" aria-label="상병 월별 추이">상병추이</canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- 주별 분석 -->
+<div class="section" id="tab-weekly">
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+    <button class="tab-btn active" id="wb1" onclick="showWeek('w1')">1주차 (3/23~3/29)</button>
+    <button class="tab-btn" id="wb2" onclick="showWeek('w2')">2주차 (3/30~4/5)</button>
+  </div>
+
+  <div id="w1" style="display:block">
+    <div class="metrics">
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">149건</div><div class="metric-sub">고유환자 99명</div></div>
+      <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">6.54M</div><div class="metric-sub">6,541,372원</div></div>
+      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">8명</div><div class="metric-sub">5.4%</div></div>
+      <div class="metric"><div class="metric-label">재초진</div><div class="metric-value" style="color:#BA7517">24명</div><div class="metric-sub">16.1%</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">일별 초진 / 재초진 / 재진</div>
+        <div class="legend">
+          <span><span class="leg-dot" style="background:#1F4E79"></span>재진</span>
+          <span><span class="leg-dot" style="background:#BA7517"></span>재초진</span>
+          <span><span class="leg-dot" style="background:#1D9E75"></span>초진</span>
+        </div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-bar" role="img" aria-label="1주차 일별 현황">1주차</canvas></div>
       </div>
+      <div class="card">
+        <div class="card-title">일별 총 진료비 (만원)</div>
+        <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총진료비</span></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-rev" role="img" aria-label="1주차 진료비">1주차진료비</canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">일별 연령대 분포</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#1F4E79"></span>70대+</span>
+        <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>50대</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
+        <span><span class="leg-dot" style="background:#D85A30"></span>30대이하</span>
+      </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-w1-age" role="img" aria-label="1주차 연령대">1주차연령</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">1주차 일별 상세</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
+          <tbody>
+            <tr><td>3/23 (일)</td><td>33명</td><td><span class="tag green">3</span></td><td><span class="tag orange">5</span></td><td>25명</td><td>1,534,380원</td></tr>
+            <tr><td>3/24 (월)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">2</span></td><td>5명</td><td>354,498원</td></tr>
+            <tr><td>3/25 (화)</td><td>34명</td><td><span class="tag green">3</span></td><td><span class="tag orange">2</span></td><td>29명</td><td>1,375,842원</td></tr>
+            <tr><td>3/26 (수)</td><td>16명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>11명</td><td>765,060원</td></tr>
+            <tr><td>3/27 (목)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>1,040,210원</td></tr>
+            <tr><td>3/28 (금)</td><td>29명</td><td><span class="tag green">1</span></td><td><span class="tag orange">4</span></td><td>24명</td><td>1,275,524원</td></tr>
+            <tr><td>3/29 (토)</td><td>4명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>4명</td><td>195,858원</td></tr>
+            <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>149건</td><td>8명</td><td>24명</td><td>117명</td><td>6,541,372원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">※ 재초진: 파일 초진 라벨이지만 이전 방문 이력 있는 환자</p>
+    </div>
+  </div>
+
+  <div id="w2" style="display:none">
+    <div class="metrics">
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">154건</div><div class="metric-sub">고유환자 98명</div></div>
+      <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">7.12M</div><div class="metric-sub">7,118,936원</div></div>
+      <div class="metric green"><div class="metric-label">초진</div><div class="metric-value">9명</div><div class="metric-sub">5.8%</div></div>
+      <div class="metric"><div class="metric-label">재초진</div><div class="metric-value" style="color:#BA7517">17명</div><div class="metric-sub">11.0%</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">일별 초진 / 재초진 / 재진</div>
+        <div class="legend">
+          <span><span class="leg-dot" style="background:#1F4E79"></span>재진</span>
+          <span><span class="leg-dot" style="background:#BA7517"></span>재초진</span>
+          <span><span class="leg-dot" style="background:#1D9E75"></span>초진</span>
+        </div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-bar" role="img" aria-label="2주차 일별 현황">2주차</canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">일별 총 진료비 (만원)</div>
+        <div class="legend"><span><span class="leg-dot" style="background:#1D9E75"></span>총진료비</span></div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-rev" role="img" aria-label="2주차 진료비">2주차진료비</canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">일별 연령대 분포</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#1F4E79"></span>70대+</span>
+        <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>50대</span>
+        <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
+        <span><span class="leg-dot" style="background:#D85A30"></span>30대이하</span>
+      </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-w2-age" role="img" aria-label="2주차 연령대">2주차연령</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">2주차 일별 상세</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>총진료비</th></tr></thead>
+          <tbody>
+            <tr><td>3/30 (일)</td><td>31명</td><td><span class="tag green">2</span></td><td><span class="tag orange">2</span></td><td>27명</td><td>1,325,620원</td></tr>
+            <tr><td>3/31 (월)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>194,410원</td></tr>
+            <tr><td>4/1 (화)</td><td>35명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>30명</td><td>1,603,438원</td></tr>
+            <tr><td>4/2 (수)</td><td>9명</td><td><span class="tag green">1</span></td><td><span class="tag orange">1</span></td><td>7명</td><td>401,508원</td></tr>
+            <tr><td>4/3 (목)</td><td>34명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>26명</td><td>1,381,908원</td></tr>
+            <tr><td>4/4 (금)</td><td>33명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>26명</td><td>1,859,850원</td></tr>
+            <tr><td>4/5 (토)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>352,202원</td></tr>
+            <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>154건</td><td>9명</td><td>17명</td><td>128명</td><td>7,118,936원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">※ 재초진: 파일 초진 라벨이지만 이전 방문 이력 있는 환자</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">주차별 비교</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>1주차 (3/23~3/29)</th><th>2주차 (3/30~4/5)</th><th>3주차 (4/6~4/12)</th></tr></thead>
+        <tbody>
+          <tr style="background:#f4f6f9"><td></td><th>1주차</th><th>2주차</th><th>3주차</th></tr>
+          <tr><td>총 방문건수</td><td>149건</td><td>154건</td><td>158건</td></tr>
+          <tr><td>고유 환자수</td><td>99명</td><td>98명</td><td>100명</td></tr>
+          <tr><td>초진</td><td>8명 (5.4%)</td><td>9명 (5.8%)</td><td>10명 (6.3%)</td></tr>
+          <tr><td>재초진</td><td>24명 (16.1%)</td><td>17명 (11.0%)</td><td>18명 (11.4%)</td></tr>
+          <tr><td>재진</td><td>117명 (78.5%)</td><td>128명 (83.1%)</td><td>130명 (82.3%)</td></tr>
+          <tr><td>총 진료비</td><td>6,541,372원</td><td>7,118,936원</td><td>6,836,808원</td></tr>
+          <tr><td>최다 방문 요일</td><td>수 34명</td><td>수 35명</td><td>월 42명</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 
 <!-- 인사이트 -->
 <div class="section" id="tab-insights">
-  <div class="insight-item blue">
-    <div class="insight-cat">환자수 추이</div>
-    <div class="insight-title">3월이 최다 방문 — 연인원 574회, 고유환자 268명</div>
-    <div class="insight-desc">1월 520회 → 2월 456회(▼) → 3월 574회(▲) → 4월 290회(14일). 3월 성수기 요인 파악 및 내년 준비 필요.</div>
-    <div class="insight-action">→ 3월 성수기 마케팅 강화 검토</div>
-  </div>
-  <div class="insight-item green">
-    <div class="insight-cat">코호트 재진율</div>
-    <div class="insight-title">재진율 하락 추세 — 1월 62.7% → 3월 52.5%</div>
-    <div class="insight-desc">신규 환자 유입은 유지되고 있으나 재방문율이 점차 하락. 초진 후 재방문 유도 강화가 필요한 시점.</div>
-    <div class="insight-action">→ 초진 후 2~4주 내 문자 발송 시스템 도입 (즉시 실행 가능)</div>
-  </div>
-  <div class="insight-item red">
-    <div class="insight-cat">이탈 관리</div>
-    <div class="insight-title">매월 약 19명 완전 이탈 — 4개월 누적 76명</div>
-    <div class="insight-desc">1~4월 초진 환자 중 한 번도 재방문하지 않은 환자 76명. 재유치 성공률 30%만 달성해도 월 추가 매출 200~300만원 기대.</div>
-    <div class="insight-action">→ 이탈환자 명단 기반 문자/전화 재유치 캠페인</div>
-  </div>
-  <div class="insight-item blue">
-    <div class="insight-cat">매출 구조</div>
-    <div class="insight-title">2월 비급여 비중 48% 최고 — 비급여 확대 기회</div>
-    <div class="insight-desc">보험수입 의존도 낮추고 비급여 프로그램 확대 시 1인당 단가 상승 가능. 2월 1인당 매출 181,258원으로 4개월 중 최고.</div>
-    <div class="insight-action">→ 다이어트·미용침·체형교정 등 비급여 프로그램 기획</div>
-  </div>
-  <div class="insight-item green">
-    <div class="insight-cat">주요 상병</div>
-    <div class="insight-title">경추/목 질환 압도적 1위 — 4개월 합계 약 190건</div>
-    <div class="insight-desc">경추통(척추 여러 부위) 108건 + 경추통(경부) 81건. 전체 상병의 약 30% 차지. 경추 특화 콘텐츠 마케팅 효과 기대.</div>
-    <div class="insight-action">→ SNS 경추 관련 콘텐츠 발행 / 경추 특화 패키지 기획</div>
-  </div>
-  <div class="insight-item orange" style="border-color:#BA7517">
-    <div class="insight-cat">연령별</div>
-    <div class="insight-title">60대+70대 이상 35~40% — 고령층이 핵심 고객</div>
-    <div class="insight-desc">60대 평균 43명/월, 70대 이상 평균 44명/월. 접수 편의·주차 등 고령층 서비스 강화 시 재방문율 제고 가능.</div>
-    <div class="insight-action">→ 어르신 특화 서비스 및 예약 시스템 개선</div>
-  </div>
+  <div class="insight-item blue"><div class="insight-cat">환자수 추이</div><div class="insight-title">3월이 최다 방문 — 연인원 574회, 고유환자 268명</div><div class="insight-desc">1월 520회 → 2월 456회(▼) → 3월 574회(▲) → 4월 290회(13일). 3월 성수기 요인 파악 및 내년 준비 필요.</div><div class="insight-action">→ 3월 성수기 마케팅 강화 검토</div></div>
+  <div class="insight-item green"><div class="insight-cat">코호트 재진율</div><div class="insight-title">재진율 하락 추세 — 1월 64.6% → 3월 52.5%</div><div class="insight-desc">신규 환자 유입은 유지되고 있으나 재방문율이 점차 하락. 초진 후 재방문 유도 강화 필요.</div><div class="insight-action">→ 초진 후 2~4주 내 문자 발송 시스템 도입</div></div>
+  <div class="insight-item red"><div class="insight-cat">이탈 관리</div><div class="insight-title">1~4월 누적 이탈 70명 — 재유치 시 월 200~300만원 기대</div><div class="insight-desc">매월 약 17~19명이 1회 방문 후 완전 이탈. 재유치 성공률 30%만 달성해도 의미있는 매출 회복 가능.</div><div class="insight-action">→ 이탈환자 명단 기반 문자/전화 재유치 캠페인</div></div>
+  <div class="insight-item blue"><div class="insight-cat">매출 구조</div><div class="insight-title">2월 비급여 비중 48% 최고 — 비급여 확대 기회</div><div class="insight-desc">보험수입 의존도 낮추고 비급여 프로그램 확대 시 1인당 단가 상승 가능. 2월 1인당 매출 181,258원으로 최고.</div><div class="insight-action">→ 다이어트·미용침·체형교정 등 비급여 프로그램 기획</div></div>
+  <div class="insight-item green"><div class="insight-cat">주요 상병</div><div class="insight-title">경추/목 질환 압도적 1위 — 4개월 합계 약 190건</div><div class="insight-desc">경추통(척추 여러 부위) 109건 + 경추통(경부) 81건. 전체 상병의 약 30% 차지.</div><div class="insight-action">→ SNS 경추 관련 콘텐츠 발행 / 경추 특화 패키지 기획</div></div>
+  <div class="insight-item orange"><div class="insight-cat">주별 패턴</div><div class="insight-title">화요일·일요일이 최다 방문 — 요일별 인력 배치 검토</div><div class="insight-desc">1·2주차 모두 화요일 34~35명, 일요일 31~33명. 월·토요일은 6~7명 수준. 진료 스케줄 최적화 여지 있음.</div><div class="insight-action">→ 화요일·일요일 집중 인력 배치 / 월요일 단축 진료 검토</div></div>
 </div>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const months = ['1월','2월','3월','4월'];
-
+// 탭/퍼널/주차 전환 함수 - 전역 정의
 function showTab(name, btn) {
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.nav button').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
 }
+function showFunnel(id) {
+  ['f1','f2','f3','f4'].forEach(function(k){
+    document.getElementById(k).style.display = k===id ? 'block' : 'none';
+  });
+  ['fb1','fb2','fb3','fb4'].forEach(function(k,i){
+    var active = 'f'+(i+1)===id;
+    document.getElementById(k).className = 'tab-btn'+(active?' active':'');
+  });
+}
+var weekChartsRendered = {w1:false,w2:false,w3:false};
+function showWeek(id) {
+  ['w1','w2','w3'].forEach(function(k){
+    document.getElementById(k).style.display = k===id ? 'block' : 'none';
+  });
+  [['wb1','w1'],['wb2','w2'],['wb3','w3']].forEach(function(pair){
+    document.getElementById(pair[0]).className = 'tab-btn'+(pair[1]===id?' active':'');
+  });
+  renderWeekCharts(id);
+}
 
-const co = {responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+document.addEventListener('DOMContentLoaded', function() {
+var months = ['1월','2월','3월','4월'];
+var co = {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}};
 
+function renderWeekCharts(id) {
+  if (weekChartsRendered[id]) return;
+  weekChartsRendered[id] = true;
+  var co2 = {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}};
+  if (id==='w1') {
+    var l1=['3/23(월)','3/24(화)','3/25(수)','3/26(목)','3/27(금)','3/28(토)','3/29(일)'];
+    new Chart(document.getElementById('c-w1-bar'),{type:'bar',data:{labels:l1,datasets:[
+      {label:'재진',data:[25,5,29,11,19,24,4],backgroundColor:'#1F4E79'},
+      {label:'재초진',data:[5,2,2,5,6,4,0],backgroundColor:'#BA7517'},
+      {label:'초진',data:[3,0,3,0,1,1,0],backgroundColor:'#1D9E75'}
+    ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
+    new Chart(document.getElementById('c-w1-rev'),{type:'bar',data:{labels:l1,datasets:[
+      {label:'진료비',data:[153,35,138,77,104,128,20],backgroundColor:'#1D9E75'}
+    ]},options:Object.assign({},co2,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
+    new Chart(document.getElementById('c-w1-age'),{type:'bar',data:{labels:l1,datasets:[
+      {label:'70대+',data:[11,0,10,4,8,2,0],backgroundColor:'#1F4E79'},
+      {label:'60대',data:[9,2,7,1,4,5,0],backgroundColor:'#378ADD'},
+      {label:'50대',data:[6,2,6,4,8,10,2],backgroundColor:'#1D9E75'},
+      {label:'40대',data:[2,0,5,1,3,9,1],backgroundColor:'#BA7517'},
+      {label:'30대이하',data:[5,3,6,6,3,3,1],backgroundColor:'#D85A30'}
+    ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
+  }
+  if (id==='w2') {
+    var l2=['3/30(월)','3/31(화)','4/1(수)','4/2(목)','4/3(금)','4/4(토)','4/5(일)'];
+    new Chart(document.getElementById('c-w2-bar'),{type:'bar',data:{labels:l2,datasets:[
+      {label:'재진',data:[27,6,30,7,26,26,6],backgroundColor:'#1F4E79'},
+      {label:'재초진',data:[2,0,5,1,3,6,0],backgroundColor:'#BA7517'},
+      {label:'초진',data:[2,0,0,1,5,1,0],backgroundColor:'#1D9E75'}
+    ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
+    new Chart(document.getElementById('c-w2-rev'),{type:'bar',data:{labels:l2,datasets:[
+      {label:'진료비',data:[133,19,160,40,138,186,35],backgroundColor:'#1D9E75'}
+    ]},options:Object.assign({},co2,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
+    new Chart(document.getElementById('c-w2-age'),{type:'bar',data:{labels:l2,datasets:[
+      {label:'70대+',data:[8,1,10,3,10,8,0],backgroundColor:'#1F4E79'},
+      {label:'60대',data:[8,1,7,1,4,10,1],backgroundColor:'#378ADD'},
+      {label:'50대',data:[5,1,6,3,9,7,1],backgroundColor:'#1D9E75'},
+      {label:'40대',data:[4,1,7,1,7,3,3],backgroundColor:'#BA7517'},
+      {label:'30대이하',data:[6,2,5,1,4,5,1],backgroundColor:'#D85A30'}
+    ]},options:Object.assign({},co2,{scales:{x:{stacked:true},y:{stacked:true}}})});
+  }
+}
+renderWeekCharts('w1');
+
+// 누적 재방문율 퍼널 렌더링
+var colors=['#1F4E79','#185FA5','#378ADD','#1D9E75','#3B6D11','#639922','#BA7517','#EF9F27','#D85A30','#E24B4A'];
+function makeBars(containerId, data, total) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = data.map(function(d,i){
+    var w = Math.round(d[1]/total*100);
+    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">'+
+      '<div style="width:75px;font-size:11px;color:#6b7a99;text-align:right;flex-shrink:0">'+d[0]+'</div>'+
+      '<div style="flex:1;background:#f0f2f5;border-radius:5px;overflow:hidden">'+
+      '<div style="background:'+colors[Math.min(i,9)]+';height:24px;width:'+w+'%;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:11px;font-weight:600;min-width:70px">'+d[1]+'명 ('+d[2]+'%)</div>'+
+      '</div></div>';
+  }).join('');
+}
+makeBars('funnel1-bars',[['초진(1회+)',48,'100'],['재진(2회+)',31,'64.6'],['삼진(3회+)',24,'50.0'],['사진(4회+)',20,'41.7'],['오진(5회+)',15,'31.2'],['6회+',11,'22.9'],['7회+',10,'20.8'],['8회+',9,'18.8'],['9회+',9,'18.8'],['10회+',7,'14.6']],48);
+makeBars('funnel2-bars',[['초진(1회+)',41,'100'],['재진(2회+)',23,'56.1'],['삼진(3회+)',13,'31.7'],['사진(4회+)',7,'17.1'],['오진(5회+)',6,'14.6'],['6회+',6,'14.6'],['7회+',5,'12.2'],['8회+',3,'7.3'],['9회+',2,'4.9'],['10회+',1,'2.4']],41);
+makeBars('funnel3-bars',[['초진(1회+)',40,'100'],['재진(2회+)',21,'52.5'],['삼진(3회+)',12,'30.0'],['사진(4회+)',10,'25.0'],['오진(5회+)',6,'15.0'],['6회+',4,'10.0'],['7회+',4,'10.0'],['8회+',4,'10.0'],['9회+',3,'7.5'],['10회+',3,'7.5']],40);
+makeBars('funnel4-bars',[['초진(1회+)',23,'100'],['재진(2회+)',7,'30.4'],['삼진(3회+)',4,'17.4'],['사진(4회+)',2,'8.7']],23);
+
+// 메인 차트들
 new Chart(document.getElementById('c-visit'),{type:'bar',data:{labels:months,datasets:[
   {label:'연인원',data:[520,456,574,290],backgroundColor:'#1F4E79'},
-  {label:'고유환자',data:[226,234,268,160],backgroundColor:'#85B7EB'},
-]},options:{...co,scales:{x:{stacked:false},y:{stacked:false}}}});
-
+  {label:'고유환자',data:[226,234,268,160],backgroundColor:'#85B7EB'}
+]},options:co});
 new Chart(document.getElementById('c-revenue'),{type:'line',data:{labels:months,datasets:[
-  {label:'총진료비(만원)',data:[3567,4241,4305,1947],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',tension:0.3,fill:true,pointRadius:5},
-]},options:{...co,scales:{y:{ticks:{callback:v=>v+'만'}}}}});
-
+  {label:'진료비',data:[3567,4241,4305,1947],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',tension:0.3,fill:true,pointRadius:5}
+]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
 new Chart(document.getElementById('c-doctor'),{type:'line',data:{labels:months,datasets:[
   {label:'김현',data:[86,82,85,53],borderColor:'#378ADD',tension:0.3,pointRadius:4},
   {label:'박미',data:[0,0,1,4],borderColor:'#1D9E75',tension:0.3,pointRadius:4,borderDash:[4,4]},
   {label:'박근',data:[0,0,15,17],borderColor:'#BA7517',tension:0.3,pointRadius:4},
-  {label:'박상',data:[108,111,122,73],borderColor:'#D85A30',tension:0.3,pointRadius:4},
+  {label:'박상',data:[108,111,122,73],borderColor:'#D85A30',tension:0.3,pointRadius:4}
 ]},options:co});
-
-new Chart(document.getElementById('c-age-pie'),{type:'doughnut',data:{labels:['09세이하','10대','20대','30대','40대','50대','60대','70대+'],datasets:[{
-  data:[7,21,43,98,93,145,171,178],
-  backgroundColor:['#B5D4F4','#85B7EB','#378ADD','#1D9E75','#97C459','#BA7517','#1F4E79','#0C447C'],
-  borderWidth:2,borderColor:'#fff'
-}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:10}}}}});
-
+new Chart(document.getElementById('c-age-pie'),{type:'doughnut',data:{labels:['09세이하','10대','20대','30대','40대','50대','60대','70대+'],datasets:[{data:[7,21,43,98,93,145,171,178],backgroundColor:['#B5D4F4','#85B7EB','#378ADD','#1D9E75','#97C459','#BA7517','#1F4E79','#0C447C'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},boxWidth:10}}}}});
 new Chart(document.getElementById('c-loyalty'),{type:'bar',data:{labels:months,datasets:[
-  {label:'1회(이탈위험)',data:[72,89,99,68],backgroundColor:'#E24B4A'},
+  {label:'1회',data:[72,89,99,68],backgroundColor:'#E24B4A'},
   {label:'2회',data:[46,37,43,44],backgroundColor:'#BA7517'},
-  {label:'3회이상',data:[76,67,81,30],backgroundColor:'#1D9E75'},
-]},options:{...co,scales:{x:{stacked:true},y:{stacked:true}}}});
-
+  {label:'3회+',data:[76,67,81,30],backgroundColor:'#1D9E75'}
+]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
 new Chart(document.getElementById('c-age-line'),{type:'line',data:{labels:months,datasets:[
   {label:'60대',data:[47,51,40,33],borderColor:'#378ADD',tension:0.3,pointRadius:4},
   {label:'70대+',data:[50,35,54,39],borderColor:'#1D9E75',tension:0.3,pointRadius:4},
   {label:'50대',data:[39,36,45,25],borderColor:'#BA7517',tension:0.3,pointRadius:4},
-  {label:'30대',data:[21,27,37,13],borderColor:'#D85A30',tension:0.3,pointRadius:4},
+  {label:'30대',data:[21,27,37,13],borderColor:'#D85A30',tension:0.3,pointRadius:4}
 ]},options:co});
-
-new Chart(document.getElementById('c-cohort-bar'),{type:'bar',data:{labels:['1월 초진(51명)','2월 초진(42명)','3월 초진(40명)','4월 초진(25명)'],datasets:[
-  {label:'재진',data:[32,23,21,6],backgroundColor:'#1D9E75'},
-  {label:'이탈',data:[19,19,19,19],backgroundColor:'#E24B4A'},
-]},options:{...co,indexAxis:'y',scales:{x:{stacked:true},y:{stacked:true}}}});
-
+new Chart(document.getElementById('c-cohort-bar'),{type:'bar',data:{labels:['1월 초진(48명)','2월 초진(41명)','3월 초진(40명)','4월 초진(23명)'],datasets:[
+  {label:'재진',data:[31,23,21,7],backgroundColor:'#1D9E75'},
+  {label:'이탈',data:[17,18,19,16],backgroundColor:'#E24B4A'}
+]},options:Object.assign({},co,{indexAxis:'y',scales:{x:{stacked:true},y:{stacked:true}}})});
 new Chart(document.getElementById('c-rev-type'),{type:'bar',data:{labels:months,datasets:[
   {label:'보험수입',data:[2265,2207,2532,1326],backgroundColor:'#378ADD'},
-  {label:'비급여수입',data:[1302,2035,1773,621],backgroundColor:'#1D9E75'},
-]},options:{...co,scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v+'만'}}}}});
-
+  {label:'비급여수입',data:[1302,2035,1773,621],backgroundColor:'#1D9E75'}
+]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
 new Chart(document.getElementById('c-per-pt'),{type:'line',data:{labels:months,datasets:[
-  {label:'1인당 매출',data:[157850,181258,160622,121717],borderColor:'#534AB7',backgroundColor:'rgba(83,74,183,0.08)',tension:0.3,fill:true,pointRadius:5},
-]},options:{...co,scales:{y:{ticks:{callback:v=>Math.round(v/10000)+'만'}}}}});
-
+  {label:'1인당',data:[157850,181258,160622,121717],borderColor:'#534AB7',backgroundColor:'rgba(83,74,183,0.08)',tension:0.3,fill:true,pointRadius:5}
+]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return Math.round(v/10000)+'만'}}}}})});
 new Chart(document.getElementById('c-disease'),{type:'bar',data:{
-  labels:['경추통(척추)','경추통(경부)','기능성소화불량','기타알레르기비염','아래허리긴장(요천)','요통(요추)','요통(요천)','경추의염좌','회전근개증후군','기타등통증(경흉)'],
-  datasets:[{label:'합계',data:[109,81,74,56,51,40,47,30,38,44],
-    backgroundColor:['#1F4E79','#1F4E79','#1D9E75','#BA7517','#378ADD','#378ADD','#378ADD','#85B7EB','#D85A30','#85B7EB'],
-  }]
-},options:{...co,indexAxis:'y',scales:{x:{beginAtZero:true}}}});
-
-new Chart(document.getElementById('c-cat-pie'),{type:'doughnut',data:{
-  labels:['경추/목','요통/허리','소화기','알레르기비염','좌골신경통','기타등통증','무릎/발목','어깨','기타'],
-  datasets:[{data:[190,180,74,56,46,44,38,35,40],
-    backgroundColor:['#1F4E79','#378ADD','#1D9E75','#BA7517','#85B7EB','#B5D4F4','#D85A30','#E2EFDA','#D3D1C7'],
-    borderWidth:2,borderColor:'#fff'
-  }]
-},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
-
+  labels:['경추통(척추)','경추통(경부)','기능성소화불량','기타알레르기비염','아래허리긴장(요천)','요통(요천)','요통(요추)','경추의염좌','기타등통증(경흉)','회전근개증후군'],
+  datasets:[{label:'합계',data:[109,81,74,56,51,47,40,30,44,38],backgroundColor:['#1F4E79','#1F4E79','#1D9E75','#BA7517','#378ADD','#378ADD','#378ADD','#85B7EB','#85B7EB','#D85A30']}]
+},options:Object.assign({},co,{indexAxis:'y',scales:{x:{beginAtZero:true}}})});
+new Chart(document.getElementById('c-cat-pie'),{type:'doughnut',data:{labels:['경추/목','요통/허리','소화기','알레르기비염','좌골신경통','기타등통증','무릎/발목','어깨','기타'],datasets:[{data:[190,180,74,56,46,44,38,35,40],backgroundColor:['#1F4E79','#378ADD','#1D9E75','#BA7517','#85B7EB','#B5D4F4','#D85A30','#E2EFDA','#D3D1C7'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
 new Chart(document.getElementById('c-disease-line'),{type:'line',data:{labels:months,datasets:[
-  {label:'경추통(척추여러부위)',data:[37,29,29,14],borderColor:'#378ADD',tension:0.3,pointRadius:4},
+  {label:'경추통(척추)',data:[37,29,29,14],borderColor:'#378ADD',tension:0.3,pointRadius:4},
   {label:'기능성소화불량',data:[19,20,22,14],borderColor:'#1D9E75',tension:0.3,pointRadius:4},
-  {label:'기타알레르기비염',data:[10,21,16,9],borderColor:'#BA7517',tension:0.3,pointRadius:4},
+  {label:'알레르기비염',data:[10,21,16,9],borderColor:'#BA7517',tension:0.3,pointRadius:4}
 ]},options:co});
+}); // DOMContentLoaded
 </script>
 </body>
 </html>
