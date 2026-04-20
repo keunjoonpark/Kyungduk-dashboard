@@ -142,6 +142,35 @@ tr:hover td{background:#f9fafc}
     <p class="note">※ 재초진: 초진 90일 이후 재내원 | 재초진으로 분류된 환자의 이후 내원은 재진으로 카운팅</p>
   </div>
 
+
+  <!-- 비급여 상세 -->
+  <div class="card">
+    <div class="card-title">비급여 수입 상세 (4주 누적 14,506,500원)</div>
+    <div class="grid2">
+      <div>
+        <div class="chart-wrap" style="height:220px"><canvas id="c-nv-pie"></canvas></div>
+      </div>
+      <div>
+        <div class="table-wrap" style="margin-top:8px"><table>
+          <thead><tr><th>항목</th><th>1주차</th><th>2주차</th><th>3주차</th><th>4주차</th><th>누적</th><th>비중</th></tr></thead>
+          <tbody>
+            <tr><td>비급여 첩약</td><td>1,440,000</td><td>3,605,000</td><td>1,122,000</td><td>4,732,000</td><td><b>10,899,000원</b></td><td><b>75.1%</b></td></tr>
+            <tr><td>기타비급여</td><td>725,000</td><td>545,000</td><td>963,500</td><td>314,000</td><td><b>2,547,500원</b></td><td><b>17.6%</b></td></tr>
+            <tr><td>태반약침</td><td>0</td><td>0</td><td>730,000</td><td>0</td><td><b>730,000원</b></td><td><b>5.0%</b></td></tr>
+            <tr><td>무통약침</td><td>0</td><td>20,000</td><td>230,000</td><td>80,000</td><td><b>330,000원</b></td><td><b>2.3%</b></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="chart-wrap" style="height:200px;margin-top:16px"><canvas id="c-nv-bar"></canvas></div>
+    <div class="legend" style="margin-top:8px">
+      <span><span class="leg-dot" style="background:#378ADD"></span>비급여첩약</span>
+      <span><span class="leg-dot" style="background:#BA7517"></span>태반약침</span>
+      <span><span class="leg-dot" style="background:#D85A30"></span>무통약침</span>
+      <span><span class="leg-dot" style="background:#B5D4F4"></span>기타비급여</span>
+    </div>
+  </div>
+
   <!-- 추나 섹션 -->
   <div class="card">
     <div class="card-title">추나 치료 현황 (건수 기준)</div>
@@ -504,7 +533,7 @@ tr:hover td{background:#f9fafc}
   <div class="insight-item orange">
     <div class="insight-cat">자보 수입</div>
     <div class="insight-title">자보 수입 4주 누적 1,471,579원 — 3주차 최고 (5.2%)</div>
-    <div class="insight-desc">3주차 자보 535,108원으로 비중 5.2%까지 상승. 자보 환자(김태원·박미영·이혜선) 꾸준히 내원 중. 자보추나도 4주간 6회 실시.</div>
+    <div class="insight-desc">3주차 자보 535,108원으로 비중 5.2%까지 상승. 자보 환자 꾸준히 내원 중. 자보추나도 4주간 6회 실시.</div>
     <div class="insight-action">→ 자보 환자 관리 지속</div>
   </div>
   <div class="insight-item red">
@@ -609,6 +638,21 @@ document.addEventListener('DOMContentLoaded',function(){
     labels:['보험수입 62.5%','비급여 34.1%','자보 3.5%'],
     datasets:[{data:[26631,14507,1472],backgroundColor:['#1F4E79','#BA7517','#1D9E75'],borderWidth:2,borderColor:'#fff'}]
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}}}});
+
+  new Chart(document.getElementById('c-nv-pie'),{type:'doughnut',data:{
+    labels:['비급여첩약 75.1%','기타비급여 17.6%','태반약침 5.0%','무통약침 2.3%'],
+    datasets:[{data:[10899000,2547500,730000,330000],
+      backgroundColor:['#378ADD','#B5D4F4','#BA7517','#D85A30'],
+      borderWidth:2,borderColor:'#fff'}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
+
+  new Chart(document.getElementById('c-nv-bar'),{type:'bar',data:{labels:wks,datasets:[
+    {label:'비급여첩약',data:[144,361,112,473],backgroundColor:'#378ADD'},
+    {label:'태반약침',data:[0,0,73,0],backgroundColor:'#BA7517'},
+    {label:'무통약침',data:[0,2,23,8],backgroundColor:'#D85A30'},
+    {label:'기타비급여',data:[73,55,96,31],backgroundColor:'#B5D4F4'}
+  ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
+
   renderWeekCharts('w1');
 });
 </script>
