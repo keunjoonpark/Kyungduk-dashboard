@@ -58,6 +58,11 @@ tr:hover td{background:#f9fafc}
 .chuna-item{background:#f4f6f9;border-radius:8px;padding:14px;text-align:center}
 .chuna-num{font-size:24px;font-weight:700;color:#1F4E79}
 .chuna-label{font-size:11px;color:#6b7a99;margin-top:4px}
+.age-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+.age-label{width:52px;color:#6b7a99;text-align:right;flex-shrink:0}
+.age-track{flex:1;background:#f0f2f5;border-radius:4px;height:14px;overflow:hidden}
+.age-fill{height:100%;border-radius:4px;background:#1F4E79;transition:width .3s}
+.age-count{width:36px;color:#6b7a99;font-size:11px}
 </style>
 </head>
 <body>
@@ -78,7 +83,7 @@ tr:hover td{background:#f9fafc}
 <!-- ══ 종합 현황 ══ -->
 <div class="section active" id="tab-overview">
   <div class="metrics">
-    <div class="metric blue"><div class="metric-label">4주 총 방문</div><div class="metric-value">627명</div><div class="metric-sub">3/23~4/19 (수입지출장 기준)</div></div>
+    <div class="metric blue"><div class="metric-label">4주 총 방문</div><div class="metric-value">627명</div><div class="metric-sub">고유환자 250명</div></div>
     <div class="metric blue"><div class="metric-label">주 평균 일평균</div><div class="metric-value">22.4명</div><div class="metric-sub">최고 4주차 24.3명</div></div>
     <div class="metric green"><div class="metric-label">4주 총 진료비</div><div class="metric-value">42.6M</div><div class="metric-sub">자보 포함</div></div>
     <div class="metric"><div class="metric-label">4주 순수입</div><div class="metric-value">39.9M</div><div class="metric-sub">지출 2.64M 제외</div></div>
@@ -125,10 +130,11 @@ tr:hover td{background:#f9fafc}
       <tbody>
         <tr><td>총 방문</td><td>152명</td><td>147명</td><td>158명</td><td>170명</td><td><b>627명</b></td></tr>
         <tr><td>일평균</td><td>21.7명</td><td>21.0명</td><td>22.6명</td><td>24.3명</td><td><b>22.4명</b></td></tr>
-        <tr><td>초진</td><td>7명</td><td>9명</td><td>10명</td><td>8명</td><td><b>34명</b></td></tr>
-        <tr><td>재초진</td><td>25명</td><td>17명</td><td>17명</td><td>28명</td><td><b>87명</b></td></tr>
+        <tr><td>초진</td><td>7명</td><td>11명</td><td>14명</td><td>13명</td><td><b>45명</b></td></tr>
+        <tr><td>재초진</td><td>29명</td><td>19명</td><td>17명</td><td>35명</td><td><b>100명</b></td></tr>
         <tr><td>재진</td><td>104명</td><td>108명</td><td>114명</td><td>112명</td><td><b>438명</b></td></tr>
         <tr><td>첩약보험</td><td>8명</td><td>15명</td><td>9명</td><td>7명</td><td><b>39명</b></td></tr>
+        <tr><td>고유 환자 수</td><td>102명</td><td>102명</td><td>105명</td><td>116명</td><td><b>250명</b></td></tr>
         <tr><td>총 진료비</td><td>8,684,682원</td><td>11,534,436원</td><td>10,272,278원</td><td>12,153,607원</td><td><b>42,644,003원</b></td></tr>
         <tr><td>보험수입</td><td>6,300,610원 (72.5%)</td><td>7,050,900원 (61.1%)</td><td>6,691,670원 (65.1%)</td><td>6,587,280원 (54.2%)</td><td><b>26,630,460원 (62.5%)</b></td></tr>
         <tr><td>비급여</td><td>2,165,000원 (24.9%)</td><td>4,298,600원 (37.3%)</td><td>3,045,500원 (29.6%)</td><td>5,126,000원 (42.2%)</td><td><b>14,635,100원 (34.3%)</b></td></tr>
@@ -167,6 +173,42 @@ tr:hover td{background:#f9fafc}
     </div>
   </div>
 
+
+  <!-- 연령대 분포 -->
+  <div class="card">
+    <div class="card-title">연령대 분포 (4주 고유 환자 230명 기준)</div>
+    <div class="grid2">
+      <div>
+        <div class="chart-wrap" style="height:240px"><canvas id="c-age-pie"></canvas></div>
+      </div>
+      <div>
+        <div style="padding-top:4px">
+          <div class="age-bar"><span class="age-label">10세미만</span><div class="age-track"><div class="age-fill" style="width:0.9%"></div></div><span class="age-count">2명</span></div>
+          <div class="age-bar"><span class="age-label">10대</span><div class="age-track"><div class="age-fill" style="width:3.9%"></div></div><span class="age-count">9명</span></div>
+          <div class="age-bar"><span class="age-label">20대</span><div class="age-track"><div class="age-fill" style="width:4.3%"></div></div><span class="age-count">10명</span></div>
+          <div class="age-bar"><span class="age-label">30대</span><div class="age-track"><div class="age-fill" style="width:11.7%"></div></div><span class="age-count">27명</span></div>
+          <div class="age-bar"><span class="age-label">40대</span><div class="age-track"><div class="age-fill" style="width:14.3%"></div></div><span class="age-count">33명</span></div>
+          <div class="age-bar"><span class="age-label">50대</span><div class="age-track"><div class="age-fill" style="width:20.9%;background:#1D9E75"></div></div><span class="age-count">48명</span></div>
+          <div class="age-bar"><span class="age-label">60대</span><div class="age-track"><div class="age-fill" style="width:19.1%;background:#378ADD"></div></div><span class="age-count">44명</span></div>
+          <div class="age-bar"><span class="age-label">70대</span><div class="age-track"><div class="age-fill" style="width:16.1%;background:#85B7EB"></div></div><span class="age-count">37명</span></div>
+          <div class="age-bar"><span class="age-label">80대</span><div class="age-track"><div class="age-fill" style="width:5.7%;background:#B5D4F4"></div></div><span class="age-count">13명</span></div>
+          <div class="age-bar"><span class="age-label">90대</span><div class="age-track"><div class="age-fill" style="width:0.4%;background:#e5e9f0"></div></div><span class="age-count">1명</span></div>
+        </div>
+        <p class="note" style="margin-top:8px">※ 4주간 방문한 고유 환자 기준 | 50·60대가 전체의 40%</p>
+      </div>
+    </div>
+    <div class="chart-wrap" style="height:200px;margin-top:16px"><canvas id="c-age-bar"></canvas></div>
+    <div class="legend" style="margin-top:8px">
+      <span><span class="leg-dot" style="background:#1F4E79"></span>50대</span>
+      <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
+      <span><span class="leg-dot" style="background:#85B7EB"></span>70대</span>
+      <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
+      <span><span class="leg-dot" style="background:#1D9E75"></span>30대</span>
+      <span><span class="leg-dot" style="background:#B5D4F4"></span>기타</span>
+    </div>
+    <p class="note">※ 주차별 막대: 해당 주 방문 환자 기준 (일별청구현황 데이터)</p>
+  </div>
+
   <!-- 추나 -->
   <div class="card">
     <div class="card-title">추나 치료 현황 (건수 기준)</div>
@@ -200,10 +242,10 @@ tr:hover td{background:#f9fafc}
   <!-- 1주차 -->
   <div id="w1" style="display:block">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">152명</div><div class="metric-sub">일평균 21.7명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">152명</div><div class="metric-sub">일평균 21.7명 / 고유 102명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">8.68M</div><div class="metric-sub">자보 포함</div></div>
-      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">7명</div><div class="metric-sub">재초진 25명</div></div>
-      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">104명</div><div class="metric-sub">73.8%</div></div>
+      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">7명</div><div class="metric-sub">재초진 29명</div></div>
+      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">104명</div><div class="metric-sub">72.2%</div></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -232,10 +274,10 @@ tr:hover td{background:#f9fafc}
           <tr><td>3/27 (금)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>-</td><td>1,244,610원</td></tr>
           <tr><td>3/28 (토)</td><td>29명</td><td><span class="tag green">1</span></td><td><span class="tag orange">4</span></td><td>21명</td><td>2명</td><td>1,978,720원</td></tr>
           <tr><td>3/29 (일)</td><td>4명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>3명</td><td>-</td><td>195,850원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>152명</td><td>7명</td><td>25명</td><td>104명</td><td>8명</td><td>8,465,610원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>152명</td><td>7명</td><td>29명</td><td>104명</td><td>8명</td><td>8,465,610원</td></tr>
         </tbody>
       </table></div>
-      <p class="note">※ 총방문 = 고유 환자 수 (첩약보험 환자 중복 제거) | 초진: 강선희·김미선·김용진(3/23), 김정은·김정이(3/25), 정지우(3/27), CHEN(3/28)</p>
+      <p class="note">※ 수입지출장 No. 기준 총방문 | 초진: 강선희·김미선·김용진(3/23), 김정은·김정이(3/25), 정지우(3/27), CHEN(3/28) | 비급여 재초진 포함</p>
     </div>
     <div class="grid2">
       <div class="card">
@@ -263,14 +305,33 @@ tr:hover td{background:#f9fafc}
         </tbody></table></div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-title">연령대 분포</div>
+      <div class="grid2">
+        <div class="chart-wrap" style="height:180px"><canvas id="c-w1-age"></canvas></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>연령대</th><th>방문</th><th>비중</th></tr></thead>
+          <tbody><tr><td>10세미만</td><td>1명</td><td>0.7%</td></tr>
+<tr><td>10대</td><td>5명</td><td>3.5%</td></tr>
+<tr><td>20대</td><td>5명</td><td>3.5%</td></tr>
+<tr><td>30대</td><td>13명</td><td>9.2%</td></tr>
+<tr><td>40대</td><td>19명</td><td>13.5%</td></tr>
+<tr><td>50대</td><td>39명</td><td>27.7%</td></tr>
+<tr><td>60대</td><td>27명</td><td>19.1%</td></tr>
+<tr><td>70대</td><td>26명</td><td>18.4%</td></tr>
+<tr><td>80대</td><td>6명</td><td>4.3%</td></tr>
+</tbody>
+        </table></div>
+      </div>
+    </div>
   </div>
 
   <!-- 2주차 -->
   <div id="w2" style="display:none">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">147명</div><div class="metric-sub">일평균 21.0명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">147명</div><div class="metric-sub">일평균 21.0명 / 고유 102명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">11.53M</div><div class="metric-sub">자보 포함</div></div>
-      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">9명</div><div class="metric-sub">재초진 17명</div></div>
+      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">11명</div><div class="metric-sub">재초진 19명</div></div>
       <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">108명</div><div class="metric-sub">78.3%</div></div>
     </div>
     <div class="grid2">
@@ -300,7 +361,7 @@ tr:hover td{background:#f9fafc}
           <tr><td>4/3 (금)</td><td>35명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>24명</td><td>1명</td><td>2,761,900원</td></tr>
           <tr><td>4/4 (토)</td><td>28명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>7명</td><td>2,419,950원</td></tr>
           <tr><td>4/5 (일)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>4명</td><td>-</td><td>352,190원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>147명</td><td>9명</td><td>17명</td><td>108명</td><td>15명</td><td>11,220,900원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>147명</td><td>11명</td><td>19명</td><td>108명</td><td>15명</td><td>11,220,900원</td></tr>
         </tbody>
       </table></div>
       <p class="note">※ 초진: 고정원·이다례(3/30), 이기택(4/2), 노혜미·민지유·박채영·이명연·이재식(4/3), 최호선(4/4)</p>
@@ -331,14 +392,34 @@ tr:hover td{background:#f9fafc}
         </tbody></table></div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-title">연령대 분포</div>
+      <div class="grid2">
+        <div class="chart-wrap" style="height:180px"><canvas id="c-w2-age"></canvas></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>연령대</th><th>방문</th><th>비중</th></tr></thead>
+          <tbody><tr><td>10세미만</td><td>1명</td><td>0.7%</td></tr>
+<tr><td>10대</td><td>2명</td><td>1.4%</td></tr>
+<tr><td>20대</td><td>2명</td><td>1.4%</td></tr>
+<tr><td>30대</td><td>15명</td><td>10.8%</td></tr>
+<tr><td>40대</td><td>24명</td><td>17.3%</td></tr>
+<tr><td>50대</td><td>32명</td><td>23.0%</td></tr>
+<tr><td>60대</td><td>30명</td><td>21.6%</td></tr>
+<tr><td>70대</td><td>24명</td><td>17.3%</td></tr>
+<tr><td>80대</td><td>8명</td><td>5.8%</td></tr>
+<tr><td>90대</td><td>1명</td><td>0.7%</td></tr>
+</tbody>
+        </table></div>
+      </div>
+    </div>
   </div>
 
   <!-- 3주차 -->
   <div id="w3" style="display:none">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">158명</div><div class="metric-sub">일평균 22.6명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">158명</div><div class="metric-sub">일평균 22.6명 / 고유 105명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">10.27M</div><div class="metric-sub">자보 포함</div></div>
-      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">10명</div><div class="metric-sub">재초진 17명</div></div>
+      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">14명</div><div class="metric-sub">재초진 17명</div></div>
       <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">114명</div><div class="metric-sub">76.5%</div></div>
     </div>
     <div class="grid2">
@@ -368,7 +449,7 @@ tr:hover td{background:#f9fafc}
           <tr><td>4/10 (금)</td><td>38명</td><td><span class="tag green">2</span></td><td><span class="tag orange">4</span></td><td>26명</td><td>1명</td><td>2,528,640원</td></tr>
           <tr><td>4/11 (토)</td><td>22명</td><td><span class="tag green">0</span></td><td><span class="tag orange">3</span></td><td>16명</td><td>2명</td><td>1,579,840원</td></tr>
           <tr><td>4/12 (일)</td><td>8명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>5명</td><td>-</td><td>522,820원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>158명</td><td>10명</td><td>17명</td><td>114명</td><td>9명</td><td>9,737,170원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>158명</td><td>14명</td><td>17명</td><td>114명</td><td>9명</td><td>9,737,170원</td></tr>
         </tbody>
       </table></div>
       <p class="note">※ 초진: 엄기문·정홍주·이혜선(4/6), 김진오·김혜성(4/7), 국주옥·김원균·이소율·황준훈(4/8), Shan·최용원(4/10)</p>
@@ -399,14 +480,33 @@ tr:hover td{background:#f9fafc}
         </tbody></table></div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-title">연령대 분포</div>
+      <div class="grid2">
+        <div class="chart-wrap" style="height:180px"><canvas id="c-w3-age"></canvas></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>연령대</th><th>방문</th><th>비중</th></tr></thead>
+          <tbody><tr><td>10세미만</td><td>1명</td><td>0.9%</td></tr>
+<tr><td>10대</td><td>4명</td><td>3.5%</td></tr>
+<tr><td>20대</td><td>3명</td><td>2.6%</td></tr>
+<tr><td>30대</td><td>6명</td><td>5.2%</td></tr>
+<tr><td>40대</td><td>18명</td><td>15.7%</td></tr>
+<tr><td>50대</td><td>27명</td><td>23.5%</td></tr>
+<tr><td>60대</td><td>32명</td><td>27.8%</td></tr>
+<tr><td>70대</td><td>16명</td><td>13.9%</td></tr>
+<tr><td>80대</td><td>8명</td><td>7.0%</td></tr>
+</tbody>
+        </table></div>
+      </div>
+    </div>
   </div>
 
   <!-- 4주차 -->
   <div id="w4" style="display:none">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">170명</div><div class="metric-sub">일평균 24.3명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">170명</div><div class="metric-sub">일평균 24.3명 / 고유 116명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">12.15M</div><div class="metric-sub">자보 포함</div></div>
-      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">8명</div><div class="metric-sub">재초진 28명</div></div>
+      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">13명</div><div class="metric-sub">재초진 35명</div></div>
       <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">112명</div><div class="metric-sub">71.8%</div></div>
     </div>
     <div class="grid2">
@@ -436,7 +536,7 @@ tr:hover td{background:#f9fafc}
           <tr><td>4/17 (금)</td><td>41명</td><td><span class="tag green">2</span></td><td><span class="tag orange">5</span></td><td>27명</td><td>2명</td><td>3,410,230원</td></tr>
           <tr><td>4/18 (토)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">2</span></td><td>22명</td><td>2명</td><td>1,752,140원</td></tr>
           <tr><td>4/19 (일)</td><td>9명</td><td><span class="tag green">0</span></td><td><span class="tag orange">1</span></td><td>6명</td><td>-</td><td>634,270원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>170명</td><td>8명</td><td>28명</td><td>112명</td><td>7명</td><td>11,713,280원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>170명</td><td>13명</td><td>35명</td><td>112명</td><td>7명</td><td>11,713,280원</td></tr>
         </tbody>
       </table></div>
       <p class="note">※ 초진: 이정본·유지선·정회승·조준우·최준경·송주상·송하경·김형석</p>
@@ -467,6 +567,26 @@ tr:hover td{background:#f9fafc}
         </tbody></table></div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-title">연령대 분포</div>
+      <div class="grid2">
+        <div class="chart-wrap" style="height:180px"><canvas id="c-w4-age"></canvas></div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>연령대</th><th>방문</th><th>비중</th></tr></thead>
+          <tbody><tr><td>10세미만</td><td>1명</td><td>0.6%</td></tr>
+<tr><td>10대</td><td>2명</td><td>1.3%</td></tr>
+<tr><td>20대</td><td>4명</td><td>2.6%</td></tr>
+<tr><td>30대</td><td>19명</td><td>12.2%</td></tr>
+<tr><td>40대</td><td>20명</td><td>12.8%</td></tr>
+<tr><td>50대</td><td>37명</td><td>23.7%</td></tr>
+<tr><td>60대</td><td>29명</td><td>18.6%</td></tr>
+<tr><td>70대</td><td>30명</td><td>19.2%</td></tr>
+<tr><td>80대</td><td>13명</td><td>8.3%</td></tr>
+<tr><td>90대</td><td>1명</td><td>0.6%</td></tr>
+</tbody>
+        </table></div>
+      </div>
+    </div>
   </div>
 
   <!-- 주차 비교 -->
@@ -476,10 +596,11 @@ tr:hover td{background:#f9fafc}
       <thead><tr><th>구분</th><th>1주차</th><th>2주차</th><th>3주차</th><th>4주차</th></tr></thead>
       <tbody>
         <tr><td>총 방문</td><td>152명</td><td>147명</td><td>158명</td><td>170명</td></tr>
+        <tr><td>고유 환자</td><td>102명</td><td>102명</td><td>105명</td><td>116명</td></tr>
         <tr><td>일평균</td><td>21.7명</td><td>21.0명</td><td>22.6명</td><td>24.3명</td></tr>
-        <tr><td>초진</td><td>7명 (5.0%)</td><td>9명 (6.5%)</td><td>10명 (6.7%)</td><td>8명 (5.1%)</td></tr>
-        <tr><td>재초진</td><td>25명 (17.7%)</td><td>17명 (12.3%)</td><td>17명 (11.4%)</td><td>28명 (17.9%)</td></tr>
-        <tr><td>재진</td><td>104명 (73.8%)</td><td>108명 (78.3%)</td><td>114명 (76.5%)</td><td>112명 (71.8%)</td></tr>
+        <tr><td>초진</td><td>7명 (4.6%)</td><td>11명 (7.5%)</td><td>14명 (8.9%)</td><td>13명 (7.6%)</td></tr>
+        <tr><td>재초진</td><td>29명 (19.1%)</td><td>19명 (12.9%)</td><td>17명 (10.8%)</td><td>35명 (20.6%)</td></tr>
+        <tr><td>재진</td><td>104명 (68.4%)</td><td>108명 (73.5%)</td><td>114명 (72.2%)</td><td>112명 (65.9%)</td></tr>
         <tr><td>첩약보험</td><td>8명</td><td>15명</td><td>9명</td><td>7명</td></tr>
         <tr><td>총 진료비 (자보포함)</td><td>8,684,682원</td><td>11,534,436원</td><td>10,272,278원</td><td>12,153,607원</td></tr>
         <tr><td>보험 비중</td><td>72.5%</td><td>61.1%</td><td>65.1%</td><td>54.2%</td></tr>
@@ -490,7 +611,7 @@ tr:hover td{background:#f9fafc}
         <tr><td>최다 방문 요일</td><td>월 31명</td><td>금 35명</td><td>월 42명</td><td>수·금 41명</td></tr>
       </tbody>
     </table></div>
-    <p class="note">※ 재초진: 초진 90일 이후 재내원 | 재초진 분류 후 재방문은 재진으로 카운팅 | 총방문 = 고유 환자 수</p>
+    <p class="note">※ 총방문: 수입지출장 No. 기준 | 고유환자: 성명+생년월일 기준 중복 제거 (비급여 환자 포함) | 재초진: 초진 90일 이후 재내원</p>
   </div>
 </div>
 
@@ -531,6 +652,12 @@ tr:hover td{background:#f9fafc}
     <div class="insight-title">3주차 지출 2,014,990원 — 의약품비 1,764,100원 포함</div>
     <div class="insight-desc">1·2·4주차 지출 180~240만원 수준 대비 3주차 의약품 대량 구입으로 급증. 순수입 8.26M으로 4주 중 최저. 의약품 구매 주기 최적화 검토 필요.</div>
     <div class="insight-action">→ 의약품 구매 주기 최적화 검토</div>
+  </div>
+  <div class="insight-item blue">
+    <div class="insight-cat">연령대 분포</div>
+    <div class="insight-title">50·60대가 핵심 — 4주 고유 환자 230명 중 40% 차지</div>
+    <div class="insight-desc">50대 48명(20.9%) + 60대 44명(19.1%) = 92명으로 전체의 40%. 70대(16.1%), 40대(14.3%)가 뒤를 이음. 3주차는 60대가 27.8%로 최고. 30~40대 젊은층 유입이 상대적으로 적어 향후 유입 전략 고민 필요.</div>
+    <div class="insight-action">→ 30·40대 타겟 마케팅 / 50·60대 충성 고객 관리 강화</div>
   </div>
   <div class="insight-item blue">
     <div class="insight-cat">월별 분석 예정</div>
@@ -617,8 +744,8 @@ document.addEventListener('DOMContentLoaded',function(){
   ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
   new Chart(document.getElementById('c-class'),{type:'bar',data:{labels:wks,datasets:[
     {label:'재진',data:[104,108,114,112],backgroundColor:'#1F4E79'},
-    {label:'재초진',data:[25,17,17,28],backgroundColor:'#BA7517'},
-    {label:'초진',data:[7,9,10,8],backgroundColor:'#1D9E75'},
+    {label:'재초진',data:[29,19,17,35],backgroundColor:'#BA7517'},
+    {label:'초진',data:[7,11,14,13],backgroundColor:'#1D9E75'},
     {label:'첩약',data:[8,15,9,7],backgroundColor:'#85B7EB'}
   ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
   new Chart(document.getElementById('c-income-pie'),{type:'doughnut',data:{
@@ -635,6 +762,40 @@ document.addEventListener('DOMContentLoaded',function(){
     {label:'더수',data:[0,54,16,0],backgroundColor:'#1D9E75'},
     {label:'기타비급여',data:[3,2,10,1],backgroundColor:'#B5D4F4'}
   ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
+
+  // 연령대 파이
+  new Chart(document.getElementById('c-age-pie'),{type:'doughnut',data:{
+    labels:['50대 20.9%','60대 19.1%','70대 16.1%','40대 14.3%','30대 11.7%','기타 17.8%'],
+    datasets:[{data:[48,44,37,33,27,41],
+      backgroundColor:['#1F4E79','#378ADD','#85B7EB','#BA7517','#1D9E75','#B5D4F4'],
+      borderWidth:2,borderColor:'#fff'}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
+
+  // 연령대 주차별 막대
+  new Chart(document.getElementById('c-age-bar'),{type:'bar',data:{labels:wks,datasets:[
+    {label:'50대',data:[39,32,27,37],backgroundColor:'#1F4E79'},
+    {label:'60대',data:[27,30,32,29],backgroundColor:'#378ADD'},
+    {label:'70대',data:[26,24,16,30],backgroundColor:'#85B7EB'},
+    {label:'40대',data:[19,24,18,20],backgroundColor:'#BA7517'},
+    {label:'30대',data:[13,15,8,19],backgroundColor:'#1D9E75'},
+    {label:'기타',data:[17,16,16,21],backgroundColor:'#B5D4F4'},
+  ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
+
+  // 주차별 연령대 도넛
+  var ageData = {
+    w1:{labels:['50대','70대','60대','40대','30대','기타'],data:[39,26,27,19,13,17],colors:['#1F4E79','#85B7EB','#378ADD','#BA7517','#1D9E75','#B5D4F4']},
+    w2:{labels:['50대','60대','70대','40대','30대','기타'],data:[32,30,24,24,15,14],colors:['#1F4E79','#378ADD','#85B7EB','#BA7517','#1D9E75','#B5D4F4']},
+    w3:{labels:['60대','50대','40대','70대','30대','기타'],data:[39,33,24,22,8,23],colors:['#378ADD','#1F4E79','#BA7517','#85B7EB','#1D9E75','#B5D4F4']},
+    w4:{labels:['50대','70대','60대','30대','40대','기타'],data:[37,30,29,19,20,21],colors:['#1F4E79','#85B7EB','#378ADD','#1D9E75','#BA7517','#B5D4F4']},
+  };
+  ['w1','w2','w3','w4'].forEach(function(wk){
+    var el = document.getElementById('c-'+wk+'-age');
+    if(!el) return;
+    var d = ageData[wk];
+    new Chart(el,{type:'doughnut',data:{labels:d.labels,datasets:[{data:d.data,backgroundColor:d.colors,borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:9},boxWidth:8}}}}});
+  });
+
   renderWeekCharts('w1');
 });
 </script>
