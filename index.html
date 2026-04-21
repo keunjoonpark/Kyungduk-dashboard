@@ -10,6 +10,7 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f6f9;color:#1a1a2e}
 .topbar{background:#1F4E79;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .topbar h1{font-size:18px;font-weight:600}
+.topbar .sub{font-size:12px;opacity:0.8;margin-top:2px}
 .badge{font-size:12px;background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px}
 .nav{background:#fff;border-bottom:1px solid #e5e9f0;padding:0 24px;display:flex;gap:4px;overflow-x:auto}
 .nav button{padding:14px 18px;border:none;background:none;font-size:13px;color:#6b7a99;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
@@ -19,17 +20,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .section{display:none}.section.active{display:block}
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
 .metric{background:#fff;border-radius:10px;padding:16px;border:1px solid #e5e9f0}
-.metric-label{font-size:11px;color:#6b7a99;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.metric-label{font-size:11px;color:#6b7a99;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
 .metric-value{font-size:22px;font-weight:700;color:#1a1a2e}
 .metric-sub{font-size:11px;color:#6b7a99;margin-top:3px}
 .metric.green .metric-value{color:#1D9E75}
 .metric.blue .metric-value{color:#1F4E79}
 .metric.orange .metric-value{color:#BA7517}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
-@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
 .card{background:#fff;border-radius:10px;padding:20px;border:1px solid #e5e9f0;margin-bottom:16px}
-.card-title{font-size:12px;font-weight:600;color:#6b7a99;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px}
+.card-title{font-size:12px;font-weight:600;color:#6b7a99;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
 .chart-wrap{position:relative;width:100%}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:12px;color:#6b7a99}
 .legend span{display:flex;align-items:center;gap:5px}
@@ -48,13 +48,13 @@ tr:hover td{background:#f9fafc}
 .insight-item.green{border-color:#1D9E75}
 .insight-item.red{border-color:#E24B4A}
 .insight-item.orange{border-color:#BA7517}
-.insight-cat{font-size:10px;color:#6b7a99;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.insight-cat{font-size:10px;color:#6b7a99;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .insight-title{font-size:13px;font-weight:600;margin-bottom:4px}
 .insight-desc{font-size:12px;color:#4a5568;line-height:1.6}
 .insight-action{font-size:11px;color:#1F4E79;margin-top:6px;font-weight:600}
 .tab-btn{padding:6px 16px;border-radius:20px;border:1.5px solid #e5e9f0;background:#fff;color:#6b7a99;font-size:12px;cursor:pointer}
 .tab-btn.active{background:#1F4E79;color:#fff;border-color:#1F4E79;font-weight:600}
-.chuna-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+.chuna-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
 .chuna-item{background:#f4f6f9;border-radius:8px;padding:14px;text-align:center}
 .chuna-num{font-size:24px;font-weight:700;color:#1F4E79}
 .chuna-label{font-size:11px;color:#6b7a99;margin-top:4px}
@@ -64,7 +64,7 @@ tr:hover td{background:#f9fafc}
 <div class="topbar">
   <div>
     <h1>경덕한의원 데이터 대시보드</h1>
-    <div style="font-size:12px;opacity:0.8;margin-top:2px">2026년 3/23~4/19 (4주차)</div>
+    <div class="sub">2026년 3/23~4/19 (4주차)</div>
   </div>
   <span class="badge">최종 업데이트: 2026.04.19</span>
 </div>
@@ -78,12 +78,11 @@ tr:hover td{background:#f9fafc}
 <!-- ══ 종합 현황 ══ -->
 <div class="section active" id="tab-overview">
   <div class="metrics">
-    <div class="metric blue"><div class="metric-label">4주 총 방문</div><div class="metric-value">625건</div><div class="metric-sub">3/23~4/19</div></div>
-    <div class="metric blue"><div class="metric-label">일평균 (주평균)</div><div class="metric-value">22.3명</div><div class="metric-sub">최고 4주차 23.4명</div></div>
+    <div class="metric blue"><div class="metric-label">4주 총 방문</div><div class="metric-value">627명</div><div class="metric-sub">3/23~4/19 (수입지출장 기준)</div></div>
+    <div class="metric blue"><div class="metric-label">주 평균 일평균</div><div class="metric-value">22.4명</div><div class="metric-sub">최고 4주차 24.3명</div></div>
     <div class="metric green"><div class="metric-label">4주 총 진료비</div><div class="metric-value">42.6M</div><div class="metric-sub">자보 포함</div></div>
-    <div class="metric"><div class="metric-label">4주 순수입</div><div class="metric-value">40.0M</div><div class="metric-sub">지출 2.64M 제외</div></div>
+    <div class="metric"><div class="metric-label">4주 순수입</div><div class="metric-value">39.9M</div><div class="metric-sub">지출 2.64M 제외</div></div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">주차별 총 방문 및 일평균</div>
@@ -96,14 +95,13 @@ tr:hover td{background:#f9fafc}
     <div class="card">
       <div class="card-title">주차별 수입 구조 (만원)</div>
       <div class="legend">
-        <span><span class="leg-dot" style="background:#1F4E79"></span>보험수입</span>
+        <span><span class="leg-dot" style="background:#1F4E79"></span>보험</span>
         <span><span class="leg-dot" style="background:#BA7517"></span>비급여</span>
         <span><span class="leg-dot" style="background:#1D9E75"></span>자보</span>
       </div>
       <div class="chart-wrap" style="height:220px"><canvas id="c-revenue"></canvas></div>
     </div>
   </div>
-
   <div class="grid2">
     <div class="card">
       <div class="card-title">주차별 초진 / 재초진 / 재진 / 첩약</div>
@@ -120,73 +118,62 @@ tr:hover td{background:#f9fafc}
       <div class="chart-wrap" style="height:220px"><canvas id="c-income-pie"></canvas></div>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">4주 누적 현황 요약</div>
     <div class="table-wrap"><table>
       <thead><tr><th>구분</th><th>1주차 (3/23~29)</th><th>2주차 (3/30~4/5)</th><th>3주차 (4/6~12)</th><th>4주차 (4/13~19)</th><th>4주 누적</th></tr></thead>
       <tbody>
-        <tr><td>총 방문</td><td>149건</td><td>154건</td><td>158건</td><td>164건</td><td><b>625건</b></td></tr>
-        <tr><td>일평균</td><td>21.3명</td><td>22.0명</td><td>22.6명</td><td>23.4명</td><td><b>22.3명</b></td></tr>
+        <tr><td>총 방문</td><td>152명</td><td>147명</td><td>158명</td><td>170명</td><td><b>627명</b></td></tr>
+        <tr><td>일평균</td><td>21.7명</td><td>21.0명</td><td>22.6명</td><td>24.3명</td><td><b>22.4명</b></td></tr>
         <tr><td>초진</td><td>7명</td><td>9명</td><td>10명</td><td>8명</td><td><b>34명</b></td></tr>
         <tr><td>재초진</td><td>25명</td><td>17명</td><td>17명</td><td>28명</td><td><b>87명</b></td></tr>
         <tr><td>재진</td><td>104명</td><td>108명</td><td>114명</td><td>112명</td><td><b>438명</b></td></tr>
         <tr><td>첩약보험</td><td>8명</td><td>15명</td><td>9명</td><td>7명</td><td><b>39명</b></td></tr>
-        <tr><td>총 진료비 (자보포함)</td><td>8,684,682원</td><td>11,534,436원</td><td>10,272,278원</td><td>12,117,143원</td><td><b>42,608,539원</b></td></tr>
-        <tr><td>보험수입</td><td>6,300,610원 (72.5%)</td><td>7,050,900원 (61.1%)</td><td>6,691,670원 (65.1%)</td><td>6,587,280원 (54.4%)</td><td><b>26,630,460원 (62.5%)</b></td></tr>
-        <tr><td>비급여</td><td>2,165,000원 (24.9%)</td><td>4,170,000원 (36.2%)</td><td>3,045,500원 (29.6%)</td><td>5,126,000원 (42.3%)</td><td><b>14,506,500원 (34.1%)</b></td></tr>
-        <tr><td>자보</td><td>219,072원 (2.5%)</td><td>313,536원 (2.7%)</td><td>535,108원 (5.2%)</td><td>403,863원 (3.3%)</td><td><b>1,471,579원 (3.5%)</b></td></tr>
+        <tr><td>총 진료비</td><td>8,684,682원</td><td>11,534,436원</td><td>10,272,278원</td><td>12,153,607원</td><td><b>42,644,003원</b></td></tr>
+        <tr><td>보험수입</td><td>6,300,610원 (72.5%)</td><td>7,050,900원 (61.1%)</td><td>6,691,670원 (65.1%)</td><td>6,587,280원 (54.2%)</td><td><b>26,630,460원 (62.5%)</b></td></tr>
+        <tr><td>비급여</td><td>2,165,000원 (24.9%)</td><td>4,298,600원 (37.3%)</td><td>3,045,500원 (29.6%)</td><td>5,126,000원 (42.2%)</td><td><b>14,635,100원 (34.3%)</b></td></tr>
+        <tr><td>자보</td><td>219,072원 (2.5%)</td><td>313,536원 (2.7%)</td><td>535,108원 (5.2%)</td><td>440,327원 (3.6%)</td><td><b>1,508,043원 (3.5%)</b></td></tr>
         <tr><td>지출</td><td>210,900원</td><td>178,000원</td><td>2,014,990원</td><td>236,890원</td><td><b>2,640,780원</b></td></tr>
       </tbody>
     </table></div>
-    <p class="note">※ 재초진: 초진 90일 이후 재내원 | 재초진으로 분류된 환자의 이후 내원은 재진으로 카운팅</p>
+    <p class="note">※ 재초진: 초진 90일 이후 재내원 | 재초진 분류 후 재방문은 재진 카운팅 | 총방문 = 고유 환자 수 (첩약 중복 제거)</p>
   </div>
-
 
   <!-- 비급여 상세 -->
   <div class="card">
-    <div class="card-title">비급여 수입 상세 (4주 누적 14,506,500원)</div>
+    <div class="card-title">비급여 수입 상세 (4주 누적 14,635,100원)</div>
     <div class="grid2">
       <div>
         <div class="chart-wrap" style="height:220px"><canvas id="c-nv-pie"></canvas></div>
       </div>
-      <div>
-        <div class="table-wrap" style="margin-top:8px"><table>
+      <div class="table-wrap">
+        <table>
           <thead><tr><th>항목</th><th>1주차</th><th>2주차</th><th>3주차</th><th>4주차</th><th>누적</th><th>비중</th></tr></thead>
           <tbody>
-            <tr><td>비급여 첩약</td><td>1,440,000</td><td>3,605,000</td><td>1,122,000</td><td>4,732,000</td><td><b>10,899,000원</b></td><td><b>75.1%</b></td></tr>
-            <tr><td>기타비급여</td><td>725,000</td><td>545,000</td><td>963,500</td><td>314,000</td><td><b>2,547,500원</b></td><td><b>17.6%</b></td></tr>
-            <tr><td>태반약침</td><td>0</td><td>0</td><td>730,000</td><td>0</td><td><b>730,000원</b></td><td><b>5.0%</b></td></tr>
-            <tr><td>무통약침</td><td>0</td><td>20,000</td><td>230,000</td><td>80,000</td><td><b>330,000원</b></td><td><b>2.3%</b></td></tr>
+            <tr><td>비급여 첩약</td><td>2,140,000</td><td>3,348,600</td><td>1,821,100</td><td>5,032,000</td><td><b>12,341,700원</b></td><td><b>84.3%</b></td></tr>
+            <tr><td>약침 (무통·태반)</td><td>0</td><td>385,000</td><td>960,000</td><td>80,000</td><td><b>1,425,000원</b></td><td><b>9.7%</b></td></tr>
+            <tr><td>더수 (공진단·경옥고·콜드퀵)</td><td>0</td><td>544,000</td><td>162,500</td><td>0</td><td><b>706,500원</b></td><td><b>4.8%</b></td></tr>
+            <tr><td>기타비급여</td><td>25,000</td><td>21,000</td><td>101,900</td><td>14,000</td><td><b>161,900원</b></td><td><b>1.1%</b></td></tr>
           </tbody>
-        </table></div>
+        </table>
       </div>
     </div>
     <div class="chart-wrap" style="height:200px;margin-top:16px"><canvas id="c-nv-bar"></canvas></div>
     <div class="legend" style="margin-top:8px">
       <span><span class="leg-dot" style="background:#378ADD"></span>비급여첩약</span>
-      <span><span class="leg-dot" style="background:#BA7517"></span>태반약침</span>
-      <span><span class="leg-dot" style="background:#D85A30"></span>무통약침</span>
+      <span><span class="leg-dot" style="background:#D85A30"></span>약침</span>
+      <span><span class="leg-dot" style="background:#1D9E75"></span>더수</span>
       <span><span class="leg-dot" style="background:#B5D4F4"></span>기타비급여</span>
     </div>
   </div>
 
-  <!-- 추나 섹션 -->
+  <!-- 추나 -->
   <div class="card">
     <div class="card-title">추나 치료 현황 (건수 기준)</div>
     <div class="chuna-box">
-      <div class="chuna-item">
-        <div class="chuna-num">16회</div>
-        <div class="chuna-label">4주 총 추나</div>
-      </div>
-      <div class="chuna-item">
-        <div class="chuna-num">10회</div>
-        <div class="chuna-label">건강보험 추나</div>
-      </div>
-      <div class="chuna-item">
-        <div class="chuna-num">6회</div>
-        <div class="chuna-label">자보 추나</div>
-      </div>
+      <div class="chuna-item"><div class="chuna-num">16회</div><div class="chuna-label">4주 총 추나</div></div>
+      <div class="chuna-item"><div class="chuna-num">10회</div><div class="chuna-label">건강보험 추나</div></div>
+      <div class="chuna-item"><div class="chuna-num">6회</div><div class="chuna-label">자보 추나</div></div>
     </div>
     <div class="table-wrap"><table>
       <thead><tr><th>주차</th><th>건보추나</th><th>자보추나</th><th>합계</th></tr></thead>
@@ -213,10 +200,10 @@ tr:hover td{background:#f9fafc}
   <!-- 1주차 -->
   <div id="w1" style="display:block">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">149건</div><div class="metric-sub">일평균 21.3명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">152명</div><div class="metric-sub">일평균 21.7명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">8.68M</div><div class="metric-sub">자보 포함</div></div>
       <div class="metric"><div class="metric-label">초진</div><div class="metric-value">7명</div><div class="metric-sub">재초진 25명</div></div>
-      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">104명</div><div class="metric-sub">69.8%</div></div>
+      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">104명</div><div class="metric-sub">73.8%</div></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -238,16 +225,17 @@ tr:hover td{background:#f9fafc}
       <div class="table-wrap"><table>
         <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>첩약</th><th>총진료비</th></tr></thead>
         <tbody>
-          <tr><td>3/23 (월)</td><td>33명</td><td><span class="tag green">3</span></td><td><span class="tag orange">5</span></td><td>22명</td><td>3명</td><td>1,438,080원</td></tr>
+          <tr><td>3/23 (월)</td><td>31명</td><td><span class="tag green">3</span></td><td><span class="tag orange">5</span></td><td>22명</td><td>3명</td><td>1,438,080원</td></tr>
           <tr><td>3/24 (화)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">2</span></td><td>4명</td><td>-</td><td>354,490원</td></tr>
-          <tr><td>3/25 (수)</td><td>34명</td><td><span class="tag green">2</span></td><td><span class="tag orange">3</span></td><td>26명</td><td>1명</td><td>2,525,830원</td></tr>
-          <tr><td>3/26 (목)</td><td>16명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>9명</td><td>2명</td><td>728,030원</td></tr>
+          <tr><td>3/25 (수)</td><td>39명</td><td><span class="tag green">2</span></td><td><span class="tag orange">3</span></td><td>26명</td><td>1명</td><td>2,525,830원</td></tr>
+          <tr><td>3/26 (목)</td><td>14명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>9명</td><td>2명</td><td>728,030원</td></tr>
           <tr><td>3/27 (금)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>-</td><td>1,244,610원</td></tr>
           <tr><td>3/28 (토)</td><td>29명</td><td><span class="tag green">1</span></td><td><span class="tag orange">4</span></td><td>21명</td><td>2명</td><td>1,978,720원</td></tr>
           <tr><td>3/29 (일)</td><td>4명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>3명</td><td>-</td><td>195,850원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>149건</td><td>7명</td><td>25명</td><td>104명</td><td>8명</td><td>8,465,610원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>152명</td><td>7명</td><td>25명</td><td>104명</td><td>8명</td><td>8,465,610원</td></tr>
         </tbody>
       </table></div>
+      <p class="note">※ 총방문 = 고유 환자 수 (첩약보험 환자 중복 제거) | 초진: 강선희·김미선·김용진(3/23), 김정은·김정이(3/25), 정지우(3/27), CHEN(3/28)</p>
     </div>
     <div class="grid2">
       <div class="card">
@@ -266,15 +254,13 @@ tr:hover td{background:#f9fafc}
       </div>
       <div class="card">
         <div class="card-title">비급여 상세 (2,165,000원)</div>
-        <div class="chart-wrap" style="height:180px"><canvas id="c-w1-nv"></canvas></div>
-        <div class="table-wrap" style="margin-top:8px"><table>
-          <tbody>
-            <tr><td>비급여 첩약</td><td style="text-align:right">1,440,000원</td><td style="text-align:right">66.5%</td></tr>
-            <tr><td>기타비급여</td><td style="text-align:right">725,000원</td><td style="text-align:right">33.5%</td></tr>
-            <tr><td>무통약침</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
-            <tr><td>태반약침</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
-          </tbody>
-        </table></div>
+        <div class="chart-wrap" style="height:160px"><canvas id="c-w1-nv"></canvas></div>
+        <div class="table-wrap" style="margin-top:8px"><table><tbody>
+          <tr><td>비급여 첩약</td><td style="text-align:right">2,140,000원</td><td style="text-align:right">98.8%</td></tr>
+          <tr><td>기타비급여</td><td style="text-align:right">25,000원</td><td style="text-align:right">1.2%</td></tr>
+          <tr><td>약침</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
+          <tr><td>더수</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
+        </tbody></table></div>
       </div>
     </div>
   </div>
@@ -282,10 +268,10 @@ tr:hover td{background:#f9fafc}
   <!-- 2주차 -->
   <div id="w2" style="display:none">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">154건</div><div class="metric-sub">일평균 22.0명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">147명</div><div class="metric-sub">일평균 21.0명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">11.53M</div><div class="metric-sub">자보 포함</div></div>
       <div class="metric"><div class="metric-label">초진</div><div class="metric-value">9명</div><div class="metric-sub">재초진 17명</div></div>
-      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">108명</div><div class="metric-sub">70.1%</div></div>
+      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">108명</div><div class="metric-sub">78.3%</div></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -307,16 +293,17 @@ tr:hover td{background:#f9fafc}
       <div class="table-wrap"><table>
         <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>첩약</th><th>총진료비</th></tr></thead>
         <tbody>
-          <tr><td>3/30 (월)</td><td>31명</td><td><span class="tag green">2</span></td><td><span class="tag orange">2</span></td><td>25명</td><td>2명</td><td>2,861,520원</td></tr>
+          <tr><td>3/30 (월)</td><td>32명</td><td><span class="tag green">2</span></td><td><span class="tag orange">2</span></td><td>25명</td><td>2명</td><td>2,861,520원</td></tr>
           <tr><td>3/31 (화)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>5명</td><td>1명</td><td>480,410원</td></tr>
-          <tr><td>4/1 (수)</td><td>35명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>25명</td><td>4명</td><td>1,943,430원</td></tr>
+          <tr><td>4/1 (수)</td><td>31명</td><td><span class="tag green">0</span></td><td><span class="tag orange">5</span></td><td>25명</td><td>4명</td><td>1,943,430원</td></tr>
           <tr><td>4/2 (목)</td><td>9명</td><td><span class="tag green">1</span></td><td><span class="tag orange">1</span></td><td>6명</td><td>-</td><td>401,500원</td></tr>
-          <tr><td>4/3 (금)</td><td>34명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>24명</td><td>1명</td><td>2,761,900원</td></tr>
-          <tr><td>4/4 (토)</td><td>33명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>7명</td><td>2,419,950원</td></tr>
+          <tr><td>4/3 (금)</td><td>35명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>24명</td><td>1명</td><td>2,761,900원</td></tr>
+          <tr><td>4/4 (토)</td><td>28명</td><td><span class="tag green">1</span></td><td><span class="tag orange">6</span></td><td>19명</td><td>7명</td><td>2,419,950원</td></tr>
           <tr><td>4/5 (일)</td><td>6명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>4명</td><td>-</td><td>352,190원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>154건</td><td>9명</td><td>17명</td><td>108명</td><td>15명</td><td>11,220,900원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>147명</td><td>9명</td><td>17명</td><td>108명</td><td>15명</td><td>11,220,900원</td></tr>
         </tbody>
       </table></div>
+      <p class="note">※ 초진: 고정원·이다례(3/30), 이기택(4/2), 노혜미·민지유·박채영·이명연·이재식(4/3), 최호선(4/4)</p>
     </div>
     <div class="grid2">
       <div class="card">
@@ -326,7 +313,7 @@ tr:hover td{background:#f9fafc}
           <tbody>
             <tr><td><b>총 진료비</b></td><td><b>11,534,436원</b></td><td>100%</td></tr>
             <tr><td>보험수입</td><td>7,050,900원</td><td>61.1%</td></tr>
-            <tr><td>비급여</td><td>4,170,000원</td><td>36.2%</td></tr>
+            <tr><td>비급여</td><td>4,298,600원</td><td>37.3%</td></tr>
             <tr><td>자보</td><td>313,536원</td><td>2.7%</td></tr>
             <tr><td>지출</td><td>178,000원</td><td>-</td></tr>
             <tr><td><b>순수입</b></td><td><b>11,356,436원</b></td><td>-</td></tr>
@@ -334,16 +321,14 @@ tr:hover td{background:#f9fafc}
         </table></div>
       </div>
       <div class="card">
-        <div class="card-title">비급여 상세 (4,170,000원)</div>
-        <div class="chart-wrap" style="height:180px"><canvas id="c-w2-nv"></canvas></div>
-        <div class="table-wrap" style="margin-top:8px"><table>
-          <tbody>
-            <tr><td>비급여 첩약</td><td style="text-align:right">3,605,000원</td><td style="text-align:right">86.5%</td></tr>
-            <tr><td>기타비급여</td><td style="text-align:right">545,000원</td><td style="text-align:right">13.1%</td></tr>
-            <tr><td>무통약침</td><td style="text-align:right">20,000원</td><td style="text-align:right">0.5%</td></tr>
-            <tr><td>태반약침</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
-          </tbody>
-        </table></div>
+        <div class="card-title">비급여 상세 (4,298,600원)</div>
+        <div class="chart-wrap" style="height:160px"><canvas id="c-w2-nv"></canvas></div>
+        <div class="table-wrap" style="margin-top:8px"><table><tbody>
+          <tr><td>비급여 첩약</td><td style="text-align:right">3,348,600원</td><td style="text-align:right">77.9%</td></tr>
+          <tr><td>더수 (공진단)</td><td style="text-align:right">544,000원</td><td style="text-align:right">12.7%</td></tr>
+          <tr><td>약침 (무통·태반)</td><td style="text-align:right">385,000원</td><td style="text-align:right">9.0%</td></tr>
+          <tr><td>기타비급여</td><td style="text-align:right">21,000원</td><td style="text-align:right">0.5%</td></tr>
+        </tbody></table></div>
       </div>
     </div>
   </div>
@@ -351,10 +336,10 @@ tr:hover td{background:#f9fafc}
   <!-- 3주차 -->
   <div id="w3" style="display:none">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">158건</div><div class="metric-sub">일평균 22.6명</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">158명</div><div class="metric-sub">일평균 22.6명</div></div>
       <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">10.27M</div><div class="metric-sub">자보 포함</div></div>
       <div class="metric"><div class="metric-label">초진</div><div class="metric-value">10명</div><div class="metric-sub">재초진 17명</div></div>
-      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">114명</div><div class="metric-sub">76.0%</div></div>
+      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">114명</div><div class="metric-sub">76.5%</div></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -378,14 +363,15 @@ tr:hover td{background:#f9fafc}
         <tbody>
           <tr><td>4/6 (월)</td><td>42명</td><td><span class="tag green">2</span></td><td><span class="tag orange">4</span></td><td>33명</td><td>2명</td><td>1,970,840원</td></tr>
           <tr><td>4/7 (화)</td><td>8명</td><td><span class="tag green">2</span></td><td><span class="tag orange">3</span></td><td>3명</td><td>-</td><td>464,180원</td></tr>
-          <tr><td>4/8 (수)</td><td>37명</td><td><span class="tag green">4</span></td><td><span class="tag orange">3</span></td><td>25명</td><td>3명</td><td>2,372,760원</td></tr>
+          <tr><td>4/8 (수)</td><td>34명</td><td><span class="tag green">4</span></td><td><span class="tag orange">3</span></td><td>25명</td><td>3명</td><td>2,372,760원</td></tr>
           <tr><td>4/9 (목)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>1명</td><td>298,090원</td></tr>
-          <tr><td>4/10 (금)</td><td>35명</td><td><span class="tag green">2</span></td><td><span class="tag orange">4</span></td><td>26명</td><td>1명</td><td>2,528,640원</td></tr>
+          <tr><td>4/10 (금)</td><td>38명</td><td><span class="tag green">2</span></td><td><span class="tag orange">4</span></td><td>26명</td><td>1명</td><td>2,528,640원</td></tr>
           <tr><td>4/11 (토)</td><td>22명</td><td><span class="tag green">0</span></td><td><span class="tag orange">3</span></td><td>16명</td><td>2명</td><td>1,579,840원</td></tr>
-          <tr><td>4/12 (일)</td><td>7명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>5명</td><td>-</td><td>522,820원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>158건</td><td>10명</td><td>17명</td><td>114명</td><td>9명</td><td>9,737,170원</td></tr>
+          <tr><td>4/12 (일)</td><td>8명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>5명</td><td>-</td><td>522,820원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>158명</td><td>10명</td><td>17명</td><td>114명</td><td>9명</td><td>9,737,170원</td></tr>
         </tbody>
       </table></div>
+      <p class="note">※ 초진: 엄기문·정홍주·이혜선(4/6), 김진오·김혜성(4/7), 국주옥·김원균·이소율·황준훈(4/8), Shan·최용원(4/10)</p>
     </div>
     <div class="grid2">
       <div class="card">
@@ -404,15 +390,13 @@ tr:hover td{background:#f9fafc}
       </div>
       <div class="card">
         <div class="card-title">비급여 상세 (3,045,500원)</div>
-        <div class="chart-wrap" style="height:180px"><canvas id="c-w3-nv"></canvas></div>
-        <div class="table-wrap" style="margin-top:8px"><table>
-          <tbody>
-            <tr><td>비급여 첩약</td><td style="text-align:right">1,122,000원</td><td style="text-align:right">36.8%</td></tr>
-            <tr><td>태반약침</td><td style="text-align:right">730,000원</td><td style="text-align:right">24.0%</td></tr>
-            <tr><td>기타비급여</td><td style="text-align:right">963,500원</td><td style="text-align:right">31.6%</td></tr>
-            <tr><td>무통약침</td><td style="text-align:right">230,000원</td><td style="text-align:right">7.6%</td></tr>
-          </tbody>
-        </table></div>
+        <div class="chart-wrap" style="height:160px"><canvas id="c-w3-nv"></canvas></div>
+        <div class="table-wrap" style="margin-top:8px"><table><tbody>
+          <tr><td>비급여 첩약</td><td style="text-align:right">1,821,100원</td><td style="text-align:right">59.8%</td></tr>
+          <tr><td>약침 (무통·태반)</td><td style="text-align:right">960,000원</td><td style="text-align:right">31.5%</td></tr>
+          <tr><td>기타비급여</td><td style="text-align:right">101,900원</td><td style="text-align:right">3.3%</td></tr>
+          <tr><td>더수 (콜드퀵·경옥고)</td><td style="text-align:right">162,500원</td><td style="text-align:right">5.3%</td></tr>
+        </tbody></table></div>
       </div>
     </div>
   </div>
@@ -420,10 +404,10 @@ tr:hover td{background:#f9fafc}
   <!-- 4주차 -->
   <div id="w4" style="display:none">
     <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">164건</div><div class="metric-sub">일평균 23.4명</div></div>
-      <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">12.12M</div><div class="metric-sub">자보 포함</div></div>
+      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">170명</div><div class="metric-sub">일평균 24.3명</div></div>
+      <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">12.15M</div><div class="metric-sub">자보 포함</div></div>
       <div class="metric"><div class="metric-label">초진</div><div class="metric-value">8명</div><div class="metric-sub">재초진 28명</div></div>
-      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">112명</div><div class="metric-sub">70.9%</div></div>
+      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">112명</div><div class="metric-sub">71.8%</div></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -445,16 +429,17 @@ tr:hover td{background:#f9fafc}
       <div class="table-wrap"><table>
         <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>첩약</th><th>총진료비</th></tr></thead>
         <tbody>
-          <tr><td>4/13 (월)</td><td>34명</td><td><span class="tag green">1</span></td><td><span class="tag orange">3</span></td><td>27명</td><td>1명</td><td>2,050,710원</td></tr>
+          <tr><td>4/13 (월)</td><td>35명</td><td><span class="tag green">1</span></td><td><span class="tag orange">3</span></td><td>27명</td><td>1명</td><td>2,050,710원</td></tr>
           <tr><td>4/14 (화)</td><td>8명</td><td><span class="tag green">0</span></td><td><span class="tag orange">2</span></td><td>5명</td><td>-</td><td>401,990원</td></tr>
-          <tr><td>4/15 (수)</td><td>40명</td><td><span class="tag green">2</span></td><td><span class="tag orange">15</span></td><td>19명</td><td>2명</td><td>3,091,030원</td></tr>
+          <tr><td>4/15 (수)</td><td>41명</td><td><span class="tag green">2</span></td><td><span class="tag orange">15</span></td><td>19명</td><td>2명</td><td>3,091,030원</td></tr>
           <tr><td>4/16 (목)</td><td>8명</td><td><span class="tag green">2</span></td><td><span class="tag orange">0</span></td><td>6명</td><td>-</td><td>372,910원</td></tr>
-          <tr><td>4/17 (금)</td><td>38명</td><td><span class="tag green">2</span></td><td><span class="tag orange">5</span></td><td>27명</td><td>2명</td><td>3,410,230원</td></tr>
-          <tr><td>4/18 (토)</td><td>28명</td><td><span class="tag green">1</span></td><td><span class="tag orange">2</span></td><td>22명</td><td>2명</td><td>1,752,140원</td></tr>
-          <tr><td>4/19 (일)</td><td>8명</td><td><span class="tag green">0</span></td><td><span class="tag orange">1</span></td><td>6명</td><td>-</td><td>634,270원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>164건</td><td>8명</td><td>28명</td><td>112명</td><td>7명</td><td>11,713,280원</td></tr>
+          <tr><td>4/17 (금)</td><td>41명</td><td><span class="tag green">2</span></td><td><span class="tag orange">5</span></td><td>27명</td><td>2명</td><td>3,410,230원</td></tr>
+          <tr><td>4/18 (토)</td><td>26명</td><td><span class="tag green">1</span></td><td><span class="tag orange">2</span></td><td>22명</td><td>2명</td><td>1,752,140원</td></tr>
+          <tr><td>4/19 (일)</td><td>9명</td><td><span class="tag green">0</span></td><td><span class="tag orange">1</span></td><td>6명</td><td>-</td><td>634,270원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>170명</td><td>8명</td><td>28명</td><td>112명</td><td>7명</td><td>11,713,280원</td></tr>
         </tbody>
       </table></div>
+      <p class="note">※ 초진: 이정본·유지선·정회승·조준우·최준경·송주상·송하경·김형석</p>
     </div>
     <div class="grid2">
       <div class="card">
@@ -462,26 +447,24 @@ tr:hover td{background:#f9fafc}
         <div class="table-wrap"><table>
           <thead><tr><th>구분</th><th>금액</th><th>비중</th></tr></thead>
           <tbody>
-            <tr><td><b>총 진료비</b></td><td><b>12,117,143원</b></td><td>100%</td></tr>
-            <tr><td>보험수입</td><td>6,587,280원</td><td>54.4%</td></tr>
-            <tr><td>비급여</td><td>5,126,000원</td><td>42.3%</td></tr>
-            <tr><td>자보</td><td>403,863원</td><td>3.3%</td></tr>
+            <tr><td><b>총 진료비</b></td><td><b>12,153,607원</b></td><td>100%</td></tr>
+            <tr><td>보험수입</td><td>6,587,280원</td><td>54.2%</td></tr>
+            <tr><td>비급여</td><td>5,126,000원</td><td>42.2%</td></tr>
+            <tr><td>자보</td><td>440,327원</td><td>3.6%</td></tr>
             <tr><td>지출</td><td>236,890원</td><td>-</td></tr>
-            <tr><td><b>순수입</b></td><td><b>11,880,253원</b></td><td>-</td></tr>
+            <tr><td><b>순수입</b></td><td><b>11,916,717원</b></td><td>-</td></tr>
           </tbody>
         </table></div>
       </div>
       <div class="card">
         <div class="card-title">비급여 상세 (5,126,000원)</div>
-        <div class="chart-wrap" style="height:180px"><canvas id="c-w4-nv"></canvas></div>
-        <div class="table-wrap" style="margin-top:8px"><table>
-          <tbody>
-            <tr><td>비급여 첩약</td><td style="text-align:right">4,732,000원</td><td style="text-align:right">92.3%</td></tr>
-            <tr><td>기타비급여</td><td style="text-align:right">314,000원</td><td style="text-align:right">6.1%</td></tr>
-            <tr><td>무통약침</td><td style="text-align:right">80,000원</td><td style="text-align:right">1.6%</td></tr>
-            <tr><td>태반약침</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
-          </tbody>
-        </table></div>
+        <div class="chart-wrap" style="height:160px"><canvas id="c-w4-nv"></canvas></div>
+        <div class="table-wrap" style="margin-top:8px"><table><tbody>
+          <tr><td>비급여 첩약</td><td style="text-align:right">5,032,000원</td><td style="text-align:right">98.2%</td></tr>
+          <tr><td>약침 (무통)</td><td style="text-align:right">80,000원</td><td style="text-align:right">1.6%</td></tr>
+          <tr><td>기타비급여</td><td style="text-align:right">14,000원</td><td style="text-align:right">0.3%</td></tr>
+          <tr><td>더수</td><td style="text-align:right">0원</td><td style="text-align:right">0%</td></tr>
+        </tbody></table></div>
       </div>
     </div>
   </div>
@@ -492,21 +475,22 @@ tr:hover td{background:#f9fafc}
     <div class="table-wrap"><table>
       <thead><tr><th>구분</th><th>1주차</th><th>2주차</th><th>3주차</th><th>4주차</th></tr></thead>
       <tbody>
-        <tr><td>총 방문</td><td>149건</td><td>154건</td><td>158건</td><td>164건</td></tr>
-        <tr><td>일평균</td><td>21.3명</td><td>22.0명</td><td>22.6명</td><td>23.4명</td></tr>
-        <tr><td>초진</td><td>7명 (4.7%)</td><td>9명 (5.8%)</td><td>10명 (6.7%)</td><td>8명 (5.1%)</td></tr>
-        <tr><td>재초진</td><td>25명 (16.8%)</td><td>17명 (11.0%)</td><td>17명 (11.0%)</td><td>28명 (17.7%)</td></tr>
-        <tr><td>재진</td><td>104명 (69.8%)</td><td>108명 (70.1%)</td><td>114명 (76.0%)</td><td>112명 (70.9%)</td></tr>
-        <tr><td>총 진료비</td><td>8,684,682원</td><td>11,534,436원</td><td>10,272,278원</td><td>12,117,143원</td></tr>
-        <tr><td>보험수입 비중</td><td>72.5%</td><td>61.1%</td><td>65.1%</td><td>54.4%</td></tr>
-        <tr><td>비급여 비중</td><td>24.9%</td><td>36.2%</td><td>29.6%</td><td>42.3%</td></tr>
-        <tr><td>자보 비중</td><td>2.5%</td><td>2.7%</td><td>5.2%</td><td>3.3%</td></tr>
+        <tr><td>총 방문</td><td>152명</td><td>147명</td><td>158명</td><td>170명</td></tr>
+        <tr><td>일평균</td><td>21.7명</td><td>21.0명</td><td>22.6명</td><td>24.3명</td></tr>
+        <tr><td>초진</td><td>7명 (5.0%)</td><td>9명 (6.5%)</td><td>10명 (6.7%)</td><td>8명 (5.1%)</td></tr>
+        <tr><td>재초진</td><td>25명 (17.7%)</td><td>17명 (12.3%)</td><td>17명 (11.4%)</td><td>28명 (17.9%)</td></tr>
+        <tr><td>재진</td><td>104명 (73.8%)</td><td>108명 (78.3%)</td><td>114명 (76.5%)</td><td>112명 (71.8%)</td></tr>
+        <tr><td>첩약보험</td><td>8명</td><td>15명</td><td>9명</td><td>7명</td></tr>
+        <tr><td>총 진료비 (자보포함)</td><td>8,684,682원</td><td>11,534,436원</td><td>10,272,278원</td><td>12,153,607원</td></tr>
+        <tr><td>보험 비중</td><td>72.5%</td><td>61.1%</td><td>65.1%</td><td>54.2%</td></tr>
+        <tr><td>비급여 비중</td><td>24.9%</td><td>37.3%</td><td>29.6%</td><td>42.2%</td></tr>
+        <tr><td>자보 비중</td><td>2.5%</td><td>2.7%</td><td>5.2%</td><td>3.6%</td></tr>
         <tr><td>건보추나</td><td>6회</td><td>2회</td><td>1회</td><td>1회</td></tr>
         <tr><td>자보추나</td><td>0회</td><td>2회</td><td>2회</td><td>2회</td></tr>
-        <tr><td>최다 방문 요일</td><td>월 33명</td><td>수 35명</td><td>월 42명</td><td>수 40명</td></tr>
+        <tr><td>최다 방문 요일</td><td>월 31명</td><td>금 35명</td><td>월 42명</td><td>수·금 41명</td></tr>
       </tbody>
     </table></div>
-    <p class="note">※ 재초진: 초진 90일 이후 재내원 | 재초진 분류 후 재방문은 재진으로 카운팅</p>
+    <p class="note">※ 재초진: 초진 90일 이후 재내원 | 재초진 분류 후 재방문은 재진으로 카운팅 | 총방문 = 고유 환자 수</p>
   </div>
 </div>
 
@@ -514,32 +498,38 @@ tr:hover td{background:#f9fafc}
 <div class="section" id="tab-insights">
   <div class="insight-item blue">
     <div class="insight-cat">방문 트렌드</div>
-    <div class="insight-title">일평균 4주 연속 증가 — 21.3 → 23.4명</div>
-    <div class="insight-desc">총 방문 625건 / 4주 누적 총진료비 42.6M. 월·수요일이 최다 방문 요일. 3주차 월요일 42명이 단일 최고.</div>
+    <div class="insight-title">일평균 꾸준히 증가 — 21.0명 → 24.3명</div>
+    <div class="insight-desc">4주 누적 627명 방문. 1주(21.7명) → 2주(21.0명) → 3주(22.6명) → 4주(24.3명)로 전반적 증가 추세. 월·금요일이 최다 방문 요일 — 3주차 월요일 42명이 단일 최고.</div>
     <div class="insight-action">→ 월·수요일 인력 집중 배치 유지</div>
   </div>
   <div class="insight-item green">
     <div class="insight-cat">환자 구성</div>
-    <div class="insight-title">재진 비율 70~76% 안정적 — 재초진은 주차별 변동</div>
-    <div class="insight-desc">재진 비율은 안정적으로 유지. 재초진은 1주(16.8%) → 2·3주(11%) → 4주(17.7%)로 변동. 재초진이 높은 주는 기존 이탈 환자 복귀를 의미. 재초진 → 재진 정착률 추적이 핵심 지표.</div>
+    <div class="insight-title">재진 70~78% 안정적 — 재초진은 1·4주차에 집중</div>
+    <div class="insight-desc">재진 비율은 70~78%로 안정적. 재초진은 1주(17.7%) → 2·3주(11~12%) → 4주(17.9%)로 변동. 재초진이 높은 주는 기존 이탈 환자 복귀 신호. 재초진 이후 재진으로 정착하는지가 핵심 지표.</div>
     <div class="insight-action">→ 재초진 환자 재이탈 방지 관리 강화</div>
   </div>
   <div class="insight-item green">
     <div class="insight-cat">비급여 성장</div>
-    <div class="insight-title">비급여 비중 4주차 42.3% 최고 — 비급여 첩약 주도</div>
-    <div class="insight-desc">비급여 비중: 1주 24.9% → 2주 36.2% → 3주 29.6% → 4주 42.3%. 2·4주차에 비급여 첩약 집중. 3주차는 태반약침(730k)·무통약침(230k) 약침 수입 최고.</div>
-    <div class="insight-action">→ 비급여 첩약 상담 강화 + 약침 프로그램 지속 홍보</div>
+    <div class="insight-title">비급여 비중 4주차 42.2% 최고 — 비급여 첩약이 84% 주도</div>
+    <div class="insight-desc">비급여 비중: 1주 24.9% → 2주 37.3% → 3주 29.6% → 4주 42.2%. 4주 누적 비급여 14.6M 중 비급여 첩약이 84.3%(12.3M) 차지. 2·4주차 비급여 첩약 집중.</div>
+    <div class="insight-action">→ 비급여 첩약 상담 강화</div>
   </div>
   <div class="insight-item orange">
-    <div class="insight-cat">자보 수입</div>
-    <div class="insight-title">자보 수입 4주 누적 1,471,579원 — 3주차 최고 (5.2%)</div>
-    <div class="insight-desc">3주차 자보 535,108원으로 비중 5.2%까지 상승. 자보 환자 꾸준히 내원 중. 자보추나도 4주간 6회 실시.</div>
-    <div class="insight-action">→ 자보 환자 관리 지속</div>
+    <div class="insight-cat">약침</div>
+    <div class="insight-title">3주차 약침 수입 960,000원 최고 — 무통·태반 동시 집중</div>
+    <div class="insight-desc">3주차: 무통 230,000원 + 태반 730,000원 = 960,000원. 4주 누적 약침 1,425,000원(비급여의 9.7%). 약침은 단가가 높아 소수 환자로 큰 수입 기여.</div>
+    <div class="insight-action">→ 태반·무통약침 패키지 지속 홍보</div>
+  </div>
+  <div class="insight-item orange">
+    <div class="insight-cat">자보</div>
+    <div class="insight-title">자보 4주 누적 1,508,043원 — 3주차 비중 5.2% 최고</div>
+    <div class="insight-desc">자보 환자 꾸준히 내원 중. 3주차 자보 535,108원으로 비중 5.2%까지 상승. 자보추나도 4주간 6회 실시. 자보는 공단청구 후 입금되므로 실수입 타임라인 별도 관리 필요.</div>
+    <div class="insight-action">→ 자보 환자 지속 관리</div>
   </div>
   <div class="insight-item red">
     <div class="insight-cat">지출 관리</div>
     <div class="insight-title">3주차 지출 2,014,990원 — 의약품비 1,764,100원 포함</div>
-    <div class="insight-desc">1·2·4주차 지출 180~240만원 수준 대비 3주차 급증. 의약품 대량 구입 영향으로 순수입 8.26M으로 낮음.</div>
+    <div class="insight-desc">1·2·4주차 지출 180~240만원 수준 대비 3주차 의약품 대량 구입으로 급증. 순수입 8.26M으로 4주 중 최저. 의약품 구매 주기 최적화 검토 필요.</div>
     <div class="insight-action">→ 의약품 구매 주기 최적화 검토</div>
   </div>
   <div class="insight-item blue">
@@ -560,9 +550,7 @@ function showTab(name,btn){
 }
 var weekChartsRendered={w1:false,w2:false,w3:false,w4:false};
 function showWeek(id){
-  ['w1','w2','w3','w4'].forEach(function(k){
-    document.getElementById(k).style.display=k===id?'block':'none';
-  });
+  ['w1','w2','w3','w4'].forEach(function(k){document.getElementById(k).style.display=k===id?'block':'none';});
   [['wb1','w1'],['wb2','w2'],['wb3','w3'],['wb4','w4']].forEach(function(p){
     document.getElementById(p[0]).className='tab-btn'+(p[1]===id?' active':'');
   });
@@ -572,8 +560,7 @@ function renderWeekCharts(id){
   if(weekChartsRendered[id])return;
   weekChartsRendered[id]=true;
   var co={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
-  var nvColors=['#378ADD','#E24B4A','#B5D4F4','#BA7517'];
-  var nvOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false,position:'right',labels:{font:{size:10},boxWidth:10}}}};
+  var nvOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}};
   if(id==='w1'){
     var l1=['3/23','3/24','3/25','3/26','3/27','3/28','3/29'];
     new Chart(document.getElementById('c-w1-bar'),{type:'bar',data:{labels:l1,datasets:[
@@ -582,7 +569,7 @@ function renderWeekCharts(id){
       {label:'초진',data:[3,0,2,0,1,1,0],backgroundColor:'#1D9E75'}
     ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
     new Chart(document.getElementById('c-w1-rev'),{type:'bar',data:{labels:l1,datasets:[{label:'진료비',data:[144,35,253,73,124,198,20],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w1-nv'),{type:'doughnut',data:{labels:['비급여첩약','기타비급여'],datasets:[{data:[1440000,725000],backgroundColor:['#378ADD','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
+    new Chart(document.getElementById('c-w1-nv'),{type:'doughnut',data:{labels:['비급여첩약','기타비급여'],datasets:[{data:[2140000,25000],backgroundColor:['#378ADD','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
   }
   if(id==='w2'){
     var l2=['3/30','3/31','4/1','4/2','4/3','4/4','4/5'];
@@ -592,7 +579,7 @@ function renderWeekCharts(id){
       {label:'초진',data:[2,0,0,1,5,1,0],backgroundColor:'#1D9E75'}
     ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
     new Chart(document.getElementById('c-w2-rev'),{type:'bar',data:{labels:l2,datasets:[{label:'진료비',data:[286,48,194,40,276,242,35],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w2-nv'),{type:'doughnut',data:{labels:['비급여첩약','기타비급여','무통약침'],datasets:[{data:[3605000,545000,20000],backgroundColor:['#378ADD','#B5D4F4','#D85A30'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
+    new Chart(document.getElementById('c-w2-nv'),{type:'doughnut',data:{labels:['비급여첩약','더수','약침','기타'],datasets:[{data:[3348600,544000,385000,21000],backgroundColor:['#378ADD','#1D9E75','#D85A30','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
   }
   if(id==='w3'){
     var l3=['4/6','4/7','4/8','4/9','4/10','4/11','4/12'];
@@ -602,7 +589,7 @@ function renderWeekCharts(id){
       {label:'초진',data:[2,2,4,0,2,0,0],backgroundColor:'#1D9E75'}
     ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
     new Chart(document.getElementById('c-w3-rev'),{type:'bar',data:{labels:l3,datasets:[{label:'진료비',data:[197,46,237,30,253,158,52],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w3-nv'),{type:'doughnut',data:{labels:['비급여첩약','태반약침','기타비급여','무통약침'],datasets:[{data:[1122000,730000,963500,230000],backgroundColor:['#378ADD','#BA7517','#B5D4F4','#D85A30'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
+    new Chart(document.getElementById('c-w3-nv'),{type:'doughnut',data:{labels:['비급여첩약','약침','더수','기타'],datasets:[{data:[1821100,960000,162500,101900],backgroundColor:['#378ADD','#D85A30','#1D9E75','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
   }
   if(id==='w4'){
     var l4=['4/13','4/14','4/15','4/16','4/17','4/18','4/19'];
@@ -612,21 +599,21 @@ function renderWeekCharts(id){
       {label:'초진',data:[1,0,2,2,2,1,0],backgroundColor:'#1D9E75'}
     ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
     new Chart(document.getElementById('c-w4-rev'),{type:'bar',data:{labels:l4,datasets:[{label:'진료비',data:[205,40,309,37,341,175,63],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w4-nv'),{type:'doughnut',data:{labels:['비급여첩약','기타비급여','무통약침'],datasets:[{data:[4732000,314000,80000],backgroundColor:['#378ADD','#B5D4F4','#D85A30'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
+    new Chart(document.getElementById('c-w4-nv'),{type:'doughnut',data:{labels:['비급여첩약','약침','기타'],datasets:[{data:[5032000,80000,14000],backgroundColor:['#378ADD','#D85A30','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
   }
 }
 document.addEventListener('DOMContentLoaded',function(){
   var co={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
   var wks=['1주차','2주차','3주차','4주차'];
   new Chart(document.getElementById('c-visit'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'총방문',data:[149,154,158,164],backgroundColor:'#1F4E79'},
-    {label:'일평균',data:[21.3,22.0,22.6,23.4],type:'line',yAxisID:'y2',borderColor:'#85B7EB',backgroundColor:'#85B7EB',pointRadius:5,fill:false}
+    {label:'총방문',data:[152,147,158,170],backgroundColor:'#1F4E79'},
+    {label:'일평균',data:[21.7,21.0,22.6,24.3],type:'line',yAxisID:'y2',borderColor:'#85B7EB',backgroundColor:'#85B7EB',pointRadius:5,fill:false}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true},y2:{position:'right',grid:{drawOnChartArea:false},min:18,max:26,ticks:{callback:function(v){return v+'명'}}}}}});
+    scales:{y:{beginAtZero:true},y2:{position:'right',grid:{drawOnChartArea:false},min:15,max:26,ticks:{callback:function(v){return v+'명'}}}}}});
   new Chart(document.getElementById('c-revenue'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'보험수입',data:[630,705,669,659],backgroundColor:'#1F4E79'},
-    {label:'비급여',data:[217,417,305,513],backgroundColor:'#BA7517'},
-    {label:'자보',data:[22,31,54,40],backgroundColor:'#1D9E75'}
+    {label:'보험',data:[630,705,669,659],backgroundColor:'#1F4E79'},
+    {label:'비급여',data:[217,430,305,513],backgroundColor:'#BA7517'},
+    {label:'자보',data:[22,31,54,44],backgroundColor:'#1D9E75'}
   ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
   new Chart(document.getElementById('c-class'),{type:'bar',data:{labels:wks,datasets:[
     {label:'재진',data:[104,108,114,112],backgroundColor:'#1F4E79'},
@@ -635,24 +622,19 @@ document.addEventListener('DOMContentLoaded',function(){
     {label:'첩약',data:[8,15,9,7],backgroundColor:'#85B7EB'}
   ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
   new Chart(document.getElementById('c-income-pie'),{type:'doughnut',data:{
-    labels:['보험수입 62.5%','비급여 34.1%','자보 3.5%'],
-    datasets:[{data:[26631,14507,1472],backgroundColor:['#1F4E79','#BA7517','#1D9E75'],borderWidth:2,borderColor:'#fff'}]
+    labels:['보험 62.5%','비급여 34.3%','자보 3.5%'],
+    datasets:[{data:[26630460,14635100,1508043],backgroundColor:['#1F4E79','#BA7517','#1D9E75'],borderWidth:2,borderColor:'#fff'}]
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}}}});
-
   new Chart(document.getElementById('c-nv-pie'),{type:'doughnut',data:{
-    labels:['비급여첩약 75.1%','기타비급여 17.6%','태반약침 5.0%','무통약침 2.3%'],
-    datasets:[{data:[10899000,2547500,730000,330000],
-      backgroundColor:['#378ADD','#B5D4F4','#BA7517','#D85A30'],
-      borderWidth:2,borderColor:'#fff'}]
+    labels:['비급여첩약 84.3%','약침 9.7%','더수 4.8%','기타 1.1%'],
+    datasets:[{data:[12341700,1425000,706500,161900],backgroundColor:['#378ADD','#D85A30','#1D9E75','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
-
   new Chart(document.getElementById('c-nv-bar'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'비급여첩약',data:[144,361,112,473],backgroundColor:'#378ADD'},
-    {label:'태반약침',data:[0,0,73,0],backgroundColor:'#BA7517'},
-    {label:'무통약침',data:[0,2,23,8],backgroundColor:'#D85A30'},
-    {label:'기타비급여',data:[73,55,96,31],backgroundColor:'#B5D4F4'}
+    {label:'비급여첩약',data:[214,335,182,503],backgroundColor:'#378ADD'},
+    {label:'약침',data:[0,39,96,8],backgroundColor:'#D85A30'},
+    {label:'더수',data:[0,54,16,0],backgroundColor:'#1D9E75'},
+    {label:'기타비급여',data:[3,2,10,1],backgroundColor:'#B5D4F4'}
   ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
-
   renderWeekCharts('w1');
 });
 </script>
