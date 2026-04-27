@@ -72,6 +72,22 @@ tr:hover td{background:#f9fafc}
 .revisit-dates{color:#4a5568;flex:1}
 .revisit-gap{font-size:11px;color:#6b7a99;background:#e5e9f0;padding:2px 8px;border-radius:10px;white-space:nowrap}
 .followup-bar{display:flex;height:24px;border-radius:6px;overflow:hidden;margin:12px 0}
+.cohort-table{width:100%;border-collapse:collapse;font-size:12px}
+.cohort-table th{background:#f4f6f9;padding:8px 10px;text-align:left;font-size:11px;color:#6b7a99;font-weight:600;border-bottom:1px solid #e5e9f0}
+.cohort-table td{padding:8px 10px;border-bottom:1px solid #f4f6f9;vertical-align:middle}
+.cohort-table tr:hover td{background:#f9fafc}
+.rv-bar-wrap{display:flex;align-items:center;gap:6px}
+.rv-bar-bg{flex:1;background:#f0f2f5;border-radius:4px;height:8px;overflow:hidden;min-width:60px}
+.rv-bar-fill{height:100%;border-radius:4px}
+.cohort-summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:700px){.cohort-summary-grid{grid-template-columns:repeat(2,1fr)}}
+.cohort-wk-card{background:#fff;border-radius:10px;padding:16px;border:1px solid #e5e9f0;text-align:center}
+.cohort-wk-card .rate{font-size:28px;font-weight:700;margin:6px 0}
+.cohort-wk-card .wk-label{font-size:11px;color:#6b7a99;font-weight:600}
+.cohort-wk-card .wk-sub{font-size:11px;color:#6b7a99;margin-top:2px}
+.dropout-tag{display:inline-block;font-size:10px;background:#FEE2E2;color:#991B1B;padding:1px 7px;border-radius:8px;font-weight:600}
+.active-tag{display:inline-block;font-size:10px;background:#D1FAE5;color:#065F46;padding:1px 7px;border-radius:8px;font-weight:600}
+.pending-tag{display:inline-block;font-size:10px;background:#FEF3C7;color:#92400E;padding:1px 7px;border-radius:8px;font-weight:600}
 .followup-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff}
 .w5-badge{display:inline-block;font-size:10px;background:#1D9E75;color:#fff;padding:1px 6px;border-radius:8px;margin-left:4px;vertical-align:middle}
 </style>
@@ -88,6 +104,7 @@ tr:hover td{background:#f9fafc}
   <button class="active" onclick="showTab('overview',this)">종합 현황</button>
   <button onclick="showTab('weekly',this)">주별 분석</button>
   <button onclick="showTab('cheopak',this)">비급여 첩약 추이</button>
+  <button onclick="showTab('cohort',this)">초진 재방문 추이</button>
   <button onclick="showTab('insights',this)">인사이트</button>
 </div>
 <div class="content">
@@ -744,6 +761,351 @@ tr:hover td{background:#f9fafc}
   </div>
 </div>
 
+
+<!-- ══ 초진 재방문 추이 ══ -->
+<div class="section" id="tab-cohort">
+
+  <!-- 주차별 요약 카드 -->
+  <div class="cohort-summary-grid">
+    <div class="cohort-wk-card">
+      <div class="wk-label">1주차 (3/23~29)</div>
+      <div class="rate" style="color:#1D9E75">86%</div>
+      <div class="wk-sub">7명 중 6명 재방문</div>
+      <div class="wk-sub">평균 5.0회</div>
+    </div>
+    <div class="cohort-wk-card">
+      <div class="wk-label">2주차 (3/30~4/5)</div>
+      <div class="rate" style="color:#BA7517">44%</div>
+      <div class="wk-sub">9명 중 4명 재방문</div>
+      <div class="wk-sub">평균 2.0회</div>
+    </div>
+    <div class="cohort-wk-card">
+      <div class="wk-label">3주차 (4/6~4/12)</div>
+      <div class="rate" style="color:#BA7517">45%</div>
+      <div class="wk-sub">11명 중 5명 재방문</div>
+      <div class="wk-sub">평균 2.2회</div>
+    </div>
+    <div class="cohort-wk-card">
+      <div class="wk-label">4주차 (4/13~4/19)</div>
+      <div class="rate" style="color:#1D9E75">75%</div>
+      <div class="wk-sub">8명 중 6명 재방문</div>
+      <div class="wk-sub">평균 2.8회</div>
+    </div>
+    <div class="cohort-wk-card">
+      <div class="wk-label">5주차 (4/20~4/26)</div>
+      <div class="rate" style="color:#6b7a99">31%</div>
+      <div class="wk-sub">13명 중 4명 재방문</div>
+      <div class="wk-sub">추적 기간 짧음</div>
+    </div>
+  </div>
+
+  <!-- 재방문율 차트 -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">주차별 쌩초진 재방문율</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-cohort-rate"></canvas></div>
+      <p class="note" style="margin-top:8px">※ 초진일 이후 전체 기간(~4/26) 기준 | 5주차는 추적기간 짧아 참고용</p>
+    </div>
+    <div class="card">
+      <div class="card-title">재방문자 평균 재방문 횟수</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-cohort-avg"></canvas></div>
+      <p class="note" style="margin-top:8px">※ 재방문한 환자만 기준 | 1주차 평균 5.0회로 압도적</p>
+    </div>
+  </div>
+
+  <!-- 전체 이탈 현황 -->
+  <div class="card">
+    <div class="card-title">전체 쌩초진 48명 재방문 현황</div>
+    <div class="metrics" style="margin-bottom:16px">
+      <div class="metric blue"><div class="metric-label">전체 쌩초진</div><div class="metric-value">48명</div></div>
+      <div class="metric green"><div class="metric-label">재방문 완료</div><div class="metric-value">25명</div><div class="metric-sub">52%</div></div>
+      <div class="metric red"><div class="metric-label">이탈 (1~4주차)</div><div class="metric-value">14명</div><div class="metric-sub">39%</div></div>
+      <div class="metric orange"><div class="metric-label">추적 중 (5주차)</div><div class="metric-value">9명</div><div class="metric-sub">미재방문 추적 필요</div></div>
+    </div>
+    <div class="followup-bar">
+      <div class="followup-seg" style="width:52.1%;background:#1D9E75">재방문 25명 (52%)</div>
+      <div class="followup-seg" style="width:29.2%;background:#E24B4A">이탈 14명 (29%)</div>
+      <div class="followup-seg" style="width:18.7%;background:#85B7EB">5주차 9명 (19%)</div>
+    </div>
+  </div>
+
+  <!-- 주차별 개인 상세 테이블 -->
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="tab-btn active" id="cb1" onclick="showCohort('c1')">1주차</button>
+    <button class="tab-btn" id="cb2" onclick="showCohort('c2')">2주차</button>
+    <button class="tab-btn" id="cb3" onclick="showCohort('c3')">3주차</button>
+    <button class="tab-btn" id="cb4" onclick="showCohort('c4')">4주차</button>
+    <button class="tab-btn" id="cb5" onclick="showCohort('c5')">5주차</button>
+  </div>
+
+  <!-- 1주차 코호트 -->
+  <div id="c1" style="display:block">
+    <div class="card">
+      <div class="card-title">1주차 쌩초진 7명 — 재방문 6명 (86%) · 총 30회 · 평균 5.0회</div>
+      <div class="table-wrap"><table class="cohort-table">
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 추이</th><th>재방문 날짜</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>김정은</b></td><td>3/25</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">17회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:100%;background:#1D9E75"></div></div><span class="rv-count">최다</span></div></td>
+            <td style="font-size:11px;color:#4a5568">3/27·28·30, 4/1·3·4·6·8·10·11·13·17·18·20·22·24·25</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td><b>김정이</b></td><td>3/25</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">7회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:41%;background:#1D9E75"></div></div><span class="rv-count"></span></div></td>
+            <td style="font-size:11px;color:#4a5568">3/27·30, 4/6·10·15·17·24</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>김용진</td><td>3/23</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">3회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:18%;background:#378ADD"></div></div><span class="rv-count"></span></div></td>
+            <td style="font-size:11px;color:#4a5568">3/25·27·30</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>강선희</td><td>3/23</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:6%;background:#378ADD"></div></div><span class="rv-count"></span></div></td>
+            <td style="font-size:11px;color:#4a5568">4/1</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>김미선</td><td>3/23</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:6%;background:#378ADD"></div></div><span class="rv-count"></span></div></td>
+            <td style="font-size:11px;color:#4a5568">4/9</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>CHEN</td><td>3/28</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:6%;background:#378ADD"></div></div><span class="rv-count"></span></div></td>
+            <td style="font-size:11px;color:#4a5568">4/13</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>정지우</td><td>3/27</td>
+            <td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:0%;background:#E24B4A"></div></div><span class="rv-count">이탈</span></div></td>
+            <td style="font-size:11px;color:#9ca3af">—</td>
+            <td><span class="dropout-tag">이탈</span></td>
+          </tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- 2주차 코호트 -->
+  <div id="c2" style="display:none">
+    <div class="card">
+      <div class="card-title">2주차 쌩초진 9명 — 재방문 4명 (44%) · 총 8회 · 평균 2.0회</div>
+      <div class="table-wrap"><table class="cohort-table">
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 추이</th><th>재방문 날짜</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>고정원</b></td><td>3/30</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">3회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:100%;background:#1D9E75"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/1·3·6</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td><b>이명연</b></td><td>4/3</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">3회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:100%;background:#1D9E75"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/6·8·10</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>이기택</td><td>4/2</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:33%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/3</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>최호선</td><td>4/4</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:33%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/6</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr><td>이다례</td><td>3/30</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>노혜미</td><td>4/3</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>민지유</td><td>4/3</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>박채영</td><td>4/3</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>이재식</td><td>4/3</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">※ 4/3 초진 5명 중 이명연만 재방문 — 금요일 초진 이탈률 주의</p>
+    </div>
+  </div>
+
+  <!-- 3주차 코호트 -->
+  <div id="c3" style="display:none">
+    <div class="card">
+      <div class="card-title">3주차 쌩초진 11명 — 재방문 5명 (45%) · 총 11회 · 평균 2.2회</div>
+      <div class="table-wrap"><table class="cohort-table">
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 추이</th><th>재방문 날짜</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>이혜선</b></td><td>4/6</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">4회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:100%;background:#1D9E75"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/10·14·21·24</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>황준훈</td><td>4/8</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">3회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:75%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/10·12·18</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>이소율</td><td>4/8</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">2회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:50%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/11·13</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>김진오</td><td>4/7</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:25%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/22</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>김혜성</td><td>4/7</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:25%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/8</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr><td>엄기문</td><td>4/6</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>정홍주</td><td>4/6</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>국주옥</td><td>4/8</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>김원균</td><td>4/8</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>Shan</td><td>4/10</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>최용원</td><td>4/10</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- 4주차 코호트 -->
+  <div id="c4" style="display:none">
+    <div class="card">
+      <div class="card-title">4주차 쌩초진 8명 — 재방문 6명 (75%) · 총 17회 · 평균 2.8회</div>
+      <div class="table-wrap"><table class="cohort-table">
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 추이</th><th>재방문 날짜</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>조준우</b></td><td>4/16</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">5회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:100%;background:#1D9E75"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/17·18·19·20·22</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td><b>최준경</b></td><td>4/16</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">4회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:80%;background:#1D9E75"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/17·19·20·24</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>이정본</td><td>4/13</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">3회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:60%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/17·20·24</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>김형석</td><td>4/18</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">3회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:60%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/20·22·24</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>유지선</td><td>4/15</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:20%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/23</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr>
+            <td>송하경</td><td>4/18</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:20%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/20</td>
+            <td><span class="pending-tag">추적필요</span></td>
+          </tr>
+          <tr><td>정회승</td><td>4/15</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+          <tr><td>송주상</td><td>4/17</td><td style="font-size:18px;font-weight:700;color:#E24B4A">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#E24B4A">이탈</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="dropout-tag">이탈</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- 5주차 코호트 -->
+  <div id="c5" style="display:none">
+    <div class="card">
+      <div class="card-title">5주차 쌩초진 13명 — 재방문 4명 (31%) · 총 5회 <span style="font-size:11px;font-weight:400;color:#6b7a99">※ 추적 기간 짧음 (최대 6일)</span></div>
+      <div class="table-wrap"><table class="cohort-table">
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 추이</th><th>재방문 날짜</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>문영식</b></td><td>4/21</td>
+            <td style="font-size:18px;font-weight:700;color:#1D9E75">2회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:100%;background:#1D9E75"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/22·23</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>윤현수</td><td>4/20</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:50%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/22</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>백현진</td><td>4/21</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:50%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/23</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr>
+            <td>김옥수</td><td>4/24</td>
+            <td style="font-size:18px;font-weight:700;color:#378ADD">1회</td>
+            <td><div class="rv-bar-wrap"><div class="rv-bar-bg"><div class="rv-bar-fill" style="width:50%;background:#378ADD"></div></div></div></td>
+            <td style="font-size:11px;color:#4a5568">4/25</td>
+            <td><span class="active-tag">활성</span></td>
+          </tr>
+          <tr><td>양혜인</td><td>4/22</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>박준이</td><td>4/24</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>김춘희</td><td>4/25</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>이지영</td><td>4/25</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>임지영</td><td>4/26</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>김정현</td><td>4/26</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>최준하</td><td>4/25</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+          <tr><td>박준우</td><td>4/25</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+          <tr><td>강양석</td><td>4/25</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td><div class="rv-bar-wrap"><div class="rv-bar-bg"></div><span class="rv-count" style="color:#6b7a99">추적중</span></div></td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">※ 5주차는 최대 6일 추적 | 비급여 순수 환자(최준하·박준우·강양석)는 XLS 미기록으로 재방문 여부 파악 불가</p>
+    </div>
+  </div>
+
+</div>
+
 <!-- ══ 인사이트 ══ -->
 <div class="section" id="tab-insights">
   <div class="insight-item blue">
@@ -813,6 +1175,16 @@ tr:hover td{background:#f9fafc}
 </div>
 
 <script>
+
+function showCohort(id){
+  ['c1','c2','c3','c4','c5'].forEach(function(k){
+    document.getElementById(k).style.display = k===id ? 'block' : 'none';
+  });
+  [['cb1','c1'],['cb2','c2'],['cb3','c3'],['cb4','c4'],['cb5','c5']].forEach(function(p){
+    document.getElementById(p[0]).className = 'tab-btn' + (p[1]===id ? ' active' : '');
+  });
+}
+
 function showTab(name,btn){
   document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
   document.querySelectorAll('.nav button').forEach(function(b){b.classList.remove('active');});
@@ -954,6 +1326,33 @@ document.addEventListener('DOMContentLoaded',function(){
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
 
   renderWeekCharts('w1');
+
+  // 코호트 재방문율 차트
+  new Chart(document.getElementById('c-cohort-rate'),{type:'bar',data:{
+    labels:['1주차\n(3/23~29)','2주차\n(3/30~4/5)','3주차\n(4/6~12)','4주차\n(4/13~19)','5주차\n(4/20~26)'],
+    datasets:[{
+      label:'재방문율',
+      data:[86,44,45,75,31],
+      backgroundColor:['#1D9E75','#BA7517','#BA7517','#1D9E75','#85B7EB'],
+      borderRadius:6,
+    }]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+    tooltip:{callbacks:{label:function(c){return c.raw+'%'}}}},
+    scales:{y:{beginAtZero:true,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
+
+  // 평균 재방문 횟수 차트
+  new Chart(document.getElementById('c-cohort-avg'),{type:'bar',data:{
+    labels:['1주차','2주차','3주차','4주차','5주차'],
+    datasets:[{
+      label:'평균 재방문 횟수',
+      data:[5.0,2.0,2.2,2.8,1.3],
+      backgroundColor:['#1F4E79','#378ADD','#378ADD','#1F4E79','#85B7EB'],
+      borderRadius:6,
+    }]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+    tooltip:{callbacks:{label:function(c){return c.raw+'회'}}}},
+    scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'회'}}}}}});
+
 });
 </script>
 </body>
