@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>경덕한의원 데이터 대시보드</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f6f9;color:#1a1a2e}
@@ -16,7 +16,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav button{padding:14px 18px;border:none;background:none;font-size:13px;color:#6b7a99;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
 .nav button.active{color:#1F4E79;border-bottom-color:#1F4E79;font-weight:600}
 .nav button:hover{color:#1F4E79;background:#f4f6f9}
-.content{padding:24px;max-width:1200px;margin:0 auto}
+.content{padding:24px;max-width:1200px;margin:0 auto;position:relative;}
 .section{display:none}.section.active{display:block}
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
 .metric{background:#fff;border-radius:10px;padding:16px;border:1px solid #e5e9f0}
@@ -31,7 +31,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 @media(max-width:700px){.grid2{grid-template-columns:1fr}}
 .card{background:#fff;border-radius:10px;padding:20px;border:1px solid #e5e9f0;margin-bottom:16px}
 .card-title{font-size:12px;font-weight:600;color:#6b7a99;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
-.chart-wrap{position:relative;width:100%}
+.chart-wrap{position:relative;width:100%;min-height:160px}.svg-host{width:100%;height:100%;min-height:160px;}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-size:12px;color:#6b7a99}
 .legend span{display:flex;align-items:center;gap:5px}
 .leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
@@ -105,6 +105,7 @@ tr:hover td{background:#f9fafc}
   <button onclick="showTab('weekly',this)">주별 분석</button>
   <button onclick="showTab('cheopak',this)">비급여 첩약 추이</button>
   <button onclick="showTab('cohort',this)">초진 재방문 추이</button>
+  <button onclick="showTab('monthly',this)">월별 분석</button>
   <button onclick="showTab('insights',this)">인사이트</button>
 </div>
 <div class="content">
@@ -124,7 +125,7 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#1F4E79"></span>총방문</span>
         <span><span class="leg-dot" style="background:#85B7EB"></span>일평균(우축)</span>
       </div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-visit"></canvas></div>
+      <div class="chart-wrap" style="height:220px"><div id="c-visit" class="svg-host"></div></div>
     </div>
     <div class="card">
       <div class="card-title">주차별 수입 구조 (만원)</div>
@@ -133,7 +134,7 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#BA7517"></span>비급여</span>
         <span><span class="leg-dot" style="background:#1D9E75"></span>자보</span>
       </div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-revenue"></canvas></div>
+      <div class="chart-wrap" style="height:220px"><div id="c-revenue" class="svg-host"></div></div>
     </div>
   </div>
   <div class="grid2">
@@ -145,11 +146,11 @@ tr:hover td{background:#f9fafc}
         <span><span class="leg-dot" style="background:#1D9E75"></span>초진</span>
         <span><span class="leg-dot" style="background:#85B7EB"></span>첩약</span>
       </div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-class"></canvas></div>
+      <div class="chart-wrap" style="height:220px"><div id="c-class" class="svg-host"></div></div>
     </div>
     <div class="card">
       <div class="card-title">5주 누적 수입 구조</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-income-pie"></canvas></div>
+      <div class="chart-wrap" style="height:220px"><div id="c-income-pie" class="svg-host"></div></div>
     </div>
   </div>
 
@@ -179,7 +180,7 @@ tr:hover td{background:#f9fafc}
     <div class="card-title">비급여 수입 상세 (5주 누적 19,058,100원)</div>
     <div style="display:grid;grid-template-columns:280px 1fr;gap:16px;margin-bottom:16px">
       <div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-nv-pie"></canvas></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-nv-pie" class="svg-host"></div></div>
       </div>
       <div class="table-wrap">
         <table>
@@ -193,7 +194,7 @@ tr:hover td{background:#f9fafc}
         </table>
       </div>
     </div>
-    <div class="chart-wrap" style="height:200px;margin-top:16px"><canvas id="c-nv-bar"></canvas></div>
+    <div class="chart-wrap" style="height:200px;margin-top:16px"><div id="c-nv-bar" class="svg-host"></div></div>
     <div class="legend" style="margin-top:8px">
       <span><span class="leg-dot" style="background:#378ADD"></span>비급여첩약</span>
       <span><span class="leg-dot" style="background:#D85A30"></span>약침</span>
@@ -207,7 +208,7 @@ tr:hover td{background:#f9fafc}
     <div class="card-title">연령대 분포 (5주 누적 기준)</div>
     <div class="grid2">
       <div>
-        <div class="chart-wrap" style="height:240px"><canvas id="c-age-pie"></canvas></div>
+        <div class="chart-wrap" style="height:240px"><div id="c-age-pie" class="svg-host"></div></div>
       </div>
       <div>
         <div style="padding-top:4px">
@@ -225,7 +226,7 @@ tr:hover td{background:#f9fafc}
         <p class="note" style="margin-top:8px">※ 5주간 방문한 급여 고유환자 기준 | 50·60대가 전체의 51%</p>
       </div>
     </div>
-    <div class="chart-wrap" style="height:200px;margin-top:16px"><canvas id="c-age-bar"></canvas></div>
+    <div class="chart-wrap" style="height:200px;margin-top:16px"><div id="c-age-bar" class="svg-host"></div></div>
     <div class="legend" style="margin-top:8px">
       <span><span class="leg-dot" style="background:#1F4E79"></span>50대</span>
       <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
@@ -281,11 +282,11 @@ tr:hover td{background:#f9fafc}
       <div class="card">
         <div class="card-title">일별 초진 / 재초진 / 재진</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1F4E79"></span>재진</span><span><span class="leg-dot" style="background:#BA7517"></span>재초진</span><span><span class="leg-dot" style="background:#1D9E75"></span>초진</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-bar"></canvas></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w1-bar" class="svg-host"></div></div>
       </div>
       <div class="card">
         <div class="card-title">일별 총 진료비 (만원)</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w1-rev"></canvas></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w1-rev" class="svg-host"></div></div>
       </div>
     </div>
     <div class="card">
@@ -319,7 +320,7 @@ tr:hover td{background:#f9fafc}
       </div>
       <div class="card">
         <div class="card-title">비급여 상세 (2,165,000원)</div>
-        <div class="chart-wrap" style="height:160px"><canvas id="c-w1-nv"></canvas></div>
+        <div class="chart-wrap" style="height:160px"><div id="c-w1-nv" class="svg-host"></div></div>
         <div class="table-wrap" style="margin-top:8px"><table><tbody>
           <tr><td>비급여 첩약</td><td style="text-align:right">2,140,000원</td><td style="text-align:right">98.8%</td></tr>
           <tr><td>기타비급여</td><td style="text-align:right">25,000원</td><td style="text-align:right">1.2%</td></tr>
@@ -339,9 +340,9 @@ tr:hover td{background:#f9fafc}
     <div class="grid2">
       <div class="card"><div class="card-title">일별 초진 / 재초진 / 재진</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1F4E79"></span>재진</span><span><span class="leg-dot" style="background:#BA7517"></span>재초진</span><span><span class="leg-dot" style="background:#1D9E75"></span>초진</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-bar"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w2-bar" class="svg-host"></div></div></div>
       <div class="card"><div class="card-title">일별 총 진료비 (만원)</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w2-rev"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w2-rev" class="svg-host"></div></div></div>
     </div>
     <div class="card">
       <div class="card-title">2주차 일별 상세</div>
@@ -371,7 +372,7 @@ tr:hover td{background:#f9fafc}
           <tr><td><b>순수입</b></td><td><b>11,356,436원</b></td><td>-</td></tr>
         </tbody></table></div></div>
       <div class="card"><div class="card-title">비급여 상세 (4,298,600원)</div>
-        <div class="chart-wrap" style="height:160px"><canvas id="c-w2-nv"></canvas></div>
+        <div class="chart-wrap" style="height:160px"><div id="c-w2-nv" class="svg-host"></div></div>
         <div class="table-wrap" style="margin-top:8px"><table><tbody>
           <tr><td>비급여 첩약</td><td style="text-align:right">3,348,600원</td><td style="text-align:right">77.9%</td></tr>
           <tr><td>더수 (공진단)</td><td style="text-align:right">544,000원</td><td style="text-align:right">12.7%</td></tr>
@@ -392,9 +393,9 @@ tr:hover td{background:#f9fafc}
     <div class="grid2">
       <div class="card"><div class="card-title">일별 초진 / 재초진 / 재진</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1F4E79"></span>재진</span><span><span class="leg-dot" style="background:#BA7517"></span>재초진</span><span><span class="leg-dot" style="background:#1D9E75"></span>초진</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w3-bar"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w3-bar" class="svg-host"></div></div></div>
       <div class="card"><div class="card-title">일별 총 진료비 (만원)</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w3-rev"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w3-rev" class="svg-host"></div></div></div>
     </div>
     <div class="card">
       <div class="card-title">3주차 일별 상세</div>
@@ -424,7 +425,7 @@ tr:hover td{background:#f9fafc}
           <tr><td><b>순수입</b></td><td><b>8,257,288원</b></td><td>-</td></tr>
         </tbody></table></div></div>
       <div class="card"><div class="card-title">비급여 상세 (3,045,500원)</div>
-        <div class="chart-wrap" style="height:160px"><canvas id="c-w3-nv"></canvas></div>
+        <div class="chart-wrap" style="height:160px"><div id="c-w3-nv" class="svg-host"></div></div>
         <div class="table-wrap" style="margin-top:8px"><table><tbody>
           <tr><td>비급여 첩약</td><td style="text-align:right">1,821,100원</td><td style="text-align:right">59.8%</td></tr>
           <tr><td>약침 (무통·태반)</td><td style="text-align:right">960,000원</td><td style="text-align:right">31.5%</td></tr>
@@ -445,9 +446,9 @@ tr:hover td{background:#f9fafc}
     <div class="grid2">
       <div class="card"><div class="card-title">일별 초진 / 재초진 / 재진</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1F4E79"></span>재진</span><span><span class="leg-dot" style="background:#BA7517"></span>재초진</span><span><span class="leg-dot" style="background:#1D9E75"></span>초진</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w4-bar"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w4-bar" class="svg-host"></div></div></div>
       <div class="card"><div class="card-title">일별 총 진료비 (만원)</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w4-rev"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w4-rev" class="svg-host"></div></div></div>
     </div>
     <div class="card">
       <div class="card-title">4주차 일별 상세</div>
@@ -477,7 +478,7 @@ tr:hover td{background:#f9fafc}
           <tr><td><b>순수입</b></td><td><b>11,916,717원</b></td><td>-</td></tr>
         </tbody></table></div></div>
       <div class="card"><div class="card-title">비급여 상세 (5,126,000원)</div>
-        <div class="chart-wrap" style="height:160px"><canvas id="c-w4-nv"></canvas></div>
+        <div class="chart-wrap" style="height:160px"><div id="c-w4-nv" class="svg-host"></div></div>
         <div class="table-wrap" style="margin-top:8px"><table><tbody>
           <tr><td>비급여 첩약</td><td style="text-align:right">5,032,000원</td><td style="text-align:right">98.2%</td></tr>
           <tr><td>약침 (무통)</td><td style="text-align:right">80,000원</td><td style="text-align:right">1.6%</td></tr>
@@ -497,9 +498,9 @@ tr:hover td{background:#f9fafc}
     <div class="grid2">
       <div class="card"><div class="card-title">일별 초진 / 재초진 / 재진</div>
         <div class="legend"><span><span class="leg-dot" style="background:#1F4E79"></span>재진</span><span><span class="leg-dot" style="background:#BA7517"></span>재초진</span><span><span class="leg-dot" style="background:#1D9E75"></span>초진</span></div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w5-bar"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w5-bar" class="svg-host"></div></div></div>
       <div class="card"><div class="card-title">일별 총 진료비 (만원)</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-w5-rev"></canvas></div></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-w5-rev" class="svg-host"></div></div></div>
     </div>
     <div class="card">
       <div class="card-title">5주차 일별 상세</div>
@@ -529,7 +530,7 @@ tr:hover td{background:#f9fafc}
           <tr><td><b>순수입</b></td><td><b>10,899,530원</b></td><td>-</td></tr>
         </tbody></table></div></div>
       <div class="card"><div class="card-title">비급여 상세 (4,423,000원)</div>
-        <div class="chart-wrap" style="height:160px"><canvas id="c-w5-nv"></canvas></div>
+        <div class="chart-wrap" style="height:160px"><div id="c-w5-nv" class="svg-host"></div></div>
         <div class="table-wrap" style="margin-top:8px"><table><tbody>
           <tr><td>비급여 첩약</td><td style="text-align:right">4,040,000원</td><td style="text-align:right">91.3%</td></tr>
           <tr><td>약침 (무통·태반)</td><td style="text-align:right">315,000원</td><td style="text-align:right">7.1%</td></tr>
@@ -540,7 +541,7 @@ tr:hover td{background:#f9fafc}
     <div class="card">
       <div class="card-title">5주차 연령대 분포 (급여 고유환자 103명)</div>
       <div class="grid2">
-        <div class="chart-wrap" style="height:180px"><canvas id="c-w5-age"></canvas></div>
+        <div class="chart-wrap" style="height:180px"><div id="c-w5-age" class="svg-host"></div></div>
         <div class="table-wrap"><table>
           <thead><tr><th>연령대</th><th>방문</th><th>비중</th></tr></thead>
           <tbody>
@@ -600,7 +601,7 @@ tr:hover td{background:#f9fafc}
       <span><span class="leg-dot" style="background:#378ADD"></span>신규 방문</span>
       <span><span class="leg-dot" style="background:#1D9E75"></span>재방문 (이전 방문 경험자)</span>
     </div>
-    <div class="chart-wrap" style="height:240px"><canvas id="c-cp-trend"></canvas></div>
+    <div class="chart-wrap" style="height:240px"><div id="c-cp-trend" class="svg-host"></div></div>
     <div class="table-wrap" style="margin-top:16px"><table>
       <thead><tr><th>주차</th><th>신규</th><th>재방문</th><th>합계</th><th>재방문율</th><th>주요 신규 환자</th></tr></thead>
       <tbody>
@@ -678,7 +679,7 @@ tr:hover td{background:#f9fafc}
     </div>
     <div style="margin-top:16px">
       <div class="card-title">재방문 간격 분포</div>
-      <div class="chart-wrap" style="height:160px"><canvas id="c-cp-gap"></canvas></div>
+      <div class="chart-wrap" style="height:160px"><div id="c-cp-gap" class="svg-host"></div></div>
       <p class="note" style="margin-top:8px">※ 재방문 9건 평균 간격: 약 17.7일 | 20첩(약 20일분) 복용 완료 시점과 일치</p>
     </div>
   </div>
@@ -702,7 +703,7 @@ tr:hover td{background:#f9fafc}
     <div class="grid2">
       <div>
         <div class="card-title">연령대별 비급여 첩약 환자 (5주 누적 68명)</div>
-        <div class="chart-wrap" style="height:220px"><canvas id="c-cp-age"></canvas></div>
+        <div class="chart-wrap" style="height:220px"><div id="c-cp-age" class="svg-host"></div></div>
         <p class="note" style="margin-top:8px">※ 30~50대(51%)가 주축 | 급여 환자(50·60대 중심)와 다른 분포</p>
       </div>
       <div>
@@ -803,12 +804,12 @@ tr:hover td{background:#f9fafc}
   <div class="grid2">
     <div class="card">
       <div class="card-title">주차별 쌩초진 재방문율</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-cohort-rate"></canvas></div>
+      <div class="chart-wrap" style="height:220px"><div id="c-cohort-rate" class="svg-host"></div></div>
       <p class="note" style="margin-top:8px">※ 초진일 이후 전체 기간(~4/26) 기준 | 5주차는 추적기간 짧아 참고용</p>
     </div>
     <div class="card">
       <div class="card-title">재방문자 평균 재방문 횟수</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="c-cohort-avg"></canvas></div>
+      <div class="chart-wrap" style="height:220px"><div id="c-cohort-avg" class="svg-host"></div></div>
       <p class="note" style="margin-top:8px">※ 재방문한 환자만 기준 | 1주차 평균 5.0회로 압도적</p>
     </div>
   </div>
@@ -1106,6 +1107,165 @@ tr:hover td{background:#f9fafc}
 
 </div>
 
+
+<!-- ══ 월별 분석 ══ -->
+<div class="section" id="tab-monthly">
+
+  <!-- 4월 KPI 카드 -->
+  <div class="metrics">
+    <div class="metric blue"><div class="metric-label">4월 총 방문</div><div class="metric-value">691명</div><div class="metric-sub">일평균 23.0명</div></div>
+    <div class="metric green"><div class="metric-label">4월 총 진료비</div><div class="metric-value">45.7M</div><div class="metric-sub">순수입 41.6M</div></div>
+    <div class="metric blue"><div class="metric-label">4월 보험수입</div><div class="metric-value">29.0M</div><div class="metric-sub">비중 63.5%</div></div>
+    <div class="metric orange"><div class="metric-label">4월 비급여</div><div class="metric-value">16.7M</div><div class="metric-sub">비중 36.5%</div></div>
+    <div class="metric"><div class="metric-label">4월 쌩초진</div><div class="metric-value">45명</div><div class="metric-sub">재초진 96 / 재진 492</div></div>
+  </div>
+
+  <!-- 수입 구조 + 일별 방문 차트 -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">4월 일별 방문수 추이</div>
+      <div class="chart-wrap" style="height:220px"><div id="c-apr-visit" class="svg-host"></div></div>
+      <p class="note" style="margin-top:6px">※ 월·수·금 피크 / 화·목·일 저점 패턴 뚜렷</p>
+    </div>
+    <div class="card">
+      <div class="card-title">4월 일별 총진료비 (만원)</div>
+      <div class="chart-wrap" style="height:220px"><div id="c-apr-rev" class="svg-host"></div></div>
+    </div>
+  </div>
+
+  <!-- 요일별 분석 -->
+  <div class="card">
+    <div class="card-title">요일별 평균 방문수 & 평균 진료비</div>
+    <div class="grid2">
+      <div>
+        <div class="chart-wrap" style="height:200px"><div id="c-apr-weekday-pt" class="svg-host"></div></div>
+      </div>
+      <div>
+        <table style="width:100%;font-size:13px;border-collapse:collapse">
+          <thead><tr>
+            <th style="padding:8px;background:#f4f6f9;border-bottom:1px solid #e5e9f0;text-align:left">요일</th>
+            <th style="padding:8px;background:#f4f6f9;border-bottom:1px solid #e5e9f0;text-align:right">평균 방문</th>
+            <th style="padding:8px;background:#f4f6f9;border-bottom:1px solid #e5e9f0;text-align:right">평균 진료비</th>
+            <th style="padding:8px;background:#f4f6f9;border-bottom:1px solid #e5e9f0;text-align:right">특징</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="padding:8px;border-bottom:1px solid #f4f6f9">월</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right;font-weight:600">35.2명</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">190.5만</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right"><span class="tag blue">피크</span></td></tr>
+            <tr><td style="padding:8px;border-bottom:1px solid #f4f6f9">화</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">9.0명</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">46.8만</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right"><span class="tag orange">저점</span></td></tr>
+            <tr><td style="padding:8px;border-bottom:1px solid #f4f6f9">수</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right;font-weight:600">36.4명</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right;font-weight:600">242.7만</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right"><span class="tag blue">피크</span></td></tr>
+            <tr><td style="padding:8px;border-bottom:1px solid #f4f6f9">목</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">9.2명</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">50.2만</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right"><span class="tag orange">저점</span></td></tr>
+            <tr><td style="padding:8px;border-bottom:1px solid #f4f6f9">금</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right;font-weight:600;color:#1D9E75">39.0명</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right;font-weight:600;color:#1D9E75">279.7만</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right"><span class="tag green">최고</span></td></tr>
+            <tr><td style="padding:8px;border-bottom:1px solid #f4f6f9">토</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">25.2명</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">214.4만</td><td style="padding:8px;border-bottom:1px solid #f4f6f9;text-align:right">비급여 집중</td></tr>
+            <tr><td style="padding:8px">일</td><td style="padding:8px;text-align:right">7.2명</td><td style="padding:8px;text-align:right">45.8만</td><td style="padding:8px;text-align:right"><span class="tag orange">최저</span></td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:8px">※ 금요일 최다 방문 + 최고 진료비 — 비급여 첩약 결제 집중 | 화·목요일은 저점 구조적 패턴</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수입 상세 -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">4월 수입 구조</div>
+      <div class="chart-wrap" style="height:220px"><div id="c-apr-income-pie" class="svg-host"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">4월 비급여 구성</div>
+      <div class="chart-wrap" style="height:220px"><div id="c-apr-nv-pie" class="svg-host"></div></div>
+    </div>
+  </div>
+
+  <!-- 수입 상세 테이블 -->
+  <div class="card">
+    <div class="card-title">4월 수입 상세 집계</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>구분</th><th>금액</th><th>비중</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td><b>총 진료비</b></td><td><b>45,733,810원</b></td><td><b>100%</b></td><td>수입지출장 하단 합계 기준</td></tr>
+        <tr><td>보험수입</td><td>29,043,310원</td><td>63.5%</td><td>공단청구 + 첩약보험 + 자보 포함</td></tr>
+        <tr><td>　└ 자보</td><td>2,210,580원</td><td>4.8%</td><td>일별청구현황 자보 항목 합산</td></tr>
+        <tr><td>비급여</td><td>16,690,500원</td><td>36.5%</td><td>일반수입 + 기타수입</td></tr>
+        <tr><td>　└ 비급여첩약</td><td>13,752,100원</td><td>30.1%</td><td>수입지출장 일반수입 중 첩약</td></tr>
+        <tr><td>　└ 약침</td><td>1,785,000원</td><td>3.9%</td><td>무통·태반 약침</td></tr>
+        <tr><td>　└ 더수</td><td>706,500원</td><td>1.5%</td><td>공진단·경옥고·콜드퀵</td></tr>
+        <tr><td>　└ 기타비급여</td><td>446,900원</td><td>1.0%</td><td>진단서·소견서·택배비 등</td></tr>
+        <tr><td>지출</td><td>4,177,480원</td><td>-</td><td>운반비·의약품비·잡비</td></tr>
+        <tr style="background:#f4f6f9;font-weight:600"><td>순수입</td><td>41,556,330원</td><td>-</td><td></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- 환자 구성 -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">4월 환자 구성</div>
+      <div class="chart-wrap" style="height:200px"><div id="c-apr-class-pie" class="svg-host"></div></div>
+      <div class="table-wrap" style="margin-top:12px"><table>
+        <thead><tr><th>구분</th><th>인원</th><th>비중</th></tr></thead>
+        <tbody>
+          <tr><td>재진</td><td>492명</td><td>71.2%</td></tr>
+          <tr><td>재초진</td><td>96명</td><td>13.9%</td></tr>
+          <tr><td>초진 (쌩초진)</td><td>45명</td><td>6.5%</td></tr>
+          <tr><td>비급여 순수방문 등</td><td>58명</td><td>8.4%</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>691명</td><td>100%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:6px">※ 재진+재초진=588명(85.1%) — 고정 환자군 안정적</p>
+    </div>
+    <div class="card">
+      <div class="card-title">4월 연령대 분포 (급여 환자 기준)</div>
+      <div class="chart-wrap" style="height:200px"><div id="c-apr-age" class="svg-host"></div></div>
+      <p class="note" style="margin-top:8px">※ 50·60대가 핵심층 | 30~40대 20% 이상으로 중년층 유입 양호</p>
+    </div>
+  </div>
+
+  <!-- 쌩초진 재방문율 (4월 코호트) -->
+  <div class="card">
+    <div class="card-title">4월 쌩초진 45명 재방문율</div>
+    <div class="metrics" style="margin-bottom:16px">
+      <div class="metric green"><div class="metric-label">재방문 완료</div><div class="metric-value">20명</div><div class="metric-sub">44%</div></div>
+      <div class="metric red"><div class="metric-label">이탈 확인</div><div class="metric-value">16명</div><div class="metric-sub">36%</div></div>
+      <div class="metric orange"><div class="metric-label">추적 중</div><div class="metric-value">9명</div><div class="metric-sub">5주차 초진 (추적기간 짧음)</div></div>
+    </div>
+    <div class="followup-bar">
+      <div class="followup-seg" style="width:44%;background:#1D9E75">재방문 20명 (44%)</div>
+      <div class="followup-seg" style="width:36%;background:#E24B4A">이탈 16명 (36%)</div>
+      <div class="followup-seg" style="width:20%;background:#85B7EB">추적중 9명 (20%)</div>
+    </div>
+    <div class="chart-wrap" style="height:200px;margin-top:16px"><div id="c-apr-cohort" class="svg-host"></div></div>
+    <p class="note" style="margin-top:8px">※ 4/3(금) 초진 5명 중 이명연만 재방문 — 금요일 초진 이탈률 높음 주의 | 4월 말 초진(6주차)은 5월 추적 필요</p>
+  </div>
+
+  <!-- 첩약보험 + 추나 -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">4월 첩약보험 & 추나</div>
+      <div class="chuna-box">
+        <div class="chuna-item"><div class="chuna-num">37명</div><div class="chuna-label">첩약보험 환자</div></div>
+        <div class="chuna-item"><div class="chuna-num">6회</div><div class="chuna-label">건보 추나</div></div>
+        <div class="chuna-item"><div class="chuna-num">4회</div><div class="chuna-label">자보 추나</div></div>
+      </div>
+      <p class="note">※ 추나 총 10회 / 첩약보험은 급여 첩약 본인부담 기준</p>
+    </div>
+    <div class="card">
+      <div class="card-title">4월 비급여 첩약 현황</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>기간</th><th>방문 건수</th><th>금액</th></tr></thead>
+        <tbody>
+          <tr><td>4/1~4/5</td><td>6건</td><td>1,960,000원</td></tr>
+          <tr><td>4/6~4/12</td><td>7건</td><td>1,821,100원</td></tr>
+          <tr><td>4/13~4/19</td><td>18건</td><td>5,032,000원</td></tr>
+          <tr><td>4/20~4/26</td><td>16건</td><td>4,040,000원</td></tr>
+          <tr><td>4/27~4/30</td><td>5건</td><td>1,700,000원</td></tr>
+          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>52건</td><td>14,553,100원</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note" style="margin-top:6px">※ 4/13~4/19 집중 — 유지선·원서영·조명아·전성연·이성준·안지현·조명순·김재연 등 대량 처방 주간</p>
+    </div>
+  </div>
+
+</div>
+
 <!-- ══ 인사이트 ══ -->
 <div class="section" id="tab-insights">
   <div class="insight-item blue">
@@ -1174,186 +1334,341 @@ tr:hover td{background:#f9fafc}
 
 </div>
 
-<script>
 
-function showCohort(id){
-  ['c1','c2','c3','c4','c5'].forEach(function(k){
-    document.getElementById(k).style.display = k===id ? 'block' : 'none';
+<script>
+// ── SVG 차트 헬퍼 ──────────────────────────────────────────
+var COLORS = {
+  navy:'#1F4E79', blue:'#378ADD', lblue:'#85B7EB', xblue:'#B5D4F4',
+  green:'#1D9E75', orange:'#BA7517', red:'#E24B4A',
+  salmon:'#D85A30', gray:'#D0D7E3', lgray:'#f4f6f9',
+  text:'#1a1a2e', muted:'#6b7a99'
+};
+
+function svgEl(tag,attrs,children){
+  var ns='http://www.w3.org/2000/svg';
+  var el=document.createElementNS(ns,tag);
+  for(var k in attrs) el.setAttribute(k,attrs[k]);
+  if(typeof children==='string') el.textContent=children;
+  else if(Array.isArray(children)) children.forEach(function(c){if(c)el.appendChild(c);});
+  return el;
+}
+
+// 막대 차트 (세로)
+function barChart(hostId, labels, datasets, opts){
+  opts=opts||{};
+  var host=document.getElementById(hostId);
+  if(!host)return;
+  host.innerHTML='';
+  var W=host.clientWidth||host.offsetWidth||600, H=host.clientHeight||220;
+  if(W<10) W=600;
+  var pad={t:16,r:16,b:labels.length>15?40:32,l:48};
+  var cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+  var stacked=opts.stacked||false;
+  var n=labels.length, ds=datasets;
+  
+  // 최대값
+  var maxVal=0;
+  if(stacked){
+    for(var i=0;i<n;i++){
+      var s=0;
+      ds.forEach(function(d){s+=(d.data[i]||0);});
+      if(s>maxVal)maxVal=s;
+    }
+  } else {
+    ds.forEach(function(d){d.data.forEach(function(v){if(v>maxVal)maxVal=v;});});
+  }
+  maxVal=maxVal||1;
+  
+  var svg=svgEl('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H,xmlns:'http://www.w3.org/2000/svg'});
+  
+  // Y축 그리드
+  var ticks=5;
+  for(var t=0;t<=ticks;t++){
+    var yv=maxVal*t/ticks;
+    var yp=pad.t+cH-(cH*t/ticks);
+    svg.appendChild(svgEl('line',{x1:pad.l,y1:yp,x2:pad.l+cW,y2:yp,stroke:'#e5e9f0','stroke-width':t===0?1.5:0.5}));
+    var label=opts.yFmt?opts.yFmt(yv):Math.round(yv)+'';
+    svg.appendChild(svgEl('text',{x:pad.l-6,y:yp+4,'text-anchor':'end','font-size':'9','fill':COLORS.muted},label));
+  }
+  
+  var gap=2, groupW=cW/n;
+  
+  ds.forEach(function(dataset,di){
+    var barW=stacked?groupW-gap*2:(groupW-gap*(ds.length+1))/ds.length;
+    dataset.data.forEach(function(val,i){
+      var x, yBase, barH;
+      if(stacked){
+        var base=0;
+        for(var j=0;j<di;j++) base+=ds[j].data[i]||0;
+        yBase=pad.t+cH-(cH*(base+val)/maxVal);
+        barH=cH*val/maxVal;
+        x=pad.l+i*groupW+gap;
+      } else {
+        x=pad.l+i*groupW+gap+di*barW;
+        yBase=pad.t+cH-cH*val/maxVal;
+        barH=cH*val/maxVal;
+      }
+      var color=Array.isArray(dataset.color)?dataset.color[i]:dataset.color;
+      var r=svgEl('rect',{x:x,y:yBase,width:stacked?groupW-gap*2:barW-1,height:Math.max(barH,0),fill:color||COLORS.blue,rx:2});
+      svg.appendChild(r);
+      // 값 표시 (큰 경우만)
+      if(val>0&&barH>14&&!stacked){
+        var lbl=opts.valFmt?opts.valFmt(val):val+'';
+        svg.appendChild(svgEl('text',{x:x+(stacked?groupW/2:barW/2),y:yBase+barH-4,'text-anchor':'middle','font-size':'8','fill':'#fff'},lbl));
+      }
+    });
   });
-  [['cb1','c1'],['cb2','c2'],['cb3','c3'],['cb4','c4'],['cb5','c5']].forEach(function(p){
-    document.getElementById(p[0]).className = 'tab-btn' + (p[1]===id ? ' active' : '');
+  
+  // X축 레이블
+  labels.forEach(function(lbl,i){
+    var x=pad.l+i*groupW+groupW/2;
+    var lines=lbl.split('\n');
+    if(lines.length>1){
+      lines.forEach(function(line,li){
+        svg.appendChild(svgEl('text',{x:x,y:H-pad.b+12+li*10,'text-anchor':'middle','font-size':'8','fill':COLORS.muted},line));
+      });
+    } else {
+      svg.appendChild(svgEl('text',{x:x,y:H-pad.b+12,'text-anchor':'middle','font-size':n>20?'7':'9','fill':COLORS.muted},lbl));
+    }
+  });
+  
+  // 범례
+  if(ds.length>1&&opts.legend!==false){
+    var lx=pad.l, ly=8;
+    ds.forEach(function(d){
+      svg.appendChild(svgEl('rect',{x:lx,y:ly-6,width:8,height:8,fill:d.color,rx:1}));
+      svg.appendChild(svgEl('text',{x:lx+11,y:ly+1,'font-size':'9','fill':COLORS.muted},d.label||''));
+      lx+=60;
+    });
+  }
+  
+  host.appendChild(svg);
+}
+
+// 도넛 차트
+function donutChart(hostId, labels, values, colors){
+  var host=document.getElementById(hostId);
+  if(!host)return;
+  host.innerHTML='';
+  var W=host.clientWidth||300, H=host.clientHeight||220;
+  if(W<10)W=300;
+  var cx=W*0.42, cy=H/2, R=Math.min(cx,cy)*0.82, r=R*0.55;
+  var total=values.reduce(function(a,b){return a+b;},0)||1;
+  var svg=svgEl('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H});
+  var angle=-Math.PI/2;
+  values.forEach(function(v,i){
+    var sweep=2*Math.PI*v/total;
+    var x1=cx+R*Math.cos(angle), y1=cy+R*Math.sin(angle);
+    var x2=cx+R*Math.cos(angle+sweep), y2=cy+R*Math.sin(angle+sweep);
+    var x3=cx+r*Math.cos(angle+sweep), y3=cy+r*Math.sin(angle+sweep);
+    var x4=cx+r*Math.cos(angle), y4=cy+r*Math.sin(angle);
+    var la=sweep>Math.PI?1:0;
+    var d=['M',x1,y1,'A',R,R,0,la,1,x2,y2,'L',x3,y3,'A',r,r,0,la,0,x4,y4,'Z'].join(' ');
+    svg.appendChild(svgEl('path',{d:d,fill:colors[i]||'#ccc',stroke:'#fff','stroke-width':2}));
+    angle+=sweep;
+  });
+  // 범례 (오른쪽)
+  var lx=W*0.87, ly=cy-labels.length*11;
+  labels.forEach(function(lbl,i){
+    var pct=Math.round(values[i]/total*100);
+    svg.appendChild(svgEl('rect',{x:lx-14,y:ly+i*22-7,width:10,height:10,fill:colors[i]||'#ccc',rx:2}));
+    svg.appendChild(svgEl('text',{x:lx,y:ly+i*22,'font-size':'9','fill':COLORS.text},lbl.split(' ')[0]));
+    svg.appendChild(svgEl('text',{x:lx,y:ly+i*22+10,'font-size':'8','fill':COLORS.muted},pct+'%'));
+  });
+  host.appendChild(svg);
+}
+
+// ── 차트 데이터 정의 ────────────────────────────────────────
+var CHART_DEFS = {};
+
+// 종합현황
+CHART_DEFS['c-visit']=function(){
+  barChart('c-visit',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'총방문',data:[152,147,158,170,164],color:COLORS.navy}
+  ]);};
+CHART_DEFS['c-revenue']=function(){
+  barChart('c-revenue',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'보험',data:[630,705,669,659,661],color:COLORS.navy},
+    {label:'비급여',data:[217,430,305,513,442],color:COLORS.orange},
+    {label:'자보',data:[22,31,54,44,65],color:COLORS.green}
+  ],{stacked:true,yFmt:function(v){return Math.round(v)+'만';}});};
+CHART_DEFS['c-class']=function(){
+  barChart('c-class',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'재진',data:[107,111,118,113,130],color:COLORS.navy},
+    {label:'재초진',data:[29,20,17,33,21],color:COLORS.orange},
+    {label:'초진',data:[7,11,15,13,13],color:COLORS.green},
+    {label:'첩약',data:[8,15,9,7,3],color:COLORS.lblue}
+  ],{stacked:true});};
+CHART_DEFS['c-income-pie']=function(){
+  donutChart('c-income-pie',['보험','비급여','자보'],[33235490,19058100,2155132],[COLORS.navy,COLORS.orange,COLORS.green]);};
+CHART_DEFS['c-nv-pie']=function(){
+  donutChart('c-nv-pie',['비급여첩약','약침','더수','기타'],[16381700,1740000,706500,229900],[COLORS.blue,COLORS.salmon,COLORS.green,COLORS.xblue]);};
+CHART_DEFS['c-nv-bar']=function(){
+  barChart('c-nv-bar',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'비급여첩약',data:[214,335,182,503,404],color:COLORS.blue},
+    {label:'약침',data:[0,39,96,8,32],color:COLORS.salmon},
+    {label:'더수',data:[0,54,16,0,0],color:COLORS.green},
+    {label:'기타',data:[3,2,10,1,7],color:COLORS.xblue}
+  ],{stacked:true,yFmt:function(v){return Math.round(v)+'만';}});};
+CHART_DEFS['c-age-pie']=function(){
+  donutChart('c-age-pie',['50대','60대','70대','40대','30대','기타'],[66,64,56,45,43,53],[COLORS.navy,COLORS.blue,COLORS.lblue,COLORS.orange,COLORS.green,COLORS.xblue]);};
+CHART_DEFS['c-age-bar']=function(){
+  barChart('c-age-bar',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'50대',data:[39,32,27,37,18],color:COLORS.navy},
+    {label:'60대',data:[27,30,32,29,20],color:COLORS.blue},
+    {label:'70대',data:[26,24,16,30,19],color:COLORS.lblue},
+    {label:'40대',data:[19,24,18,20,12],color:COLORS.orange},
+    {label:'30대',data:[13,15,8,19,16],color:COLORS.green},
+    {label:'기타',data:[17,16,16,21,18],color:COLORS.xblue}
+  ],{stacked:true});};
+
+// 주별분석
+function weekBar(sfx,labels,revisit,reinit,initial){
+  barChart('c-w'+sfx+'-bar',labels,[
+    {label:'재진',data:revisit,color:COLORS.navy},
+    {label:'재초진',data:reinit,color:COLORS.orange},
+    {label:'초진',data:initial,color:COLORS.green}
+  ],{stacked:true});}
+function weekRev(sfx,labels,data){
+  barChart('c-w'+sfx+'-rev',labels,[{label:'진료비',data:data,color:COLORS.green}],{yFmt:function(v){return Math.round(v)+'만';}});}
+function weekNv(sfx,vals,lbls,cols){
+  donutChart('c-w'+sfx+'-nv',lbls,vals,cols);}
+
+CHART_DEFS['c-w1-bar']=function(){weekBar('1',['3/23','3/24','3/25','3/26','3/27','3/28','3/29'],[22,4,26,9,19,21,3],[5,2,3,5,6,4,0],[3,0,2,0,1,1,0]);};
+CHART_DEFS['c-w1-rev']=function(){weekRev('1',['3/23','3/24','3/25','3/26','3/27','3/28','3/29'],[144,35,253,73,124,198,20]);};
+CHART_DEFS['c-w1-nv']=function(){weekNv('1',[2140000,25000],['비급여첩약','기타'],[COLORS.blue,COLORS.xblue]);};
+CHART_DEFS['c-w2-bar']=function(){weekBar('2',['3/30','3/31','4/1','4/2','4/3','4/4','4/5'],[25,5,25,6,24,19,4],[2,0,5,1,3,6,0],[2,0,0,1,5,1,0]);};
+CHART_DEFS['c-w2-rev']=function(){weekRev('2',['3/30','3/31','4/1','4/2','4/3','4/4','4/5'],[286,48,194,40,276,242,35]);};
+CHART_DEFS['c-w2-nv']=function(){weekNv('2',[3348600,544000,385000,21000],['비급여첩약','더수','약침','기타'],[COLORS.blue,COLORS.green,COLORS.salmon,COLORS.xblue]);};
+CHART_DEFS['c-w3-bar']=function(){weekBar('3',['4/6','4/7','4/8','4/9','4/10','4/11','4/12'],[33,3,25,6,26,16,5],[4,3,3,0,4,3,0],[2,2,4,0,2,0,0]);};
+CHART_DEFS['c-w3-rev']=function(){weekRev('3',['4/6','4/7','4/8','4/9','4/10','4/11','4/12'],[197,46,237,30,253,158,52]);};
+CHART_DEFS['c-w3-nv']=function(){weekNv('3',[1821100,960000,162500,101900],['비급여첩약','약침','더수','기타'],[COLORS.blue,COLORS.salmon,COLORS.green,COLORS.xblue]);};
+CHART_DEFS['c-w4-bar']=function(){weekBar('4',['4/13','4/14','4/15','4/16','4/17','4/18','4/19'],[27,5,19,6,27,22,6],[3,2,15,0,5,2,1],[1,0,2,2,2,1,0]);};
+CHART_DEFS['c-w4-rev']=function(){weekRev('4',['4/13','4/14','4/15','4/16','4/17','4/18','4/19'],[205,40,309,37,341,175,63]);};
+CHART_DEFS['c-w4-nv']=function(){weekNv('4',[5032000,80000,14000],['비급여첩약','약침','기타'],[COLORS.blue,COLORS.salmon,COLORS.xblue]);};
+CHART_DEFS['c-w5-bar']=function(){weekBar('5',['4/20','4/21','4/22','4/23','4/24','4/25','4/26'],[26,8,24,7,33,15,4],[6,1,5,3,4,2,0],[1,2,1,0,2,5,2]);};
+CHART_DEFS['c-w5-rev']=function(){weekRev('5',['4/20','4/21','4/22','4/23','4/24','4/25','4/26'],[164,64,245,66,249,282,32]);};
+CHART_DEFS['c-w5-nv']=function(){weekNv('5',[4040000,315000,68000],['비급여첩약','약침','기타'],[COLORS.blue,COLORS.salmon,COLORS.xblue]);};
+CHART_DEFS['c-w5-age']=function(){donutChart('c-w5-age',['60대','50대','70대','30대','40대','기타'],[20,18,19,16,12,18],[COLORS.blue,COLORS.navy,COLORS.lblue,COLORS.green,COLORS.orange,COLORS.xblue]);};
+
+// 비급여 첩약 추이
+CHART_DEFS['c-cp-trend']=function(){
+  barChart('c-cp-trend',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'신규',data:[9,15,7,18,12],color:COLORS.blue},
+    {label:'재방문',data:[0,1,3,3,4],color:COLORS.green}
+  ],{stacked:true});};
+CHART_DEFS['c-cp-gap']=function(){
+  barChart('c-cp-gap',['박지흠','이복순','이용훈','조근혜','김재연','송선화','이채연','정미선','최경주'],[
+    {label:'간격(일)',data:[9,13,14,14,21,19,23,24,22],color:COLORS.lblue}
+  ],{yFmt:function(v){return v+'일';}});};
+CHART_DEFS['c-cp-age']=function(){
+  donutChart('c-cp-age',['30대','60대','40대','20대','70대','기타'],[13,11,11,8,8,17],[COLORS.green,COLORS.blue,COLORS.orange,COLORS.lblue,COLORS.xblue,COLORS.gray]);};
+
+// 초진 재방문 추이
+CHART_DEFS['c-cohort-rate']=function(){
+  barChart('c-cohort-rate',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'재방문율(%)',data:[86,44,45,75,31],color:[COLORS.green,COLORS.orange,COLORS.orange,COLORS.green,COLORS.lblue]}
+  ],{yFmt:function(v){return v+'%';}});};
+CHART_DEFS['c-cohort-avg']=function(){
+  barChart('c-cohort-avg',['1주차','2주차','3주차','4주차','5주차'],[
+    {label:'평균재방문',data:[5.0,2.0,2.2,2.8,1.3],color:[COLORS.navy,COLORS.blue,COLORS.blue,COLORS.navy,COLORS.lblue]}
+  ],{yFmt:function(v){return v+'회';}});};
+
+// 월별분석
+CHART_DEFS['c-apr-visit']=function(){
+  var aprDates=['4/1','4/2','4/3','4/4','4/5','4/6','4/7','4/8','4/9','4/10','4/11','4/12','4/13','4/14','4/15','4/16','4/17','4/18','4/19','4/20','4/21','4/22','4/23','4/24','4/25','4/26','4/27','4/28','4/29','4/30'];
+  var aprVisit=[31,9,35,28,6,42,8,34,6,38,22,8,35,8,41,8,41,26,9,35,12,33,11,42,25,6,29,8,43,12];
+  var wdMap={'4/1':'수','4/2':'목','4/3':'금','4/4':'토','4/5':'일','4/6':'월','4/7':'화','4/8':'수','4/9':'목','4/10':'금','4/11':'토','4/12':'일','4/13':'월','4/14':'화','4/15':'수','4/16':'목','4/17':'금','4/18':'토','4/19':'일','4/20':'월','4/21':'화','4/22':'수','4/23':'목','4/24':'금','4/25':'토','4/26':'일','4/27':'월','4/28':'화','4/29':'수','4/30':'목'};
+  var bgC=aprDates.map(function(d){var w=wdMap[d];return w==='금'?COLORS.green:w==='월'||w==='수'?COLORS.blue:w==='토'?COLORS.orange:COLORS.gray;});
+  barChart('c-apr-visit',aprDates,[{label:'방문수',data:aprVisit,color:bgC}]);};
+CHART_DEFS['c-apr-rev']=function(){
+  var aprDates=['4/1','4/2','4/3','4/4','4/5','4/6','4/7','4/8','4/9','4/10','4/11','4/12','4/13','4/14','4/15','4/16','4/17','4/18','4/19','4/20','4/21','4/22','4/23','4/24','4/25','4/26','4/27','4/28','4/29','4/30'];
+  var aprRev=[194,40,276,242,35,197,46,237,30,253,158,52,205,40,309,37,341,175,63,164,64,245,66,249,282,32,196,36,228,78];
+  var wdMap={'4/1':'수','4/2':'목','4/3':'금','4/4':'토','4/5':'일','4/6':'월','4/7':'화','4/8':'수','4/9':'목','4/10':'금','4/11':'토','4/12':'일','4/13':'월','4/14':'화','4/15':'수','4/16':'목','4/17':'금','4/18':'토','4/19':'일','4/20':'월','4/21':'화','4/22':'수','4/23':'목','4/24':'금','4/25':'토','4/26':'일','4/27':'월','4/28':'화','4/29':'수','4/30':'목'};
+  var bgC=aprDates.map(function(d){var w=wdMap[d];return w==='금'?COLORS.green:w==='월'||w==='수'?COLORS.blue:w==='토'?COLORS.orange:COLORS.gray;});
+  barChart('c-apr-rev',aprDates,[{label:'진료비',data:aprRev,color:bgC}],{yFmt:function(v){return Math.round(v)+'만';}});};
+CHART_DEFS['c-apr-weekday-pt']=function(){
+  barChart('c-apr-weekday-pt',['월','화','수','목','금','토','일'],[
+    {label:'평균방문',data:[35.2,9.0,36.4,9.2,39.0,25.2,7.2],color:[COLORS.blue,COLORS.gray,COLORS.blue,COLORS.gray,COLORS.green,COLORS.orange,COLORS.gray]}
+  ]);};
+CHART_DEFS['c-apr-income-pie']=function(){
+  donutChart('c-apr-income-pie',['보험','비급여','자보'],[26832730,16690500,2210580],[COLORS.navy,COLORS.orange,COLORS.green]);};
+CHART_DEFS['c-apr-nv-pie']=function(){
+  donutChart('c-apr-nv-pie',['비급여첩약','약침','더수','기타'],[13752100,1785000,706500,446900],[COLORS.blue,COLORS.salmon,COLORS.green,COLORS.xblue]);};
+CHART_DEFS['c-apr-class-pie']=function(){
+  donutChart('c-apr-class-pie',['재진','재초진','초진','기타'],[492,96,45,58],[COLORS.navy,COLORS.orange,COLORS.green,COLORS.xblue]);};
+CHART_DEFS['c-apr-age']=function(){
+  barChart('c-apr-age',['10미만','10대','20대','30대','40대','50대','60대','70대','80대'],[
+    {label:'환자수',data:[2,11,22,43,45,66,64,56,18],color:[COLORS.xblue,COLORS.xblue,COLORS.lblue,COLORS.green,COLORS.orange,COLORS.navy,COLORS.blue,COLORS.lblue,COLORS.xblue]}
+  ]);};
+CHART_DEFS['c-apr-cohort']=function(){
+  barChart('c-apr-cohort',['4/1~5\n7명','4/6~12\n11명','4/13~19\n8명','4/20~26\n13명','4/27~30\n6명'],[
+    {label:'재방문',data:[4,5,6,4,1],color:COLORS.green},
+    {label:'이탈',data:[3,6,2,0,4],color:COLORS.red},
+    {label:'추적중',data:[0,0,0,9,1],color:COLORS.lblue}
+  ],{stacked:true});};
+
+// ── 탭별 차트 목록 ──────────────────────────────────────────
+var TAB_CHARTS = {
+  'overview': ['c-visit','c-revenue','c-class','c-income-pie','c-nv-pie','c-nv-bar','c-age-pie','c-age-bar'],
+  'weekly':   ['c-w1-bar','c-w1-rev','c-w1-nv'],
+  'cheopak':  ['c-cp-trend','c-cp-gap','c-cp-age'],
+  'cohort':   ['c-cohort-rate','c-cohort-avg'],
+  'monthly':  ['c-apr-visit','c-apr-rev','c-apr-weekday-pt','c-apr-income-pie','c-apr-nv-pie','c-apr-class-pie','c-apr-age','c-apr-cohort'],
+  'insights': []
+};
+var WEEK_CHARTS = {
+  'w1':['c-w1-bar','c-w1-rev','c-w1-nv'],
+  'w2':['c-w2-bar','c-w2-rev','c-w2-nv'],
+  'w3':['c-w3-bar','c-w3-rev','c-w3-nv'],
+  'w4':['c-w4-bar','c-w4-rev','c-w4-nv'],
+  'w5':['c-w5-bar','c-w5-rev','c-w5-nv','c-w5-age']
+};
+var drawnCharts={};
+
+function drawCharts(ids){
+  ids.forEach(function(id){
+    if(!drawnCharts[id] && CHART_DEFS[id]){
+      try{ CHART_DEFS[id](); drawnCharts[id]=true; }
+      catch(e){ console.warn('차트 오류',id,e); }
+    }
   });
 }
 
+// 탭 전환
+var monthlyInited=false;
 function showTab(name,btn){
   document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
   document.querySelectorAll('.nav button').forEach(function(b){b.classList.remove('active');});
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
+  setTimeout(function(){ drawCharts(TAB_CHARTS[name]||[]); },50);
 }
 var weekChartsRendered={w1:false,w2:false,w3:false,w4:false,w5:false};
 function showWeek(id){
-  ['w1','w2','w3','w4','w5'].forEach(function(k){document.getElementById(k).style.display=k===id?'block':'none';});
+  ['w1','w2','w3','w4','w5'].forEach(function(k){
+    document.getElementById(k).style.display=k===id?'block':'none';
+  });
   [['wb1','w1'],['wb2','w2'],['wb3','w3'],['wb4','w4'],['wb5','w5']].forEach(function(p){
     document.getElementById(p[0]).className='tab-btn'+(p[1]===id?' active':'');
   });
-  renderWeekCharts(id);
+  setTimeout(function(){ drawCharts(WEEK_CHARTS[id]||[]); },50);
 }
-function renderWeekCharts(id){
-  if(weekChartsRendered[id])return;
-  weekChartsRendered[id]=true;
-  var co={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
-  var nvOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}};
-  if(id==='w1'){
-    new Chart(document.getElementById('c-w1-bar'),{type:'bar',data:{labels:['3/23','3/24','3/25','3/26','3/27','3/28','3/29'],datasets:[
-      {label:'재진',data:[22,4,26,9,19,21,3],backgroundColor:'#1F4E79'},
-      {label:'재초진',data:[5,2,3,5,6,4,0],backgroundColor:'#BA7517'},
-      {label:'초진',data:[3,0,2,0,1,1,0],backgroundColor:'#1D9E75'}
-    ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
-    new Chart(document.getElementById('c-w1-rev'),{type:'bar',data:{labels:['3/23','3/24','3/25','3/26','3/27','3/28','3/29'],datasets:[{label:'진료비',data:[144,35,253,73,124,198,20],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w1-nv'),{type:'doughnut',data:{labels:['비급여첩약','기타비급여'],datasets:[{data:[2140000,25000],backgroundColor:['#378ADD','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
-  }
-  if(id==='w2'){
-    new Chart(document.getElementById('c-w2-bar'),{type:'bar',data:{labels:['3/30','3/31','4/1','4/2','4/3','4/4','4/5'],datasets:[
-      {label:'재진',data:[25,5,25,6,24,19,4],backgroundColor:'#1F4E79'},
-      {label:'재초진',data:[2,0,5,1,3,6,0],backgroundColor:'#BA7517'},
-      {label:'초진',data:[2,0,0,1,5,1,0],backgroundColor:'#1D9E75'}
-    ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
-    new Chart(document.getElementById('c-w2-rev'),{type:'bar',data:{labels:['3/30','3/31','4/1','4/2','4/3','4/4','4/5'],datasets:[{label:'진료비',data:[286,48,194,40,276,242,35],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w2-nv'),{type:'doughnut',data:{labels:['비급여첩약','더수','약침','기타'],datasets:[{data:[3348600,544000,385000,21000],backgroundColor:['#378ADD','#1D9E75','#D85A30','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
-  }
-  if(id==='w3'){
-    new Chart(document.getElementById('c-w3-bar'),{type:'bar',data:{labels:['4/6','4/7','4/8','4/9','4/10','4/11','4/12'],datasets:[
-      {label:'재진',data:[33,3,25,6,26,16,5],backgroundColor:'#1F4E79'},
-      {label:'재초진',data:[4,3,3,0,4,3,0],backgroundColor:'#BA7517'},
-      {label:'초진',data:[2,2,4,0,2,0,0],backgroundColor:'#1D9E75'}
-    ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
-    new Chart(document.getElementById('c-w3-rev'),{type:'bar',data:{labels:['4/6','4/7','4/8','4/9','4/10','4/11','4/12'],datasets:[{label:'진료비',data:[197,46,237,30,253,158,52],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w3-nv'),{type:'doughnut',data:{labels:['비급여첩약','약침','더수','기타'],datasets:[{data:[1821100,960000,162500,101900],backgroundColor:['#378ADD','#D85A30','#1D9E75','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
-  }
-  if(id==='w4'){
-    new Chart(document.getElementById('c-w4-bar'),{type:'bar',data:{labels:['4/13','4/14','4/15','4/16','4/17','4/18','4/19'],datasets:[
-      {label:'재진',data:[27,5,19,6,27,22,6],backgroundColor:'#1F4E79'},
-      {label:'재초진',data:[3,2,15,0,5,2,1],backgroundColor:'#BA7517'},
-      {label:'초진',data:[1,0,2,2,2,1,0],backgroundColor:'#1D9E75'}
-    ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
-    new Chart(document.getElementById('c-w4-rev'),{type:'bar',data:{labels:['4/13','4/14','4/15','4/16','4/17','4/18','4/19'],datasets:[{label:'진료비',data:[205,40,309,37,341,175,63],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w4-nv'),{type:'doughnut',data:{labels:['비급여첩약','약침','기타'],datasets:[{data:[5032000,80000,14000],backgroundColor:['#378ADD','#D85A30','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
-  }
-  if(id==='w5'){
-    new Chart(document.getElementById('c-w5-bar'),{type:'bar',data:{labels:['4/20','4/21','4/22','4/23','4/24','4/25','4/26'],datasets:[
-      {label:'재진',data:[26,8,24,7,33,15,4],backgroundColor:'#1F4E79'},
-      {label:'재초진',data:[6,1,5,3,4,2,0],backgroundColor:'#BA7517'},
-      {label:'초진',data:[1,2,1,0,2,5,2],backgroundColor:'#1D9E75'}
-    ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
-    new Chart(document.getElementById('c-w5-rev'),{type:'bar',data:{labels:['4/20','4/21','4/22','4/23','4/24','4/25','4/26'],datasets:[{label:'진료비',data:[164,64,245,66,249,282,32],backgroundColor:'#1D9E75'}]},options:Object.assign({},co,{scales:{y:{ticks:{callback:function(v){return v+'만'}}}}})});
-    new Chart(document.getElementById('c-w5-nv'),{type:'doughnut',data:{labels:['비급여첩약','약침','기타'],datasets:[{data:[4040000,315000,68000],backgroundColor:['#378ADD','#D85A30','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:nvOpts});
-    new Chart(document.getElementById('c-w5-age'),{type:'doughnut',data:{labels:['60대','50대','70대','30대','40대','기타'],datasets:[{data:[20,18,19,16,12,18],backgroundColor:['#378ADD','#1F4E79','#85B7EB','#1D9E75','#BA7517','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:9},boxWidth:8}}}}});
-  }
+function showCohort(id){
+  ['c1','c2','c3','c4','c5'].forEach(function(k){
+    document.getElementById(k).style.display=k===id?'block':'none';
+  });
+  [['cb1','c1'],['cb2','c2'],['cb3','c3'],['cb4','c4'],['cb5','c5']].forEach(function(p){
+    document.getElementById(p[0]).className='tab-btn'+(p[1]===id?' active':'');
+  });
 }
-document.addEventListener('DOMContentLoaded',function(){
-  var co={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
-  var wks=['1주차','2주차','3주차','4주차','5주차'];
-  new Chart(document.getElementById('c-visit'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'총방문',data:[152,147,158,170,164],backgroundColor:'#1F4E79'},
-    {label:'일평균',data:[21.7,21.0,22.6,24.3,23.4],type:'line',yAxisID:'y2',borderColor:'#85B7EB',backgroundColor:'#85B7EB',pointRadius:5,fill:false}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true},y2:{position:'right',grid:{drawOnChartArea:false},min:15,max:30,ticks:{callback:function(v){return v+'명'}}}}}});
-  new Chart(document.getElementById('c-revenue'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'보험',data:[630,705,669,659,661],backgroundColor:'#1F4E79'},
-    {label:'비급여',data:[217,430,305,513,442],backgroundColor:'#BA7517'},
-    {label:'자보',data:[22,31,54,44,65],backgroundColor:'#1D9E75'}
-  ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
-  new Chart(document.getElementById('c-class'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'재진',data:[107,111,118,113,130],backgroundColor:'#1F4E79'},
-    {label:'재초진',data:[29,20,17,33,21],backgroundColor:'#BA7517'},
-    {label:'초진',data:[7,11,15,13,13],backgroundColor:'#1D9E75'},
-    {label:'첩약',data:[8,15,9,7,3],backgroundColor:'#85B7EB'}
-  ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
-  new Chart(document.getElementById('c-income-pie'),{type:'doughnut',data:{
-    labels:['보험 61.9%','비급여 35.5%','자보 4.0%'],
-    datasets:[{data:[33235490,19058100,2155132],backgroundColor:['#1F4E79','#BA7517','#1D9E75'],borderWidth:2,borderColor:'#fff'}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}}}});
-  new Chart(document.getElementById('c-nv-pie'),{type:'doughnut',data:{
-    labels:['비급여첩약 85.9%','약침 9.1%','더수 3.7%','기타 1.2%'],
-    datasets:[{data:[16381700,1740000,706500,229900],backgroundColor:['#378ADD','#D85A30','#1D9E75','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
-  new Chart(document.getElementById('c-nv-bar'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'비급여첩약',data:[214,335,182,503,404],backgroundColor:'#378ADD'},
-    {label:'약침',data:[0,39,96,8,32],backgroundColor:'#D85A30'},
-    {label:'더수',data:[0,54,16,0,0],backgroundColor:'#1D9E75'},
-    {label:'기타비급여',data:[3,2,10,1,7],backgroundColor:'#B5D4F4'}
-  ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:function(v){return v+'만'}}}}})});
-  new Chart(document.getElementById('c-age-pie'),{type:'doughnut',data:{
-    labels:['50대 25.9%','60대 25.1%','70대 21.9%','40대 17.6%','30대 16.8%','기타 13.3%'],
-    datasets:[{data:[66,64,56,45,43,22],backgroundColor:['#1F4E79','#378ADD','#85B7EB','#BA7517','#1D9E75','#B5D4F4'],borderWidth:2,borderColor:'#fff'}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
-  new Chart(document.getElementById('c-age-bar'),{type:'bar',data:{labels:wks,datasets:[
-    {label:'50대',data:[39,32,27,37,18],backgroundColor:'#1F4E79'},
-    {label:'60대',data:[27,30,32,29,20],backgroundColor:'#378ADD'},
-    {label:'70대',data:[26,24,16,30,19],backgroundColor:'#85B7EB'},
-    {label:'40대',data:[19,24,18,20,12],backgroundColor:'#BA7517'},
-    {label:'30대',data:[13,15,8,19,16],backgroundColor:'#1D9E75'},
-    {label:'기타',data:[17,16,16,21,18],backgroundColor:'#B5D4F4'},
-  ]},options:Object.assign({},co,{scales:{x:{stacked:true},y:{stacked:true}}})});
 
-  // 비급여 첩약 추이 차트
-  new Chart(document.getElementById('c-cp-trend'),{type:'bar',data:{
-    labels:['1주차','2주차','3주차','4주차','5주차'],
-    datasets:[
-      {label:'신규 방문',data:[9,15,7,18,12],backgroundColor:'#378ADD'},
-      {label:'재방문',data:[0,1,3,3,4],backgroundColor:'#1D9E75'},
-    ]
-  },options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:true,position:'top',labels:{font:{size:11},boxWidth:10}}},
-    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{stepSize:5}}}}});
-
-  // 재방문 간격 분포
-  new Chart(document.getElementById('c-cp-gap'),{type:'bar',data:{
-    labels:['박지흠\n9일','이복순\n13일','이용훈\n14일','조근혜\n14일','이복순(2차)\n13일','이용훈(2차)\n14일','조근혜(2차)\n14일','김재연\n21일','송선화\n19일','이채연\n23일','정미선\n24일','최경주\n22일'],
-    datasets:[{
-      label:'재방문 간격(일)',
-      data:[9,13,14,14,13,14,14,21,19,23,24,22],
-      backgroundColor:['#85B7EB','#85B7EB','#85B7EB','#85B7EB','#85B7EB','#85B7EB','#85B7EB','#85B7EB','#1D9E75','#1D9E75','#1D9E75','#1D9E75'],
-    }]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,max:30,ticks:{callback:function(v){return v+'일'}}}}}});
-
-  // 비급여 첩약 연령대 (5주 누적 68명)
-  new Chart(document.getElementById('c-cp-age'),{type:'doughnut',data:{
-    labels:['30대 19.1%','60대 16.2%','40대 16.2%','20대 11.8%','70대 11.8%','10세미만 4.4%','기타 20.6%'],
-    datasets:[{data:[13,11,11,8,8,3,14],backgroundColor:['#1D9E75','#378ADD','#BA7517','#85B7EB','#B5D4F4','#E24B4A','#e5e9f0'],borderWidth:2,borderColor:'#fff'}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:10}}}}});
-
-  renderWeekCharts('w1');
-
-  // 코호트 재방문율 차트
-  new Chart(document.getElementById('c-cohort-rate'),{type:'bar',data:{
-    labels:['1주차\n(3/23~29)','2주차\n(3/30~4/5)','3주차\n(4/6~12)','4주차\n(4/13~19)','5주차\n(4/20~26)'],
-    datasets:[{
-      label:'재방문율',
-      data:[86,44,45,75,31],
-      backgroundColor:['#1D9E75','#BA7517','#BA7517','#1D9E75','#85B7EB'],
-      borderRadius:6,
-    }]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{label:function(c){return c.raw+'%'}}}},
-    scales:{y:{beginAtZero:true,max:100,ticks:{callback:function(v){return v+'%'}}}}}});
-
-  // 평균 재방문 횟수 차트
-  new Chart(document.getElementById('c-cohort-avg'),{type:'bar',data:{
-    labels:['1주차','2주차','3주차','4주차','5주차'],
-    datasets:[{
-      label:'평균 재방문 횟수',
-      data:[5.0,2.0,2.2,2.8,1.3],
-      backgroundColor:['#1F4E79','#378ADD','#378ADD','#1F4E79','#85B7EB'],
-      borderRadius:6,
-    }]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-    tooltip:{callbacks:{label:function(c){return c.raw+'회'}}}},
-    scales:{y:{beginAtZero:true,ticks:{callback:function(v){return v+'회'}}}}}});
-
+// 초기 렌더링
+window.addEventListener('load',function(){
+  drawCharts(TAB_CHARTS['overview']);
+  drawCharts(WEEK_CHARTS['w1']);
 });
 </script>
+
 </body>
 </html>
