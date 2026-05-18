@@ -79,12 +79,12 @@ tr:hover td{background:#f9fafc}
 .rv-bar-wrap{display:flex;align-items:center;gap:6px}
 .rv-bar-bg{flex:1;background:#f0f2f5;border-radius:4px;height:8px;overflow:hidden;min-width:60px}
 .rv-bar-fill{height:100%;border-radius:4px}
-.cohort-summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
-@media(max-width:700px){.cohort-summary-grid{grid-template-columns:repeat(2,1fr)}}
+.cohort-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+@media(max-width:900px){.cohort-summary-grid{grid-template-columns:repeat(4,1fr)}} @media(max-width:600px){.cohort-summary-grid{grid-template-columns:repeat(2,1fr)}}
 .cohort-wk-card{background:#fff;border-radius:10px;padding:16px;border:1px solid #e5e9f0;text-align:center}
-.cohort-wk-card .rate{font-size:28px;font-weight:700;margin:6px 0}
-.cohort-wk-card .wk-label{font-size:11px;color:#6b7a99;font-weight:600}
-.cohort-wk-card .wk-sub{font-size:11px;color:#6b7a99;margin-top:2px}
+.cohort-wk-card .rate{font-size:22px;font-weight:700;margin:4px 0}
+.cohort-wk-card .wk-label{font-size:10px;color:#6b7a99;font-weight:600}
+.cohort-wk-card .wk-sub{font-size:10px;color:#6b7a99;margin-top:2px}
 .dropout-tag{display:inline-block;font-size:10px;background:#FEE2E2;color:#991B1B;padding:1px 7px;border-radius:8px;font-weight:600}
 .active-tag{display:inline-block;font-size:10px;background:#D1FAE5;color:#065F46;padding:1px 7px;border-radius:8px;font-weight:600}
 .pending-tag{display:inline-block;font-size:10px;background:#FEF3C7;color:#92400E;padding:1px 7px;border-radius:8px;font-weight:600}
@@ -113,10 +113,10 @@ tr:hover td{background:#f9fafc}
 <!-- ══ 종합 현황 ══ -->
 <div class="section active" id="tab-overview">
   <div class="metrics">
-    <div class="metric blue"><div class="metric-label">6주 총 방문</div><div class="metric-value">1,254명</div><div class="metric-sub">주평균 156.8명</div></div>
-    <div class="metric blue"><div class="metric-label">6주 일평균</div><div class="metric-value">22.2명</div><div class="metric-sub">최고 6주차 23.7명</div></div>
-    <div class="metric green"><div class="metric-label">6주 총 진료비</div><div class="metric-value">85.0M</div><div class="metric-sub">자보 포함</div></div>
-    <div class="metric"><div class="metric-label">6주 순수입</div><div class="metric-value">79.9M</div><div class="metric-sub">지출 5.07M 제외</div></div>
+    <div class="metric blue"><div class="metric-label">8주 총 방문</div><div class="metric-value">1,254명</div><div class="metric-sub">주평균 156.8명</div></div>
+    <div class="metric blue"><div class="metric-label">8주 일평균</div><div class="metric-value">22.2명</div><div class="metric-sub">최고 6주차 23.7명</div></div>
+    <div class="metric green"><div class="metric-label">8주 총 진료비</div><div class="metric-value">85.0M</div><div class="metric-sub">자보 포함</div></div>
+    <div class="metric"><div class="metric-label">8주 순수입</div><div class="metric-value">79.9M</div><div class="metric-sub">지출 5.07M 제외</div></div>
   </div>
   <div class="grid2">
     <div class="card">
@@ -149,13 +149,13 @@ tr:hover td{background:#f9fafc}
       <div class="chart-wrap" style="height:220px"><div id="c-class" class="svg-host"></div></div>
     </div>
     <div class="card">
-      <div class="card-title">6주 누적 수입 구조</div>
+      <div class="card-title">8주 누적 수입 구조</div>
       <div class="chart-wrap" style="height:220px"><div id="c-income-pie" class="svg-host"></div></div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">6주 누적 현황 요약</div>
+    <div class="card-title">8주 누적 현황 요약</div>
     <div class="table-wrap"><table>
       <thead><tr><th>구분</th><th>1주차</th><th>2주차</th><th>3주차</th><th>4주차</th><th>5주차</th><th>6주차</th><th>7주차</th><th>8주차</th><th>8주 누적</th></tr></thead>
       <tbody>
@@ -758,7 +758,7 @@ tr:hover td{background:#f9fafc}
     <div class="metric blue"><div class="metric-label">5주 고유환자</div><div class="metric-value">93명</div><div class="metric-sub">1~7주 86명 + 8주 7명</div></div>
     <div class="metric green"><div class="metric-label">5주 재방문</div><div class="metric-value">40명</div><div class="metric-sub">전체의 43.0%</div></div>
     <div class="metric orange"><div class="metric-label">미재방문</div><div class="metric-value">47명</div><div class="metric-sub">1~7주차 환자 기준</div></div>
-    <div class="metric"><div class="metric-label">5주 총 첩약수입</div><div class="metric-value">29.1M</div><div class="metric-sub">비급여첩약 누적</div></div>
+    <div class="metric"><div class="metric-label">8주 총 첩약수입</div><div class="metric-value">29.1M</div><div class="metric-sub">비급여첩약 누적</div></div>
   </div>
 
   <!-- 주차별 신규/재방문 추이 -->
@@ -912,7 +912,7 @@ tr:hover td{background:#f9fafc}
 
     <div class="grid2">
       <div>
-        <div class="card-title">연령대별 비급여 첩약 환자 (5주 누적 68명)</div>
+        <div class="card-title">연령대별 비급여 첩약 환자 (8주 누적 93명)</div>
         <div class="chart-wrap" style="height:220px"><div id="c-cp-age" class="svg-host"></div></div>
         <p class="note" style="margin-top:8px">※ 30~50대(51%)가 주축 | 급여 환자(50·60대 중심)와 다른 분포</p>
       </div>
@@ -972,7 +972,7 @@ tr:hover td{background:#f9fafc}
 <div class="section" id="tab-cohort">
 
   <!-- 주차별 요약 카드 -->
-  <div class="cohort-summary-grid" style="grid-template-columns:repeat(6,1fr)">
+  <div class="cohort-summary-grid">
     <div class="cohort-wk-card">
       <div class="wk-label">1주차 (3/23~29)</div>
       <div class="rate" style="color:#1D9E75">86%</div>
@@ -1011,15 +1011,15 @@ tr:hover td{background:#f9fafc}
     </div>
     <div class="cohort-wk-card">
       <div class="wk-label">7주차 (5/4~5/10)</div>
-      <div class="rate" style="color:#6b7a99">-</div>
-      <div class="wk-sub">6명 / 추적 중</div>
-      <div class="wk-sub">추적 기간 최대 6일</div>
+      <div class="rate" style="color:#E24B4A">0%</div>
+      <div class="wk-sub">6명 / 재방문 0명</div>
+      <div class="wk-sub">추적 중</div>
     </div>
     <div class="cohort-wk-card">
       <div class="wk-label">8주차 (5/11~5/17)</div>
-      <div class="rate" style="color:#6b7a99">-</div>
-      <div class="wk-sub">19명 / 추적 중</div>
-      <div class="wk-sub">최종 주차</div>
+      <div class="rate" style="color:#BA7517">37%</div>
+      <div class="wk-sub">19명 / 재방문 7명</div>
+      <div class="wk-sub">주차 내 기준</div>
     </div>
   </div>
 
@@ -1363,48 +1363,48 @@ tr:hover td{background:#f9fafc}
   <!-- 7주차 코호트 -->
   <div id="c7" style="display:none">
     <div class="card">
-      <div class="card-title">7주차 쌩초진 6명 <span style="font-size:11px;font-weight:400;color:#6b7a99">※ 추적기간 최대 6일, 이후 데이터로 완성 예정</span></div>
+      <div class="card-title">7주차 쌩초진 6명 — 8주차 재방문 0명 (0%)</div>
       <div class="table-wrap"><table class="cohort-table">
-        <thead><tr><th>이름</th><th>초진일</th><th>재방문</th><th>상태</th></tr></thead>
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 날짜</th><th>상태</th></tr></thead>
         <tbody>
-          <tr><td>배유호</td><td>5/4</td><td style="font-size:11px;color:#9ca3af">추적중</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>유서윤</td><td>5/6</td><td style="font-size:11px;color:#9ca3af">추적중</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>오서윤</td><td>5/6</td><td style="font-size:11px;color:#9ca3af">추적중</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
-          <tr><td>이현승</td><td>5/8</td><td style="font-size:11px;color:#9ca3af">추적중</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>신우택</td><td>5/9</td><td style="font-size:11px;color:#9ca3af">추적중</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>박문섭</td><td>5/10</td><td style="font-size:11px;color:#9ca3af">추적중</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>배유호</td><td>5/4</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>유서윤</td><td>5/6</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>오서윤</td><td>5/6</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+          <tr><td>이현승</td><td>5/8</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>신우택</td><td>5/9</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>박문섭</td><td>5/10</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
         </tbody>
       </table></div>
-      <p class="note">※ 7주차는 분석 기간 마지막 주차로 재방문 추적 불가 | 8주차 데이터 수신 시 업데이트 예정</p>
+      <p class="note">※ 7주차 쌩초진 6명 모두 8주차(5/11~5/17) 미방문 확인 | 9주차 이후 재방문 추적 계속</p>
     </div>
   </div>
 
   <!-- 8주차 코호트 -->
   <div id="c8" style="display:none">
     <div class="card">
-      <div class="card-title">8주차 쌩초진 19명 <span style="font-size:11px;font-weight:400;color:#6b7a99">※ 최종 주차 — 이후 데이터로 추적 예정</span></div>
+      <div class="card-title">8주차 쌩초진 19명 — 주차 내 재방문 7명(37%) <span style="font-size:11px;font-weight:400;color:#6b7a99">※ 9주차 이후 추적 계속</span></div>
       <div class="table-wrap"><table class="cohort-table">
-        <thead><tr><th>이름</th><th>초진일</th><th>상태</th></tr></thead>
+        <thead><tr><th>이름</th><th>초진일</th><th>재방문 횟수</th><th>재방문 날짜</th><th>상태</th></tr></thead>
         <tbody>
-          <tr><td>강도구</td><td>5/11</td><td><span class="pending-tag">추적중 (자보)</span></td></tr>
-          <tr><td>박희범</td><td>5/11</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>신서연</td><td>5/11</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>김현정</td><td>5/11</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
-          <tr><td>박지현</td><td>5/11</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
-          <tr><td>김봉진</td><td>5/12</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>김인숙</td><td>5/12</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>임종범</td><td>5/12</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>김재영</td><td>5/13</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>chun</td><td>5/13</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>남소영</td><td>5/13</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>이영화</td><td>5/13</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>장명관</td><td>5/14</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>한상철</td><td>5/15</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>김민정</td><td>5/16</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>문종숙</td><td>5/16</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>민소윤</td><td>5/16</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
-          <tr><td>오영택</td><td>5/16</td><td><span class="pending-tag">추적중</span></td></tr>
-          <tr><td>이용기</td><td>5/17</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>강도구</td><td>5/11</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td><b>박희범</b></td><td>5/11</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/13</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td>신서연</td><td>5/11</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>김현정</td><td>5/11</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+          <tr><td>박지현</td><td>5/11</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+          <tr><td><b>김봉진</b></td><td>5/12</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/15</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td>김인숙</td><td>5/12</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>임종범</td><td>5/12</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td><b>김재영</b></td><td>5/13</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/15</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td>chun</td><td>5/13</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td><b>남소영</b></td><td>5/13</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/16</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td><b>이영화</b></td><td>5/13</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/14</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td><b>장명관</b></td><td>5/14</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/15</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td><b>한상철</b></td><td>5/15</td><td style="font-size:18px;font-weight:700;color:#1D9E75">1회</td><td style="font-size:11px;color:#4a5568">5/16</td><td><span class="active-tag">재방문</span></td></tr>
+          <tr><td>김민정</td><td>5/16</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>문종숙</td><td>5/16</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>민소윤</td><td>5/16</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중 (비급여)</span></td></tr>
+          <tr><td>오영택</td><td>5/16</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
+          <tr><td>이용기</td><td>5/17</td><td style="font-size:18px;font-weight:700;color:#6b7a99">0회</td><td style="font-size:11px;color:#9ca3af">—</td><td><span class="pending-tag">추적중</span></td></tr>
         </tbody>
       </table></div>
       <p class="note">※ 8주차는 분석 기간 마지막 주차 | 9주차 데이터 수신 시 재방문 여부 업데이트 예정</p>
@@ -1925,7 +1925,7 @@ CHART_DEFS['c-cp-age']=function(){
 // 초진 재방문 추이
 CHART_DEFS['c-cohort-rate']=function(){
   barChart('c-cohort-rate',['1주차','2주차','3주차','4주차','5주차','6주차','7주차','8주차'],[
-    {label:'재방문율(%)',data:[86,44,45,75,31,31,0,0],color:[COLORS.green,COLORS.orange,COLORS.orange,COLORS.green,COLORS.lblue,COLORS.lblue,COLORS.gray,COLORS.gray]}
+    {label:'재방문율(%)',data:[86,44,45,75,31,31,0,37],color:[COLORS.green,COLORS.orange,COLORS.orange,COLORS.green,COLORS.lblue,COLORS.lblue,COLORS.gray,COLORS.orange]}
   ],{yFmt:function(v){return v+'%';}});};
 CHART_DEFS['c-cohort-avg']=function(){
   barChart('c-cohort-avg',['1주차','2주차','3주차','4주차','5주차','6주차','7주차','8주차'],[
@@ -2004,6 +2004,7 @@ function showTab(name,btn){
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
   setTimeout(function(){ drawCharts(TAB_CHARTS[name]||[]); },50);
+  if(name==='weekly'){setTimeout(function(){showWeek('w1');},50);}
 }
 var weekChartsRendered={w1:false,w2:false,w3:false,w4:false,w5:false};
 function showWeek(id){
@@ -2017,7 +2018,7 @@ function showWeek(id){
   setTimeout(function(){ drawCharts(WEEK_CHARTS[id]||[]); },50);
 }
 function showCohort(id){
-  ['c1','c2','c3','c4','c5','c6'].forEach(function(k){
+  ['c1','c2','c3','c4','c5','c6','c7','c8'].forEach(function(k){
     var el=document.getElementById(k); if(el) el.style.display=k===id?'block':'none';
   });
   [['cb1','c1'],['cb2','c2'],['cb3','c3'],['cb4','c4'],['cb5','c5'],['cb6','c6'],['cb7','c7'],['cb8','c8']].forEach(function(p){
