@@ -277,7 +277,6 @@ tr:hover td{background:#f9fafc}
     <button class="tab-btn" id="wb7" onclick="showWeek('w7')">7주차 (5/4~5/10)</button>
     <button class="tab-btn" id="wb8" onclick="showWeek('w8')">8주차 (5/11~5/17)</button>
     <button class="tab-btn" id="wb9" onclick="showWeek('w9')">9주차 (5/18~5/24)</button>
-    <button class="tab-btn" id="wb9" onclick="showWeek('w9')">9주차 (5/18~5/24)</button>
   </div>
 
   <!-- 1주차 -->
@@ -784,61 +783,6 @@ tr:hover td{background:#f9fafc}
       </div>
     </div>
   </div>
-
-
-  <!-- 9주차 -->
-  <div id="w9" style="display:none">
-    <div class="metrics">
-      <div class="metric blue"><div class="metric-label">총 방문</div><div class="metric-value">169명</div><div class="metric-sub">일평균 24.1명 / 고유 107명</div></div>
-      <div class="metric green"><div class="metric-label">총 진료비</div><div class="metric-value">14.0M</div><div class="metric-sub">자보 포함</div></div>
-      <div class="metric"><div class="metric-label">초진</div><div class="metric-value">23명</div><div class="metric-sub">재초진 22명</div></div>
-      <div class="metric orange"><div class="metric-label">재진</div><div class="metric-value">124명</div><div class="metric-sub">73.4%</div></div>
-    </div>
-    <div class="grid2">
-      <div class="card"><div class="card-title">일별 초진 / 재초진 / 재진</div>
-        <div class="legend"><span><span class="leg-dot" style="background:#1F4E79"></span>재진</span><span><span class="leg-dot" style="background:#BA7517"></span>재초진</span><span><span class="leg-dot" style="background:#1D9E75"></span>초진</span></div>
-        <div class="chart-wrap" style="height:220px"><div id="c-w9-bar" class="svg-host"></div></div></div>
-      <div class="card"><div class="card-title">일별 총 진료비 (만원)</div>
-        <div class="chart-wrap" style="height:220px"><div id="c-w9-rev" class="svg-host"></div></div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">9주차 일별 상세</div>
-      <div class="table-wrap"><table>
-        <thead><tr><th>날짜</th><th>총방문</th><th>초진</th><th>재초진</th><th>재진</th><th>첩약보험</th><th>총진료비</th></tr></thead>
-        <tbody>
-          <tr><td>5/18 (월)</td><td>34명</td><td><span class="tag green">5</span></td><td><span class="tag orange">3</span></td><td>26명</td><td>-</td><td>1,935,940원</td></tr>
-          <tr><td>5/19 (화)</td><td>10명</td><td><span class="tag green">1</span></td><td><span class="tag orange">2</span></td><td>7명</td><td>-</td><td>3,498,470원</td></tr>
-          <tr><td>5/20 (수)</td><td>34명</td><td><span class="tag green">3</span></td><td><span class="tag orange">4</span></td><td>27명</td><td>-</td><td>2,877,170원</td></tr>
-          <tr><td>5/21 (목)</td><td>13명</td><td><span class="tag green">3</span></td><td><span class="tag orange">3</span></td><td>7명</td><td>1명</td><td>737,780원</td></tr>
-          <tr><td>5/22 (금)</td><td>49명</td><td><span class="tag green">9</span></td><td><span class="tag orange">5</span></td><td>35명</td><td>2명</td><td>3,118,110원</td></tr>
-          <tr><td>5/23 (토)</td><td>25명</td><td><span class="tag green">2</span></td><td><span class="tag orange">5</span></td><td>18명</td><td>1명</td><td>1,653,370원</td></tr>
-          <tr><td>5/24 (일)</td><td>4명</td><td><span class="tag green">0</span></td><td><span class="tag orange">0</span></td><td>4명</td><td>-</td><td>178,420원</td></tr>
-          <tr style="background:#f4f6f9;font-weight:600"><td>합계</td><td>169명</td><td>23명</td><td>22명 (급여18+비급여4)</td><td>124명</td><td>4명</td><td>13,999,260원</td></tr>
-        </tbody>
-      </table></div>
-      <p class="note">※ 쌩초진 23명: 공현수·신승환·이수연·이채언·이채윤(5/18), 한천수(5/19), 서지희·양해영·김영옥(5/20), 은영서·김도은·현경애(5/21), 임봉규·양지영·이지현·진명희·주선일·허철·김유민·안세라·김진선(5/22), 박나리·전소연(5/23) | 비급여재초진: 백효진(5/18), 박순조(5/20), 김유진·하준후(5/23) | 추나: 건보1(안세라5/22)+자보2(박미영·김태원5/18)</p>
-    </div>
-    <div class="grid2">
-      <div class="card"><div class="card-title">수입 현황</div>
-        <div class="table-wrap"><table><thead><tr><th>구분</th><th>금액</th><th>비중</th></tr></thead><tbody>
-          <tr><td><b>총 진료비</b></td><td><b>13,999,260원</b></td><td>100%</td></tr>
-          <tr><td>보험수입</td><td>6,739,260원</td><td>48.1%</td></tr>
-          <tr><td>비급여</td><td>7,260,000원</td><td>51.9%</td></tr>
-          <tr><td>자보</td><td>611,776원</td><td>4.4%</td></tr>
-          <tr><td>지출</td><td>118,500원</td><td>-</td></tr>
-          <tr><td><b>순수입</b></td><td><b>13,880,760원</b></td><td>-</td></tr>
-        </tbody></table></div></div>
-      <div class="card"><div class="card-title">비급여 상세 (7,260,000원)</div>
-        <div class="chart-wrap" style="height:160px"><div id="c-w9-nv" class="svg-host"></div></div>
-        <div class="table-wrap" style="margin-top:8px"><table><tbody>
-          <tr><td>비급여첩약</td><td style="text-align:right">4,108,000원</td><td style="text-align:right">56.6%</td></tr>
-          <tr><td>더수 (민성림 원방)</td><td style="text-align:right">3,120,000원</td><td style="text-align:right">43.0%</td></tr>
-          <tr><td>약침 (현경애 무통)</td><td style="text-align:right">20,000원</td><td style="text-align:right">0.3%</td></tr>
-          <tr><td>기타비급여</td><td style="text-align:right">12,000원</td><td style="text-align:right">0.2%</td></tr>
-        </tbody></table></div></div>
-    </div>
-  </div>
-
   <!-- 주차 비교 -->
   <div class="card" style="margin-top:8px">
     <div class="card-title">주차별 비교 (전체)</div>
