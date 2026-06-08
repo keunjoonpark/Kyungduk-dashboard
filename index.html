@@ -6,31 +6,131 @@
 <title>경덕한의원 대시보드</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; }
+  body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background:#f0f2f7; color:#1a1a2e; }
   #pw-screen {
     display:flex; flex-direction:column; align-items:center;
     justify-content:center; height:100vh; background:#f4f6f9;
   }
-  .pw-box {
-    background:white; padding:40px 36px; border-radius:16px;
-    box-shadow:0 4px 24px rgba(0,0,0,0.10); text-align:center; width:320px;
-  }
+  .pw-box { background:white; padding:40px 36px; border-radius:16px;
+    box-shadow:0 4px 24px rgba(0,0,0,0.10); text-align:center; width:320px; }
   .pw-logo { font-size:22px; font-weight:700; color:#1F4E79; margin-bottom:6px; }
   .pw-sub  { font-size:13px; color:#9ca3af; margin-bottom:28px; }
-  .pw-input {
-    width:100%; padding:12px 16px; border:1.5px solid #e5e7eb;
+  .pw-input { width:100%; padding:12px 16px; border:1.5px solid #e5e7eb;
     border-radius:10px; font-size:16px; outline:none;
-    text-align:center; letter-spacing:3px; color:#1F4E79; transition:border 0.2s;
-  }
+    text-align:center; letter-spacing:3px; color:#1F4E79; transition:border 0.2s; }
   .pw-input:focus { border-color:#1F4E79; }
-  .pw-btn {
-    margin-top:14px; width:100%; padding:13px; background:#1F4E79;
+  .pw-btn { margin-top:14px; width:100%; padding:13px; background:#1F4E79;
     color:white; border:none; border-radius:10px; font-size:15px;
-    font-weight:600; cursor:pointer; transition:background 0.2s;
-  }
+    font-weight:600; cursor:pointer; transition:background 0.2s; }
   .pw-btn:hover { background:#163d61; }
   .pw-error { margin-top:10px; font-size:13px; color:#E24B4A; min-height:18px; }
   #dashboard { display:none; }
+
+  /* ── 대시보드 레이아웃 ── */
+  .topbar { background:#1F4E79; color:white; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; }
+  .topbar h1 { font-size:20px; font-weight:700; }
+  .topbar .sub { font-size:12px; opacity:.75; margin-top:2px; }
+  .badge { background:rgba(255,255,255,0.18); padding:4px 12px; border-radius:20px; font-size:11px; }
+  .nav { background:#163d61; display:flex; gap:4px; padding:8px 16px; flex-wrap:wrap; }
+  .nav button { background:transparent; border:none; color:rgba(255,255,255,0.7);
+    padding:7px 14px; border-radius:8px; font-size:13px; cursor:pointer; transition:all .2s; }
+  .nav button.active, .nav button:hover { background:rgba(255,255,255,0.18); color:white; }
+  .content { padding:20px 24px; max-width:1400px; margin:0 auto; }
+  .section { display:none; }
+  .section.active { display:block; }
+
+  /* ── 카드 / 메트릭 ── */
+  .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:16px; }
+  .metric { background:white; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,.06); border-left:4px solid #e5e7eb; }
+  .metric.blue { border-left-color:#1F4E79; }
+  .metric.green { border-left-color:#1D9E75; }
+  .metric.orange { border-left-color:#BA7517; }
+  .metric.red { border-left-color:#E24B4A; }
+  .metric-label { font-size:11px; color:#6b7a99; margin-bottom:4px; }
+  .metric-value { font-size:26px; font-weight:700; color:#1a1a2e; line-height:1.1; }
+  .metric-sub { font-size:11px; color:#9ca3af; margin-top:4px; }
+  .card { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 4px rgba(0,0,0,.06); margin-bottom:16px; }
+  .card-title { font-size:14px; font-weight:600; color:#1F4E79; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  @media(max-width:768px){ .grid2 { grid-template-columns:1fr; } }
+
+  /* ── 차트 ── */
+  .chart-wrap { position:relative; width:100%; overflow:hidden; }
+  .svg-host { width:100%; height:100%; }
+  .legend { display:flex; gap:12px; flex-wrap:wrap; font-size:12px; color:#6b7a99; margin-bottom:8px; }
+  .leg-dot { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:4px; vertical-align:middle; }
+
+  /* ── 테이블 ── */
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th { background:#f4f6f9; padding:8px 10px; text-align:left; color:#6b7a99; font-weight:600; border-bottom:1px solid #e5e7eb; white-space:nowrap; }
+  td { padding:7px 10px; border-bottom:1px solid #f0f2f7; vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+
+  /* ── 탭 버튼 ── */
+  .tab-btn { background:#f4f6f9; border:none; padding:7px 14px; border-radius:8px;
+    font-size:12px; cursor:pointer; color:#6b7a99; transition:all .2s; margin-bottom:4px; }
+  .tab-btn.active { background:#1F4E79; color:white; }
+
+  /* ── 태그 ── */
+  .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .tag.green { background:#d1fae5; color:#065f46; }
+  .tag.orange { background:#fef3c7; color:#92400e; }
+  .note { font-size:11px; color:#9ca3af; margin-top:8px; line-height:1.6; }
+  .w5-badge { background:#1F4E79; color:white; font-size:10px; padding:1px 6px; border-radius:8px; margin-left:4px; }
+
+  /* ── 추나 ── */
+  .chuna-box { display:flex; gap:24px; margin-bottom:16px; flex-wrap:wrap; }
+  .chuna-item { text-align:center; }
+  .chuna-num { font-size:32px; font-weight:700; color:#1F4E79; }
+  .chuna-label { font-size:11px; color:#6b7a99; margin-top:2px; }
+
+  /* ── 연령대 바 ── */
+  .age-bar { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:12px; }
+  .age-label { width:52px; color:#6b7a99; font-size:11px; flex-shrink:0; }
+  .age-track { flex:1; background:#f0f2f7; border-radius:4px; height:12px; }
+  .age-fill { height:100%; border-radius:4px; }
+  .age-count { width:28px; text-align:right; color:#1a1a2e; font-size:11px; flex-shrink:0; }
+
+  /* ── 비급여 follow-up 바 ── */
+  .followup-bar { display:flex; border-radius:8px; overflow:hidden; height:28px; margin-bottom:8px; }
+  .followup-seg { display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:white; font-weight:600; padding:0 8px; white-space:nowrap; }
+
+  /* ── 코호트 ── */
+  .cohort-summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:16px; }
+  .cohort-wk-card { background:white; border-radius:10px; padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.06); text-align:center; }
+  .wk-label { font-size:11px; color:#6b7a99; margin-bottom:4px; }
+  .rate { font-size:24px; font-weight:700; }
+  .wk-sub { font-size:10px; color:#9ca3af; margin-top:2px; }
+  .cohort-table th, .cohort-table td { font-size:11px; }
+  .rv-bar-wrap { display:flex; align-items:center; gap:6px; }
+  .rv-bar-bg { flex:1; background:#f0f2f7; border-radius:3px; height:8px; overflow:hidden; }
+  .rv-bar-fill { height:100%; border-radius:3px; }
+  .rv-count { font-size:10px; color:#9ca3af; white-space:nowrap; }
+  .active-tag { background:#d1fae5; color:#065f46; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; }
+  .pending-tag { background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; }
+  .dropout-tag { background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:600; }
+
+  /* ── 인사이트 ── */
+  .insight-item { background:white; border-radius:12px; padding:18px 20px; margin-bottom:12px;
+    box-shadow:0 1px 4px rgba(0,0,0,.06); border-left:4px solid #e5e7eb; }
+  .insight-item.blue { border-left-color:#1F4E79; }
+  .insight-item.green { border-left-color:#1D9E75; }
+  .insight-item.orange { border-left-color:#BA7517; }
+  .insight-item.red { border-left-color:#E24B4A; }
+  .insight-cat { font-size:10px; color:#9ca3af; font-weight:600; text-transform:uppercase; margin-bottom:4px; }
+  .insight-title { font-size:14px; font-weight:700; color:#1a1a2e; margin-bottom:8px; }
+  .insight-desc { font-size:12px; color:#4a5568; line-height:1.7; margin-bottom:8px; }
+  .insight-action { font-size:12px; color:#1F4E79; font-weight:600; }
+
+  /* ── 재방문 타임라인 ── */
+  .revisit-timeline { display:flex; flex-direction:column; gap:6px; }
+  .revisit-row { display:flex; gap:8px; align-items:center; padding:6px 10px; background:#f4f6f9; border-radius:8px; font-size:12px; }
+  .revisit-row.new { background:#e8f5e9; }
+  .revisit-name { font-weight:600; width:60px; flex-shrink:0; }
+  .revisit-dates { color:#4a5568; flex:1; }
+  .revisit-gap { color:#1D9E75; font-weight:600; width:40px; text-align:right; flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -2281,18 +2381,7 @@ function showCohort(id){
   });
 }
 
-// 초기 렌더링
-window.addEventListener('load',function(){
-  drawCharts(TAB_CHARTS['overview']);
-  drawCharts(WEEK_CHARTS['w1']);
-});
-</script>
 
-
-
-
-</div>
-<script>
 function checkPw(){
   var input=document.getElementById('pw-input').value;
   if(input==='koma0707'){
@@ -2300,6 +2389,7 @@ function checkPw(){
     document.getElementById('dashboard').style.display='block';
     if(typeof drawCharts==='function'){
       drawCharts(TAB_CHARTS['overview']||[]);
+      drawCharts(WEEK_CHARTS['w1']||[]);
     }
   } else {
     document.getElementById('pw-error').textContent='비밀번호가 틀렸습니다.';
@@ -2307,7 +2397,17 @@ function checkPw(){
     document.getElementById('pw-input').focus();
   }
 }
-window.addEventListener('load',function(){ document.getElementById('pw-input').focus(); });
+// 초기 렌더링
+window.addEventListener('load',function(){
+  drawCharts(TAB_CHARTS['overview']);
+  drawCharts(WEEK_CHARTS['w1']);
+  document.getElementById('pw-input').focus();
+});
 </script>
+
+
+
+
+</div>
 </body>
 </html>
