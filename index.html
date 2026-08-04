@@ -265,7 +265,7 @@
       </div>
       <div>
         <div style="padding-top:4px">
-                    <div class="age-bar"><span class="age-label">10세미만</span><div class="age-track"><div class="age-fill" style="width:3.1%;background:#D85A30"></div></div><span class="age-count">15명</span></div>
+          <div class="age-bar"><span class="age-label">10세미만</span><div class="age-track"><div class="age-fill" style="width:3.1%;background:#D85A30"></div></div><span class="age-count">15명</span></div>
           <div class="age-bar"><span class="age-label">10대</span><div class="age-track"><div class="age-fill" style="width:11.0%;background:#E8A87C"></div></div><span class="age-count">53명</span></div>
           <div class="age-bar"><span class="age-label">20대</span><div class="age-track"><div class="age-fill" style="width:19.5%;background:#A8D5A2"></div></div><span class="age-count">94명</span></div>
           <div class="age-bar"><span class="age-label">30대</span><div class="age-track"><div class="age-fill" style="width:48.0%;background:#1D9E75"></div></div><span class="age-count">231명</span></div>
@@ -275,9 +275,55 @@
           <div class="age-bar"><span class="age-label">70대</span><div class="age-track"><div class="age-fill" style="width:67.2%;background:#85B7EB"></div></div><span class="age-count">323명</span></div>
           <div class="age-bar"><span class="age-label">80대이상</span><div class="age-track"><div class="age-fill" style="width:30.1%;background:#9E9E9E"></div></div><span class="age-count">145명</span></div>
         </div>
+        <p class="note" style="margin-top:8px">※ 1~19주 XLS 생년월일 기준 고유환자 집계 | 60대 481명 최다(24.1%), 50·60대 전체의 43.1%</p>
       </div>
     </div>
-          <p class="note">※ 18주차: 김도훈·노우철(7/21)건보 / 윤현수(7/21·7/23)자보 | 19주차(7/27): 김도훈·전혜리건보 | 19주차(8/2): 윤지은자보 | 9주차: 안세라(5/22)건보·박미영·김태원(5/18)자보</p>
+    <div class="chart-wrap" style="height:200px;margin-top:16px"><div id="c-age-bar" class="svg-host"></div></div>
+    <div class="legend" style="margin-top:8px">
+      <span><span class="leg-dot" style="background:#1F4E79"></span>50대</span>
+      <span><span class="leg-dot" style="background:#378ADD"></span>60대</span>
+      <span><span class="leg-dot" style="background:#85B7EB"></span>70대</span>
+      <span><span class="leg-dot" style="background:#BA7517"></span>40대</span>
+      <span><span class="leg-dot" style="background:#1D9E75"></span>30대</span>
+      <span><span class="leg-dot" style="background:#B5D4F4"></span>기타</span>
+    </div>
+  </div>
+
+  <!-- 추나 -->
+  <div class="card">
+    <div class="card-title">추나 치료 현황 (건수 기준)</div>
+    <div class="chuna-box">
+      <div class="chuna-item"><div class="chuna-num">66회</div><div class="chuna-label">19주 총 추나</div></div>
+      <div class="chuna-item"><div class="chuna-num">35회</div><div class="chuna-label">건강보험 추나</div></div>
+      <div class="chuna-item"><div class="chuna-num">24회</div><div class="chuna-label">자보 추나</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>주차</th><th>건보추나</th><th>자보추나</th><th>합계</th></tr></thead>
+      <tbody>
+        <tr><td>1주차 (3/23~29)</td><td>6회</td><td>0회</td><td>6회</td></tr>
+        <tr><td>2주차 (3/30~4/5)</td><td>2회</td><td>2회</td><td>4회</td></tr>
+        <tr><td>3주차 (4/6~12)</td><td>1회</td><td>2회</td><td>3회</td></tr>
+        <tr><td>4주차 (4/13~19)</td><td>1회</td><td>2회</td><td>3회</td></tr>
+        <tr><td>5주차 (4/20~26)</td><td>2회</td><td>0회</td><td>2회</td></tr>
+        <tr><td>6주차 (4/27~5/3)</td><td>0회</td><td>0회</td><td>0회</td></tr>
+        <tr><td>7주차 (5/4~5/10)</td><td><b>1회</b></td><td><b>1회</b></td><td><b>2회</b></td></tr>
+        <tr><td>8주차 (5/11~5/17)</td><td>0회</td><td>3회</td><td>3회</td></tr>
+        <tr><td>9주차 (5/18~5/24)</td><td>1회</td><td>2회</td><td>3회</td></tr>
+        <tr><td>10주차 (5/25~5/31)</td><td>0회</td><td>2회</td><td>2회</td></tr>
+        <tr><td>11주차 (6/1~6/7)</td><td>3회</td><td>3회</td><td>6회</td></tr>
+        <tr><td>12주차 (6/8~6/14)</td><td>1회</td><td>3회</td><td>4회</td></tr>
+        <tr><td>13주차 (6/15~6/21)</td><td>3회</td><td>0회</td><td>3회</td></tr>
+        <tr><td>14주차 (6/22~6/28)</td><td>4회</td><td>4회</td><td>8회</td></tr>
+        <tr><td>15주차 (6/29~7/5)</td><td>2회</td><td>1회</td><td>3회</td></tr>
+        <tr><td>16주차 (7/6~7/12)</td><td>3회 (+2누락)</td><td>1회</td><td>4회</td></tr>
+        <tr><td>17주차 (7/13~7/19)</td><td>1회</td><td>2회</td><td>3회</td></tr>
+        <tr><td>18주차 (7/20~7/26)</td><td>2회</td><td>2회</td><td>4회</td></tr>
+        <tr><td>19주차 (7/27)</td><td>2회</td><td>0회</td><td>2회</td></tr>
+        <tr><td>19주차 (8/2)</td><td><b>0회</b></td><td><b>1회</b></td><td><b>1회</b></td></tr>
+        <tr style="background:#f4f6f9;font-weight:600"><td>누적</td><td>35회</td><td>31회</td><td>66회</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">※ 18주차: 김도훈·노우철(7/21)건보 / 윤현수(7/21·7/23)자보 | 19주차(7/27): 김도훈·전혜리건보 | 19주차(8/2): 윤지은자보 | 9주차: 안세라(5/22)건보·박미영·김태원(5/18)자보</p>
   </div>
 
 </div>
@@ -2498,7 +2544,14 @@
     </div>
 
     <div class="grid2">
-      <div class="card">
+      <div class="card" style="margin-bottom:16px">
+      <div class="card-title">4월 연령대 분포 (고유환자 282명)</div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div class="chart-wrap" style="width:160px;min-width:160px;max-width:160px;height:160px;flex-shrink:0"><div id="c-m4-age" class="svg-host" style="width:160px;height:160px;overflow:hidden"></div></div>
+        <table style="width:100%;border-collapse:collapse"><tbody><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#D85A30;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10세미만</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>2명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(0.7%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#E8A87C;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>9명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(3.2%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#A8D5A2;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>20대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>14명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(5.0%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1D9E75;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>30대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>38명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(13.5%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#BA7517;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>40대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>37명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(13.1%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1F4E79;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>50대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>55명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(19.5%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#378ADD;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>60대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>54명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(19.1%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#85B7EB;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>70대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>51명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(18.1%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#9E9E9E;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>80대이상</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>21명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(7.4%)</td></tr><tr><td colspan="3" style="padding-top:6px;font-size:11px;color:#1F4E79;font-weight:600">최다: 50대 20% · 60대 19% · 70대 18%</td></tr></tbody></table>
+      </div>
+    </div>
+    <div class="card">
         <div class="card-title">4월 수입 구조</div>
         <div class="table-wrap"><table><thead><tr><th>구분</th><th>금액</th><th>비중</th></tr></thead><tbody>
           <tr><td><b>총 진료비</b></td><td><b>45,713,251원</b></td><td>100%</td></tr>
@@ -2540,8 +2593,15 @@
       <div class="metric orange"><div class="metric-label">5월 쌩초진</div><div class="metric-value">70명</div><div class="metric-sub"><span style="color:#1D9E75;font-size:11px">▲12명 (+20.7%)</span></div></div>
     </div>
 
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">5월 연령대 분포 (고유환자 240명)</div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div class="chart-wrap" style="width:160px;min-width:160px;max-width:160px;height:160px;flex-shrink:0"><div id="c-m5-age" class="svg-host" style="width:160px;height:160px;overflow:hidden"></div></div>
+        <table style="width:100%;border-collapse:collapse"><tbody><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#D85A30;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10세미만</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>2명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(0.8%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#E8A87C;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>8명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(3.3%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#A8D5A2;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>20대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>18명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(7.5%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1D9E75;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>30대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>30명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(12.5%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#BA7517;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>40대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>37명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(15.4%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1F4E79;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>50대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>41명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(17.1%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#378ADD;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>60대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>54명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(22.5%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#85B7EB;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>70대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>34명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(14.2%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#9E9E9E;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>80대이상</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>16명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(6.7%)</td></tr><tr><td colspan="3" style="padding-top:6px;font-size:11px;color:#1F4E79;font-weight:600">최다: 60대 22% · 50대 17% · 40대 15%</td></tr></tbody></table>
+      </div>
     <div class="grid2">
-      <div class="card">
+      </div>
+    <div class="card">
         <div class="card-title">5월 수입 구조</div>
         <div class="table-wrap"><table><thead><tr><th>구분</th><th>금액</th><th>비중</th><th>전달 대비</th></tr></thead><tbody>
           <tr><td><b>총 진료비</b></td><td><b>48,641,510원</b></td><td>100%</td><td><span style="color:#1D9E75;font-size:11px">▲2.93M (+6.4%)</span></td></tr>
@@ -2584,8 +2644,15 @@
       <div class="metric orange"><div class="metric-label">6월 쌩초진</div><div class="metric-value">57명</div><div class="metric-sub"><span style="color:#E24B4A;font-size:11px">▼13명 (-18.6%)</span></div></div>
     </div>
 
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">6월 연령대 분포 (고유환자 250명)</div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div class="chart-wrap" style="width:160px;min-width:160px;max-width:160px;height:160px;flex-shrink:0"><div id="c-m6-age" class="svg-host" style="width:160px;height:160px;overflow:hidden"></div></div>
+        <table style="width:100%;border-collapse:collapse"><tbody><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#D85A30;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10세미만</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>2명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(0.8%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#E8A87C;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>5명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(2.0%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#A8D5A2;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>20대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>13명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(5.2%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1D9E75;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>30대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>36명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(14.4%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#BA7517;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>40대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>37명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(14.8%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1F4E79;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>50대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>49명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(19.6%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#378ADD;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>60대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>56명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(22.4%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#85B7EB;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>70대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>33명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(13.2%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#9E9E9E;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>80대이상</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>19명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(7.6%)</td></tr><tr><td colspan="3" style="padding-top:6px;font-size:11px;color:#1F4E79;font-weight:600">최다: 60대 22% · 50대 20% · 40대 15%</td></tr></tbody></table>
+      </div>
     <div class="grid2">
-      <div class="card">
+      </div>
+    <div class="card">
         <div class="card-title">6월 수입 구조</div>
         <div class="table-wrap"><table><thead><tr><th>구분</th><th>금액</th><th>비중</th><th>전달 대비</th></tr></thead><tbody>
           <tr><td><b>총 진료비</b></td><td><b>42,782,740원</b></td><td>100%</td><td><span style="color:#E24B4A;font-size:11px">▼5.86M (-12.0%)</span></td></tr>
@@ -2645,8 +2712,15 @@
       <div class="metric orange"><div class="metric-label">비급여 매출</div><div class="metric-value">18.4M</div><div class="metric-sub">비급여 <span style="color:#1D9E75;font-size:11px">▲4.1M vs 6월</span></div></div>
       <div class="metric"><div class="metric-label">첩약보험</div><div class="metric-value">29명</div><div class="metric-sub">6월 38명 <span style="color:#E24B4A;font-size:11px">▼9명</span></div></div>
     </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">7월 연령대 분포 (고유환자 283명)</div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <div class="chart-wrap" style="width:160px;min-width:160px;max-width:160px;height:160px;flex-shrink:0"><div id="c-m7-age" class="svg-host" style="width:160px;height:160px;overflow:hidden"></div></div>
+        <table style="width:100%;border-collapse:collapse"><tbody><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#D85A30;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10세미만</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>1명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(0.4%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#E8A87C;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>10대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>7명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(2.5%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#A8D5A2;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>20대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>14명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(4.9%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1D9E75;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>30대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>47명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(16.6%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#BA7517;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>40대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>42명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(14.8%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#1F4E79;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>50대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>47명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(16.6%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#378ADD;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>60대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>71명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(25.1%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#85B7EB;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>70대</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>33명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(11.7%)</td></tr><tr><td style='padding:2px 4px'><span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#9E9E9E;margin-right:4px;vertical-align:middle'></span><span style='font-size:12px'>80대이상</span></td><td style='padding:2px 8px;text-align:right;font-size:12px;font-weight:600'>21명</td><td style='padding:2px 4px;text-align:right;font-size:11px;color:#6b7a99'>(7.4%)</td></tr><tr><td colspan="3" style="padding-top:6px;font-size:11px;color:#1F4E79;font-weight:600">최다: 60대 25% · 30대 17% · 50대 17%</td></tr></tbody></table>
+      </div>
     <div class="grid2">
-      <div class="card">
+      </div>
+    <div class="card">
         <div class="card-title">7월 수입 구조</div>
         <div class="table-wrap"><table>
           <thead><tr><th>구분</th><th>금액</th><th>비중</th></tr></thead>
@@ -2858,13 +2932,14 @@ function barChart(hostId, labels, datasets, opts){
 }
 
 // 도넛 차트
-function donutChart(hostId, labels, values, colors){
+function donutChart(hostId, labels, values, colors, opts){
+  opts=opts||{};
   var host=document.getElementById(hostId);
   if(!host)return;
   host.innerHTML='';
-  var W=host.clientWidth||300, H=host.clientHeight||220;
+  var W=parseInt(host.style.width)||host.clientWidth||300, H=parseInt(host.style.height)||host.clientHeight||220;
   if(W<10)W=300;
-  var cx=W*0.42, cy=H/2, R=Math.min(cx,cy)*0.82, r=R*0.55;
+  var cx=opts.noLegend?W/2:W*0.42, cy=H/2, R=Math.min(cx,cy)*0.82, r=R*0.55;
   var total=values.reduce(function(a,b){return a+b;},0)||1;
   var svg=svgEl('svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H});
   var angle=-Math.PI/2;
@@ -2879,7 +2954,7 @@ function donutChart(hostId, labels, values, colors){
     svg.appendChild(svgEl('path',{d:d,fill:colors[i]||'#ccc',stroke:'#fff','stroke-width':2}));
     angle+=sweep;
   });
-  // 범례 (오른쪽)
+  if(!opts.noLegend){
   var lx=W*0.87, ly=cy-labels.length*11;
   labels.forEach(function(lbl,i){
     var pct=Math.round(values[i]/total*100);
@@ -2887,6 +2962,7 @@ function donutChart(hostId, labels, values, colors){
     svg.appendChild(svgEl('text',{x:lx,y:ly+i*22,'font-size':'9','fill':COLORS.text},lbl.split(' ')[0]));
     svg.appendChild(svgEl('text',{x:lx,y:ly+i*22+10,'font-size':'8','fill':COLORS.muted},pct+'%'));
   });
+  }
   host.appendChild(svg);
 }
 function lineChart(hostId, labels, datasets, opts){
@@ -3366,6 +3442,14 @@ CHART_DEFS['c-jun-nv-pie']=function(){
   donutChart('c-jun-nv-pie',['비급여첩약','더수','약침','기타'],[12807200,658200,225000,681500],[COLORS.blue,COLORS.green,COLORS.salmon,COLORS.xblue]);};
 CHART_DEFS['c-jun-class-pie']=function(){
   donutChart('c-jun-class-pie',['재진','재초진','초진'],[574,82,57],[COLORS.navy,COLORS.orange,COLORS.green]);};
+CHART_DEFS['c-m4-age']=function(){
+  donutChart('c-m4-age',['50대','60대','70대','30대','40대','80대이상','20대','10대','10세미만'],[55,54,51,38,37,21,14,9,2],['#1F4E79','#378ADD','#85B7EB','#1D9E75','#BA7517','#9E9E9E','#A8D5A2','#E8A87C','#D85A30'],{noLegend:true});};
+CHART_DEFS['c-m5-age']=function(){
+  donutChart('c-m5-age',['60대','50대','40대','70대','30대','20대','80대이상','10대','10세미만'],[54,41,37,34,30,18,16,8,2],['#378ADD','#1F4E79','#BA7517','#85B7EB','#1D9E75','#A8D5A2','#9E9E9E','#E8A87C','#D85A30'],{noLegend:true});};
+CHART_DEFS['c-m6-age']=function(){
+  donutChart('c-m6-age',['60대','50대','40대','30대','70대','80대이상','20대','10대','10세미만'],[56,49,37,36,33,19,13,5,2],['#378ADD','#1F4E79','#BA7517','#1D9E75','#85B7EB','#9E9E9E','#A8D5A2','#E8A87C','#D85A30'],{noLegend:true});};
+CHART_DEFS['c-m7-age']=function(){
+  donutChart('c-m7-age',['60대','30대','50대','40대','70대','80대이상','20대','10대','10세미만'],[71,47,47,42,33,21,14,7,1],['#378ADD','#1D9E75','#1F4E79','#BA7517','#85B7EB','#9E9E9E','#A8D5A2','#E8A87C','#D85A30'],{noLegend:true});};
 CHART_DEFS['c-apr-visit']=function(){
   var aprDates=['4/1','4/2','4/3','4/4','4/5','4/6','4/7','4/8','4/9','4/10','4/11','4/12','4/13','4/14','4/15','4/16','4/17','4/18','4/19','4/20','4/21','4/22','4/23','4/24','4/25','4/26','4/27','4/28','4/29','4/30'];
   var aprVisit=[31,9,35,28,6,42,8,34,6,38,22,8,35,8,41,8,41,26,9,35,12,33,11,42,25,6,29,8,43,12];
@@ -3405,7 +3489,7 @@ var TAB_CHARTS = {
   'weekly':   ['c-weekly-ratio','c-w1-bar','c-w1-rev','c-w1-nv'],
   'cheopak':  ['c-cp-trend','c-cp-gap','c-cp-age'],
   'cohort':   ['c-cohort-rate','c-cohort-avg'],
-  'monthly':  ['c-monthly-ratio','c-apr-visit','c-apr-rev','c-apr-weekday-pt','c-apr-income-pie','c-apr-nv-pie','c-apr-class-pie','c-apr-age','c-apr-cohort'],
+  'monthly':  ['c-monthly-ratio','c-m4-age','c-m5-age','c-m6-age','c-m7-age','c-apr-visit','c-apr-rev','c-apr-weekday-pt','c-apr-income-pie','c-apr-nv-pie','c-apr-class-pie','c-apr-age','c-apr-cohort'],
   'insights': []
 };
 var WEEK_CHARTS = {
